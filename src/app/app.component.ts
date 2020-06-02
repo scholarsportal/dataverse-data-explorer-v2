@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatomoInjector } from 'ngx-matomo';
+import { ConfigService } from './config.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'dataverse-data-explorer-v2';
+  constructor(
+    private config: ConfigService,
+    private matomoInjector: MatomoInjector
+  ) {
+    this.matomoInjector.init(this.config.baseUrl, this.config.id);
+  }
+  title = 'data-explorer';
 }
+

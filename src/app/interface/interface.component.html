@@ -1,0 +1,27 @@
+<div id="loading-details" *ngIf="!ddiLoaded" class="row content-area">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<ng-container class="interface-container">
+  <mat-toolbar class="interface-header">
+    <mat-toolbar-row>
+      <h1 class="header-text title">{{title}}</h1>
+      <span class="fill-space"></span>
+      <mat-form-field class="lang-select">
+        <select matNativeControl title="Language" #langSelect (change)="translate.use(langSelect.value)">
+          <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{lang}}</option>
+        </select>
+      </mat-form-field>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-text">
+      {{filename}}
+    </mat-toolbar-row>
+    <mat-toolbar-row class="header-text citation">
+      <span>{{firstCitat}}<a href="{{doi}}">{{doi}}</a>{{secondCitat}}</span>
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+  <app-var></app-var>
+
+</ng-container>
+

@@ -1,0 +1,72 @@
+<mat-grid-list class="table-controls" cols="3" rowHeight="64">
+  <mat-grid-tile>
+    <mat-form-field>
+      <input matInput [formControl]="searchFilter" placeholder="{{'VAR.SEARCH' | translate}}" />
+      <span matSuffix><mat-icon>search</mat-icon></span>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-paginator [pageSizeOptions]="getPageSizeOptions()"></mat-paginator>
+  <mat-divider [vertical]="true"></mat-divider>
+
+</mat-grid-list>
+
+<mat-table class="mat-elevation-z8" [dataSource]="datasource" matSort (matSortChange)="sortChange($event)">
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.ID' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{ row['id'] }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="_order">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>order</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{ row['_order'] }} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.NAME' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ (row['@name'].length > 30) ? (row['@name'] | slice:0:30) + '...' : (row['@name']) }}  </mat-cell>
+  </ng-container>
+
+  <!-- Label Column -->
+  <ng-container matColumnDef="labl">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.LABEL' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{ (row.labl['#text'].length > 150) ? (row.labl['#text'] | slice:0:150) + '...' : (row.labl['#text'])}} </mat-cell>
+  </ng-container>
+
+  <!-- Weight Column-->
+  <ng-container matColumnDef="wgt-var">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.WEIGHT' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <span *ngIf="row['@wgt-var'] ; else elseBlock">{{ row['@wgt-var'] }} </span>
+      <ng-template #elseBlock>
+        <span *ngIf="row['@wgt']">{{ row['@wgt'] }}</span>
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <!-- View Column-->
+  <ng-container matColumnDef="view">
+    <mat-header-cell *matHeaderCellDef>{{'VAR.VIEW' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row; let i = index">
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="onView(row['@ID'])"
+        matTooltip="{{'VAR.VIEW' | translate}}"
+      >
+        <mat-icon [attr.aria-label]="'VAR.VIEW' | translate">visibility</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+
+
+  <mat-header-row *matHeaderRowDef="getDisplayedColumns()"></mat-header-row>
+  <mat-row
+    *matRowDef="let row; columns: getDisplayedColumns()"
+    [ngClass]="{ unvis: row._show != true , active: row._active == true }"
+  >
+  </mat-row>
+</mat-table>
