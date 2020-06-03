@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import { MatomoTracker } from 'ngx-matomo';
 import { DdiService } from '../ddi.service';
@@ -6,6 +6,8 @@ import { xml2json } from '../../assets/js/xml2json';
 import {TranslateService} from '@ngx-translate/core';
 
 import { VarComponent } from '../var/var.component';
+import {VarGroupComponent} from '../var-group/var-group.component';
+
 @Component({
   selector: 'app-interface',
   templateUrl: './interface.component.html',
@@ -13,6 +15,8 @@ import { VarComponent } from '../var/var.component';
 })
 export class InterfaceComponent implements OnInit {
   @ViewChild(VarComponent, { static: true }) child;
+  @ViewChild(VarGroupComponent, { static: true }) childGroups;
+  @ViewChild('scrollMe', { static: true }) private myScrollContainer: ElementRef;
 
   translate: TranslateService;
   ddiLoaded = false; // show the loading
@@ -24,6 +28,7 @@ export class InterfaceComponent implements OnInit {
   filename;
   dvLocale = null;
   _variables = []; // store the variables to be broadcast to child
+  variableGroups = []; // store the variables in an array display
 
   constructor(
     private matomoTracker: MatomoTracker,
@@ -81,7 +86,7 @@ export class InterfaceComponent implements OnInit {
   }
 
   completeDDI() {
-    //this.showVarsGroups();
+    this.showVarsGroups();
     this.showVars();
     this.title = this.data
       .getElementsByTagName('stdyDscr')[0]
@@ -173,5 +178,28 @@ export class InterfaceComponent implements OnInit {
     console.log(this._variables);
     this.child.onUpdateVars(this._variables);
 
+  }
+
+  showVarsGroups() {
+    const elm = this.data.getElementsByTagName('varGrp');
+
+    for (const elmIn of elm) {
+      const obj = JSON.parse(xml2json(elmIn, ''));
+      if (typeof obj.varGrp['@var'] === 'undefined') {
+        obj.varGrp['@var'] = '';
+      }
+      this.variableGroups.push(obj);
+    }
+  }
+
+  // pass the selected ids to the var table for display
+  broadcastSubSetRows(ids) {
+    this.child.onSubset(ids);
+  }
+
+
+  scrollNav() {
+    const elm = this.myScrollContainer['_elementRef'].nativeElement;
+    elm.scrollTop = elm.scrollHeight;
   }
 }

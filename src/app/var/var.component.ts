@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild, HostListener} from '@angular/core';
+import {Component, OnInit, ViewChild, HostListener, Input, ElementRef} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {FormControl} from '@angular/forms';
 import {DdiService} from '../ddi.service';
 import {TranslateService} from '@ngx-translate/core';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-var',
@@ -14,11 +15,16 @@ import {TranslateService} from '@ngx-translate/core';
 export class VarComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @Input() variableGroups: any;
 
+
+
+  variableGroupsVars = [];
   datasource: MatTableDataSource<any>;
   public searchFilter = new FormControl();
   _variables;
   renderedData = null;
+  mode = 'all';
   private filterValues = { search: '', _show: true };
 
   constructor(private ddiService: DdiService,
@@ -31,7 +37,6 @@ export class VarComponent implements OnInit {
       this.datasource.filter = JSON.stringify(this.filterValues);
     });
 
-    //this.group_select['hidden'] = true;
   }
 
 
@@ -47,7 +52,7 @@ export class VarComponent implements OnInit {
       }
     }
     // show if var is _in_group
-    //this.updateGroupsVars(true);
+    this.updateGroupsVars(true);
     this.datasource = new MatTableDataSource(this._variables);
     this.datasource.sort = this.sort;
     console.log(this.datasource);
@@ -146,8 +151,7 @@ export class VarComponent implements OnInit {
 
   @HostListener('matSortChange', ['$event'])
   sortChange(sort) {
-    console.log("sortChange");
-    console.log(sort);
+
     let vars = [];
 
     for (let i = 0; i < this._variables.length; i++) {
@@ -170,6 +174,90 @@ export class VarComponent implements OnInit {
       }
     }
   }
+
+  onSubset(_ids, sort?) {
+    if (_ids == null) {
+      this.mode = 'all';
+    } else {
+      this.mode = 'group';
+    }
+
+    const data = [];
+    let ungroupedCount = 0;
+    let obj;
+    for (let i = 0; i < this._variables.length; i++) {
+      obj = this._variables[i];
+      if (this.mode === 'group') {
+        if (_ids.indexOf(obj['@ID']) !== -1) {
+          obj._order = _ids.indexOf(obj['@ID']);
+          obj._show = true;
+          data.push(obj);
+        } else {
+          ungroupedCount += 1;
+          obj._order = 99999 + ungroupedCount;
+          obj._show = false;
+        }
+      } else if (this.mode === 'all') {
+        obj._order = null;
+        obj._show = true;
+        data.push(obj);
+      }
+    }
+    obj._active = false;
+    this.filterValues['_show'] = true;
+    this.datasource.filter = JSON.stringify(this.filterValues);
+
+    // Showing all
+    //this.checkSelection(); // and enable group dropdown if applicable
+    this.datasource.data = data;
+    if (this.mode === 'group') {
+      if (sort == null || sort) {
+        this.sortByOrder();
+        this.paginator.firstPage();
+      }
+    } else {
+      if (sort == null || sort) {
+        this.sort.sort({id: '', start: 'asc', disableClear: false});
+        this.paginator.firstPage();
+      }
+    }
+
+  }
+
+
+
+  updateGroupsVars(load?) {
+    this.getVariableGroupsVars();
+    for (let i = 0; i < this._variables.length; i++) {
+      if (this.variableGroupsVars.indexOf(this._variables[i]['@ID']) > -1) {
+        this._variables[i]._in_group = true;
+      } else {
+        this._variables[i]._in_group = false;
+      }
+    }
+
+  }
+
+  getVariableGroupsVars() {
+    this.variableGroupsVars = [];
+    // loop though all the variables in the varaible groups and create a complete list
+    for (let i = 0; i < this.variableGroups.length; i++) {
+      const obj = this.variableGroups[i];
+      const vars = obj.varGrp['@var'].split(' ');
+      for (let j = 0; j < vars.length; j++) {
+        if (this.variableGroupsVars.indexOf(vars[j]) === -1) {
+          this.variableGroupsVars.push(vars[j]);
+        }
+      }
+    }
+  }
+
+  sortByOrder() {
+    this.sort.sort({ id: '', start: 'asc', disableClear: false });
+    this.sort.sort({ id: '_order', start: 'asc', disableClear: false });
+  }
+
+
 
 
 

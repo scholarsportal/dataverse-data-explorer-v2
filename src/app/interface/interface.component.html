@@ -19,9 +19,36 @@
     <mat-toolbar-row class="header-text citation">
       <span>{{firstCitat}}<a href="{{doi}}">{{doi}}</a>{{secondCitat}}</span>
     </mat-toolbar-row>
+    <mat-toolbar-row>
+      <span class="groups-toggle">
+        <ng-container *ngIf="sidenav.opened; else showGroups">
+          <button mat-button (click)="sidenav.toggle()">
+            <mat-icon color="accent" [attr.aria-label]="'GROUPS.HIDE' | translate">keyboard_arrow_left</mat-icon>
+            <span class="button-label">{{'GROUPS.HIDE' | translate }}</span>
+          </button>
+        </ng-container>
+        <ng-template #showGroups>
+          <button mat-button (click)="sidenav.toggle()">
+            <mat-icon color="accent" [attr.aria-label]="'GROUPS.SHOW' | translate">keyboard_arrow_right</mat-icon>
+            <span class="button-label">{{'GROUPS.SHOW' | translate }}</span>
+          </button>
+        </ng-template>
+      </span>
+      <span class="fill-space"></span>
+    </mat-toolbar-row>
 
   </mat-toolbar>
-  <app-var></app-var>
+
+  <mat-sidenav-container class="group-container">
+    <mat-sidenav mode="side" opened class="side_nav" #sidenav #scrollMe>
+      <app-var-group [variableGroups]="variableGroups" (subSetRows)="broadcastSubSetRows($event)"
+                     (parentScrollNav)="scrollNav()"
+      ></app-var-group>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-var [variableGroups]="variableGroups"></app-var>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 
 </ng-container>
 
