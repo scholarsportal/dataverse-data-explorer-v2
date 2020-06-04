@@ -5,7 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {FormControl} from '@angular/forms';
 import {DdiService} from '../ddi.service';
 import {TranslateService} from '@ngx-translate/core';
-import {SelectionModel} from '@angular/cdk/collections';
+import {VarStatDialogComponent} from '../var-stat-dialog/var-stat-dialog.component';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-var',
@@ -17,17 +18,20 @@ export class VarComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @Input() variableGroups: any;
 
-
+  public dialogStatRef: MatDialogRef<VarStatDialogComponent>;
 
   variableGroupsVars = [];
   datasource: MatTableDataSource<any>;
   public searchFilter = new FormControl();
+
+
   _variables;
   renderedData = null;
   mode = 'all';
   private filterValues = { search: '', _show: true };
 
-  constructor(private ddiService: DdiService,
+  constructor(public dialog: MatDialog,
+              private ddiService: DdiService,
               private translate: TranslateService) { }
 
   ngOnInit() {
@@ -127,13 +131,13 @@ export class VarComponent implements OnInit {
   }
 
   onView(_id) {
- /*   const data = this.getObjByID(_id, this._variables);
+    const data = this.getObjByID(_id, this._variables);
     // open a dialog showing the variables
     this.dialogStatRef = this.dialog.open(VarStatDialogComponent, {
       width: '35em',
       data: data,
       panelClass: 'field_width'
-    });*/
+    });
   }
 
   getDisplayedColumns() {

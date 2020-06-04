@@ -52,6 +52,8 @@ import {MyMatPaginatorIntl} from './mat-paginator-intl';
 import { InterfaceComponent } from './interface/interface.component';
 import { VarComponent } from './var/var.component';
 import { VarGroupComponent } from './var-group/var-group.component';
+import { VarStatDialogComponent } from './var-stat-dialog/var-stat-dialog.component';
+import { ChartComponent } from './chart/chart.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -98,7 +100,9 @@ export function load(http: HttpClient, config: ConfigService): (() => Promise<bo
     AppComponent,
     InterfaceComponent,
     VarComponent,
-    VarGroupComponent
+    VarGroupComponent,
+    VarStatDialogComponent,
+    ChartComponent
   ],
   imports: [
     MatomoModule,

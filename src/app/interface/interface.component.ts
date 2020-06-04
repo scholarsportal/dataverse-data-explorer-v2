@@ -46,7 +46,8 @@ export class InterfaceComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.child);
     this.ddiLoaded = false; // for now
-
+    this.dvLocale = this.ddiService.getParameterByName('dvLocale');
+    console.log(this.dvLocale);
     if (this.dvLocale != null) {
       if (this.dvLocale === 'en') {
         this.translate.use('English');
@@ -61,10 +62,26 @@ export class InterfaceComponent implements OnInit {
       this.translate.use(browserLang.match(/English|Français/) ? browserLang : 'English');
     }
 
+//siteUrl=https://dataverse.scholarsportal.info&fileId=8988
 
+    const siteUrl = this.ddiService.getParameterByName('siteUrl');
+    console.log(siteUrl);
+    const fileId = this.ddiService.getParameterByName('fileId');
+    console.log(fileId);
+    const metaId = this.ddiService.getParameterByName('fileMetadataId');
+    console.log(metaId);
     let uri = null;
-    uri = window.location.href;
-    uri = uri + '/assets/test_groups.xml';
+    if (siteUrl != null && fileId != null) {
+      uri = siteUrl + '/api/access/datafile/' + fileId + '/metadata/ddi';
+      if (metaId != null) {
+        uri = uri + '?fileMetadataId=' + metaId;
+      }
+    } else if (siteUrl == null && fileId == null){
+      // Just for testing purposes
+      uri = this.ddiService.getBaseUrl();
+      uri = uri + '/assets/test_groups.xml';
+    }
+    console.log(uri);
 
     this.getDDI(uri);
   }
