@@ -1,0 +1,83 @@
+<div mat-dialog-content >
+
+
+  <button mat-icon-button mat-dialog-close matTooltip="{{'VARDIALSTAT.CLOSE' | translate}}" class="close-dialog">
+    <mat-icon  [attr.aria-label]="'VARDIALSTAT.CLOSE' | translate">close</mat-icon>
+  </button>
+
+  <h1 mat-dialog-title>{{'VARDIALOG.VARINFO' | translate}}</h1>
+
+    <mat-dialog-content>
+      <mat-grid-list  cols="2" class="table-controls" rowHeight="62">
+        <mat-grid-tile colspan="1" rowspan="1">
+          <table>
+            <tr><th>{{'VAR.ID' | translate }}</th></tr>
+            <tr><th>{{data['@ID']}}</th></tr>
+          </table>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="1" rowspan="1">
+
+          <table>
+            <tr> <th>{{'VAR.NAME' | translate}}</th></tr>
+            <tr><td>{{data['@name']}}</td></tr>
+          </table>
+
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1">
+
+
+          <table >
+            <tr><th>{{'VAR.LABEL' | translate}}</th></tr>
+            <tr><td>{{data.labl['#text']}}</td></tr>
+          </table>
+
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1" *ngIf=data.qstn>
+          <table>
+            <tr><th>{{'VARDIALOG.LITQ' | translate}}</th></tr>
+            <tr><td *ngIf=data.qstn.qstnLit>{{data.qstn.qstnLit}}</td></tr>
+          </table>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1" *ngIf=data.qstn>
+          <table>
+            <tr><th>{{'VARDIALOG.INTINSTR' | translate}}</th></tr>
+            <tr><td >{{data.qstn.ivuInstr}}</td></tr>
+          </table>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1" *ngIf=data.qstn>
+          <table>
+            <tr><th>{{'VARDIALOG.POSTQ' | translate}}</th></tr>
+            <tr><td>{{data.qstn.postQTxt}}</td></tr>
+          </table>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1" *ngIf=data.universe>
+          <table>
+            <tr><th>{{'VARDIALOG.UNIVERSE' | translate}}</th></tr>
+            <tr><td>{{data.universe['#text']}}</td></tr>
+          </table>
+        </mat-grid-tile>
+        <mat-grid-tile  colspan="2" rowspan="1" *ngIf=isNote()>
+          <table>
+            <tr><th>{{'VARDIALOG.NOTES' | translate}}</th></tr>
+            <tr><td>{{data.notes['#cdata']}}</td></tr>
+          </table>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="1" rowspan="1">
+          <table>
+            <tr><th>{{'VARDIALOG.WEIGHTVAR' | translate}}</th></tr>
+            <tr *ngIf=hasWeghtedVar()><td>{{data['@wgt-var']}}</td></tr>
+            <tr *ngIf=!hasWeghtedVar()><td>{{'VARDIALOG.UNWEIGHTED' | translate}}</td></tr>
+          </table>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1" rowspan="1">
+          <section class="example-section">
+            <mat-checkbox  align="end" checked="{{data['@wgt']}}" disabled="true"><b>{{'VARDIALOG.ISWEIGHT' | translate}}</b></mat-checkbox>
+          </section>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+    </mat-dialog-content>
+
+</div>

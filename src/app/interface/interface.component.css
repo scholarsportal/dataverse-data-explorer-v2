@@ -8,6 +8,11 @@
   width: 7em;
 }
 
+.mat-form-field.download-select {
+  font-size: 0.6em;
+  width: 10em;
+}
+
 .mat-toolbar-row,
 .mat-toolbar-single-row {
   min-height: 40px;

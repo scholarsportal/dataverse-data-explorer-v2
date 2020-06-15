@@ -22,7 +22,14 @@
     "DOWNLOAD": "Download",
     "CANNOT": "Cannot save to Dataverse. ",
     "SAVED": "Saved to Dataverse",
-    "MISSAPI": "Cannot save to Dataverse. API key is missing."
+    "MISSAPI": "Cannot save to Dataverse. API key is missing.",
+    "DOWNLOADSUB": "Download subset",
+    "DOWNLOADORIG": "Download original file",
+    "DOWNLOADTAB": "Download tab-delimited file",
+    "DOWNLOADRDATA": "Download RData format file",
+    "DOWNLOADVARMETA": "Download variable metadata",
+    "NOFILEID": "Cannot download, there is no file id",
+    "NOSELECT": "There was no selection"
   },
   "VAR": {
     "SEARCH": "Search",
@@ -31,9 +38,9 @@
     "NAME": "Name",
     "LABEL": "Label",
     "WEIGHT": "Weight",
-    "VIEW": "View",
-    "GROUPEDIT": "Group Edit",
-    "EDIT": "Edit"
+    "VIEW": "View Categories",
+    "VIEWQUEST": "View Questions"
+
   },
   "VARDIALOG":{
     "VARINFO": "Variable Information",

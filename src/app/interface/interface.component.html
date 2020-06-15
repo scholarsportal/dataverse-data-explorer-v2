@@ -35,6 +35,16 @@
         </ng-template>
       </span>
       <span class="fill-space"></span>
+      <mat-form-field class="download-select">
+      <mat-select placeholder="{{'SAVE.DOWNLOAD' | translate}}" #downloadSelect (selectionChange)="onSave($event)">
+        <mat-option  value="1">{{'SAVE.DOWNLOADSUB' | translate}}</mat-option>
+        <mat-option value="2">{{'SAVE.DOWNLOADORIG' | translate}}</mat-option>
+        <mat-option value="3"> {{'SAVE.DOWNLOADTAB' | translate}}</mat-option>
+        <mat-option value="4">{{'SAVE.DOWNLOADRDATA' | translate}}</mat-option>
+        <mat-option value="5">{{'SAVE.DOWNLOADVARMETA' | translate}}</mat-option>
+      </mat-select>
+      </mat-form-field>
+
     </mat-toolbar-row>
 
   </mat-toolbar>

@@ -22,7 +22,14 @@
     "DOWNLOAD": "Télécharger",
     "CANNOT": "N'a pas pu être sauvegardé dans Dataverse.",
     "SAVED": "A été enregisté dans Dataverse",
-    "MISSAPI": "N'a pas pu être sauvegardé dans Dataverse - La clé API est introuvable."
+    "MISSAPI": "N'a pas pu être sauvegardé dans Dataverse - La clé API est introuvable.",
+    "DOWNLOADSUB": "Télécharger le sous-ensemble",
+    "DOWNLOADORIG": "Fichier au format d'origine",
+    "DOWNLOADTAB": "Fichier délimité par des tabulations",
+    "DOWNLOADRDATA": "Fichier au format RData",
+    "DOWNLOADVARMETA": "Métadonnées des variables",
+    "NOFILEID": "Cannot download, there is no file id FR",
+    "NOSELECT": "There was no selection FR"
   },
   "VAR": {
     "SEARCH": "Chercher",
@@ -31,9 +38,8 @@
     "NAME": "Nom",
     "LABEL": "Étiquette",
     "WEIGHT": "Poids",
-    "VIEW": "Visualiser",
-    "GROUPEDIT": "Modification au groupe",
-    "EDIT": "Modifier"
+    "VIEW": "Visualiser FR",
+    "VIEWQUEST": "View Questions FR"
   },
   "VARDIALOG":{
     "VARINFO": "Information sur la variable",

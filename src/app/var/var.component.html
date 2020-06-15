@@ -15,6 +15,27 @@
 
 <mat-table class="mat-elevation-z8" [dataSource]="datasource" matSort (matSortChange)="sortChange($event)">
 
+  <!-- Checkbox Column in 'All Variables' view -->
+  <ng-container matColumnDef="select">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-checkbox
+        (change)="$event ? masterToggle() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
+      >
+      </mat-checkbox>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row; let i=index">
+      <mat-checkbox
+        (click)="$event.shiftKey ? multipleToggle(row,i, $event) : singleToggle(i,$event)"
+        (change)="$event ? selection.toggle(row) : null; "
+        [checked]="selection.isSelected(row)"
+        matTooltip="{{'VAR.SELECT' | translate}}"
+      >
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
   <!-- ID Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.ID' | translate}}</mat-header-cell>
@@ -60,6 +81,21 @@
         matTooltip="{{'VAR.VIEW' | translate}}"
       >
         <mat-icon [attr.aria-label]="'VAR.VIEW' | translate">visibility</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- View Questions-->
+  <ng-container matColumnDef="viewquest">
+    <mat-header-cell *matHeaderCellDef>{{'VAR.VIEWQUEST' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row; let i = index">
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="onViewQuestions(row['@ID'])"
+        matTooltip="{{'VAR.VIEWQUEST' | translate}}"
+      >
+        <mat-icon [attr.aria-label]="'VAR.VIEWQUEST' | translate">visibility</mat-icon>
       </button>
     </mat-cell>
   </ng-container>

@@ -1,0 +1,34 @@
+<div mat-dialog-content >
+
+
+  <button mat-icon-button mat-dialog-close matTooltip="{{'VARDIALSTAT.CLOSE' | translate}}" class="close-dialog">
+    <mat-icon  [attr.aria-label]="'VARDIALSTAT.CLOSE' | translate">close</mat-icon>
+  </button>
+
+  <h1 mat-dialog-title>{{'VARDIALOG.VARINFO' | translate}}</h1>
+
+    <mat-dialog-content>
+     <table>
+       <tr><td><b>{{'VAR.ID' | translate }}</b>:</td><td>{{data['@ID']}}</td></tr>
+       <tr> <td><b>{{'VAR.NAME' | translate}}</b>:</td><td>{{data['@name']}}</td></tr>
+       <tr><td><b>{{'VAR.LABEL' | translate}}</b>: </td><td>{{data.labl['#text']}}</td></tr>
+       <tr *ngIf=data.qstn&&data.qstn.qstnLit><td><b>{{'VARDIALOG.LITQ' | translate}}</b>:</td><td >{{data.qstn.qstnLit}}</td></tr>
+       <tr *ngIf=data.qstn&&data.qstn.ivuInstr><td><b>{{'VARDIALOG.INTINSTR' | translate}}</b>:</td><td >{{data.qstn.ivuInstr}}</td></tr>
+       <tr *ngIf=data.qstn&&data.qstn.postQTxt><td><b>{{'VARDIALOG.POSTQ' | translate}}</b>:</td><td>{{data.qstn.postQTxt}}</td></tr>
+       <tr *ngIf=data.universe><td><b>{{'VARDIALOG.UNIVERSE' | translate}}</b>:</td><td>{{data.universe['#text']}}</td></tr>
+       <tr *ngIf=isNote()><td><b>{{'VARDIALOG.NOTES' | translate}}</b>:</td><td>{{data.notes['#cdata']}}</td></tr>
+       <tr>
+         <td><b>{{'VARDIALOG.WEIGHTVAR' | translate}}</b>:</td>
+         <td *ngIf=hasWeghtedVar()>{{data['@wgt-var']}}</td>
+         <td *ngIf=!hasWeghtedVar()>{{'VARDIALOG.UNWEIGHTED' | translate}}</td>
+       </tr>
+       <tr>
+         <td><b>{{'VARDIALOG.ISWEIGHT' | translate}}</b>:</td>
+         <td *ngIf=isWeight()>Yes</td>
+         <td *ngIf=!isWeight()>No</td>
+       </tr>
+
+     </table>
+    </mat-dialog-content>
+
+</div>

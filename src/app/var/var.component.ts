@@ -7,6 +7,8 @@ import {DdiService} from '../ddi.service';
 import {TranslateService} from '@ngx-translate/core';
 import {VarStatDialogComponent} from '../var-stat-dialog/var-stat-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {VarDialogComponent} from '../var-dialog/var-dialog.component';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-var',
@@ -19,6 +21,7 @@ export class VarComponent implements OnInit {
   @Input() variableGroups: any;
 
   public dialogStatRef: MatDialogRef<VarStatDialogComponent>;
+  public dialogRef: MatDialogRef<VarDialogComponent>;
 
   variableGroupsVars = [];
   datasource: MatTableDataSource<any>;
@@ -26,9 +29,13 @@ export class VarComponent implements OnInit {
 
 
   _variables;
+  startSelection = null;
+  endSelection = null;
   renderedData = null;
   mode = 'all';
   private filterValues = { search: '', _show: true };
+
+  selection = new SelectionModel<Element>(true, []);
 
   constructor(public dialog: MatDialog,
               private ddiService: DdiService,
@@ -140,15 +147,27 @@ export class VarComponent implements OnInit {
     });
   }
 
+  onViewQuestions(_id) {
+    const data = this.getObjByID(_id, this._variables);
+    // open a dialog showing the variables
+    this.dialogRef = this.dialog.open(VarDialogComponent, {
+      width: '35em',
+      data: data,
+      panelClass: 'field_width'
+    });
+  }
+
   getDisplayedColumns() {
     let displayedColumns = []; // 'order_arrows'
 
     displayedColumns = [
-        'id',
-        'name',
-        'labl',
-        'wgt-var',
-        'view'
+      'select',
+      'id',
+      'name',
+      'labl',
+      'wgt-var',
+      'view',
+      'viewquest'
     ];
     return displayedColumns;
   }
@@ -259,6 +278,78 @@ export class VarComponent implements OnInit {
   sortByOrder() {
     this.sort.sort({ id: '', start: 'asc', disableClear: false });
     this.sort.sort({ id: '_order', start: 'asc', disableClear: false });
+  }
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      for (let i = 0; i < this.datasource.data.length; i++) {
+        if (this.datasource.data[i]._show === true) {
+          this.selection.select(this.datasource.data[i]);
+        }
+      }
+    }
+    this.checkSelection();
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.datasource.data.length;
+    return numSelected === numRows;
+  }
+
+  multipleToggle(row, i, event) {
+    let selectFlag = false;
+    if (this.selection.isSelected(row) ) {
+      selectFlag = true;
+      this.selection.deselect(row);
+    } else {
+      selectFlag = false;
+      this.selection.select(row) ;
+    }
+    if (this.startSelection == null) {
+      this.startSelection =  i;
+    } else {
+      this.endSelection = i;
+      let currentIndex = 0;
+      this.renderedData.forEach(r => {
+        if (this.startSelection <= this.endSelection) {
+          if (currentIndex >= this.startSelection && currentIndex <= this.endSelection) {
+            if (selectFlag) {
+              this.selection.deselect(r);
+            } else {
+              this.selection.select(r);
+            }
+          }
+          currentIndex++;
+        } else {
+          if (currentIndex >= this.endSelection && currentIndex <= this.startSelection) {
+            if (selectFlag) {
+              this.selection.deselect(r);
+            } else {
+              this.selection.select(r);
+            }
+          }
+          currentIndex++;
+        }
+      });
+
+      this.startSelection = null;
+      this.endSelection = null;
+    }
+
+    // this.checkSelection();
+  }
+
+  singleToggle(i, event) {
+    this.startSelection = i;
+    this.endSelection = null;
+    event.stopPropagation();
+  }
+
+  checkSelection() {
+
   }
 
 

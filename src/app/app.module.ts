@@ -54,6 +54,7 @@ import { VarComponent } from './var/var.component';
 import { VarGroupComponent } from './var-group/var-group.component';
 import { VarStatDialogComponent } from './var-stat-dialog/var-stat-dialog.component';
 import { ChartComponent } from './chart/chart.component';
+import { VarDialogComponent } from './var-dialog/var-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -102,7 +103,8 @@ export function load(http: HttpClient, config: ConfigService): (() => Promise<bo
     VarComponent,
     VarGroupComponent,
     VarStatDialogComponent,
-    ChartComponent
+    ChartComponent,
+    VarDialogComponent
   ],
   imports: [
     MatomoModule,

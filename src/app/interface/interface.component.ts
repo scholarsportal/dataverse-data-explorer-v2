@@ -8,6 +8,8 @@ import {TranslateService} from '@ngx-translate/core';
 import { VarComponent } from '../var/var.component';
 import {VarGroupComponent} from '../var-group/var-group.component';
 
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-interface',
   templateUrl: './interface.component.html',
@@ -29,10 +31,15 @@ export class InterfaceComponent implements OnInit {
   dvLocale = null;
   _variables = []; // store the variables to be broadcast to child
   variableGroups = []; // store the variables in an array display
+  siteUrl;
+  fileId;
+  fileMetadataId;
+  key;
 
   constructor(
     private matomoTracker: MatomoTracker,
     private ddiService: DdiService,
+    public snackBar: MatSnackBar,
     private translatePar: TranslateService) {
 
     this.translate = translatePar;
@@ -64,22 +71,31 @@ export class InterfaceComponent implements OnInit {
 
 //siteUrl=https://dataverse.scholarsportal.info&fileId=8988
 
-    const siteUrl = this.ddiService.getParameterByName('siteUrl');
-    console.log(siteUrl);
-    const fileId = this.ddiService.getParameterByName('fileId');
-    console.log(fileId);
-    const metaId = this.ddiService.getParameterByName('fileMetadataId');
-    console.log(metaId);
+    this.siteUrl = this.ddiService.getParameterByName('siteUrl');
+    console.log(this.siteUrl);
+    this.fileId = this.ddiService.getParameterByName('fileId');
+    console.log(this.fileId);
+    this.fileMetadataId = this.ddiService.getParameterByName('fileMetadataId');
+    this.key = this.ddiService.getParameterByName('key');
+    console.log(this.fileMetadataId);
     let uri = null;
-    if (siteUrl != null && fileId != null) {
-      uri = siteUrl + '/api/access/datafile/' + fileId + '/metadata/ddi';
-      if (metaId != null) {
-        uri = uri + '?fileMetadataId=' + metaId;
+    if (this.siteUrl != null && this.fileId != null) {
+      uri = this.siteUrl + '/api/access/datafile/' + this.fileId + '/metadata/ddi';
+      if (this.fileMetadataId != null) {
+        uri = uri + '?fileMetadataId=' + this.fileMetadataId;
       }
-    } else if (siteUrl == null && fileId == null){
+      if (this.key !== null ) {
+        if (this.fileMetadataId != null) {
+          uri = uri + '&key=' + this.key;
+        } else {
+          uri = uri + '?key=' + this.key;
+        }
+      }
+    } else if (this.siteUrl == null && this.fileId == null){
       // Just for testing purposes
       uri = this.ddiService.getBaseUrl();
-      uri = uri + '/assets/test_groups.xml';
+     // uri = uri + '/assets/test_groups.xml';
+      uri = uri + '/assets/dct2.xml';
     }
     console.log(uri);
 
@@ -181,11 +197,23 @@ export class InterfaceComponent implements OnInit {
 
       if (typeof obj.var.notes !== 'undefined') {
         if (typeof obj.var.notes.length !== undefined && obj.var.notes.length === 2 ) {
-          obj.var.notes = {'#cdata': obj.var.notes[1]['#cdata'],
-            '#text': obj.var.notes[0]['#text'],
-            '@level': obj.var.notes[0]['@level'],
-            '@subject': obj.var.notes[0]['@subject'],
-            '@type': obj.var.notes[0]['@type']};
+          if (obj.var.notes[0]['#cdata'] !== 'undefined') {
+            obj.var.notes = {
+              '#cdata': obj.var.notes[0]['#cdata'],
+              '#text': obj.var.notes[1]['#text'],
+              '@level': obj.var.notes[1]['@level'],
+              '@subject': obj.var.notes[1]['@subject'],
+              '@type': obj.var.notes[1]['@type']
+            };
+          } else {
+            obj.var.notes = {
+              '#cdata': obj.var.notes[1]['#cdata'],
+              '#text': obj.var.notes[0]['#text'],
+              '@level': obj.var.notes[0]['@level'],
+              '@subject': obj.var.notes[0]['@subject'],
+              '@type': obj.var.notes[0]['@type']
+            };
+          }
         }
       }
       flat_array.push(obj.var);
@@ -201,6 +229,7 @@ export class InterfaceComponent implements OnInit {
     const elm = this.data.getElementsByTagName('varGrp');
 
     for (const elmIn of elm) {
+
       const obj = JSON.parse(xml2json(elmIn, ''));
       if (typeof obj.varGrp['@var'] === 'undefined') {
         obj.varGrp['@var'] = '';
@@ -219,4 +248,90 @@ export class InterfaceComponent implements OnInit {
     const elm = this.myScrollContainer['_elementRef'].nativeElement;
     elm.scrollTop = elm.scrollHeight;
   }
+
+  onSave(event){
+    console.log(event);
+    const option = event.value;
+    let url = this.siteUrl;
+    if (this.fileId === null) {
+      this.snackBar.open(this.translate.instant('SAVE.NOFILEID') , '', {
+        duration: 2000
+      });
+      return;
+    }
+
+    switch (Number(option)) {
+      case 1:
+        url = url + '/api/access/datafile/' + this.fileId + '?format=subset' + '&variables=';
+        if (this.child.selection.selected.length === 0) {
+          this.snackBar.open(this.translate.instant('SAVE.NOSELECT') , '', {
+            duration: 2000
+          });
+          return;
+        }
+        for (let i = 0; i < this.child.selection.selected.length; i++) {
+          if (i < this.child.selection.selected.length - 1) {
+            url = url + this.child.selection.selected[i]['@ID'].substring(1) + ',';
+          }
+          else {
+            url = url + this.child.selection.selected[i]['@ID'].substring(1);
+            if (this.fileMetadataId !== null) {
+              url = url + '&fileMetadataId=' + this.fileMetadataId;
+            }
+            if (this.key !== null) {
+              url = url + '&key=' + this.key;
+            }
+          }
+        }
+        break;
+      case 2:
+        url = url + '/api/access/datafile/' + this.fileId + '?format=original';
+        if (this.fileMetadataId !== null) {
+          url = url + '&fileMetadataId=' + this.fileMetadataId;
+        }
+        if (this.key !== null) {
+          url = url + '&key=' + this.key;
+        }
+        break;
+      case 3:
+        url = url + '/api/access/datafile/' + this.fileId;
+        if (this.fileMetadataId !== null) {
+          url = url + '?fileMetadataId=' + this.fileMetadataId;
+          if (this.key !== null) {
+            url = url + '&key=' + this.key;
+          }
+        } else {
+          if (this.key !== null) {
+            url = url + '?key=' + this.key;
+          }
+        }
+        break;
+      case 4:
+        url = url + '/api/access/datafile/' + this.fileId + '/?format=RData';
+        if (this.fileMetadataId !== null) {
+          url = url + '&fileMetadataId=' + this.fileMetadataId;
+        }
+        if (this.key !== null) {
+          url = url + '&key=' + this.key;
+        }
+        break;
+      case 5:
+        url = url + '/api/meta/datafile/' + this.fileId;
+        if (this.fileMetadataId !== null) {
+          url = url + '?fileMetadataId=' + this.fileMetadataId;
+          if (this.key !== null) {
+            url = url + '&key=' + this.key;
+          }
+        } else {
+          if (this.key !== null) {
+            url = url + '?key=' + this.key;
+          }
+        }
+        break;
+    }
+    window.location.assign(url);
+  }
+
+
+
 }
