@@ -39,7 +39,8 @@
     "LABEL": "Label",
     "WEIGHT": "Weight",
     "VIEW": "View Categories",
-    "VIEWQUEST": "View Questions"
+    "VIEWQUEST": "View Questions",
+    "VIEWSUMSTAT": "View Summary Statistics"
 
   },
   "VARDIALOG":{
@@ -62,7 +63,15 @@
     "CATEGORIES": "Categories",
     "COUNT": "Count",
     "COUNTPER": "Count Percentage(%)",
-    "WEIGHTCOUNT": "Weighted Count"
+    "WEIGHTCOUNT": "Weighted Count",
+    "MEDIAN": "Median",
+    "STDEV": "Standart deviation",
+    "MIN": "Minimum",
+    "MAX": "Maximum",
+    "MEAN": "Mean",
+    "VALD": "Total Valid Count",
+    "INVD": "Total Invalid Count",
+    "OTHER": "Other"
   },
   "TS": {
     "CONFIRM": "Are you sure you want to delete "

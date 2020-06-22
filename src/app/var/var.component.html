@@ -71,6 +71,21 @@
   </ng-container>
 
   <!-- View Column-->
+  <ng-container matColumnDef="viewsumstat">
+    <mat-header-cell *matHeaderCellDef>{{'VAR.VIEWSUMSTAT' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row; let i = index">
+      <button
+        mat-icon-button
+        color="accent"
+        (click)="onViewSumStat(row['@ID'])"
+        matTooltip="{{'VAR.VIEWSUMSTAT' | translate}}"
+      >
+        <mat-icon [attr.aria-label]="'VAR.VIEWSUMSTAT' | translate">visibility</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <!-- View Column-->
   <ng-container matColumnDef="view">
     <mat-header-cell *matHeaderCellDef>{{'VAR.VIEW' | translate}}</mat-header-cell>
     <mat-cell *matCellDef="let row; let i = index">

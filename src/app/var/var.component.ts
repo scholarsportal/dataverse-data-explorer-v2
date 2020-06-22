@@ -6,6 +6,7 @@ import {FormControl} from '@angular/forms';
 import {DdiService} from '../ddi.service';
 import {TranslateService} from '@ngx-translate/core';
 import {VarStatDialogComponent} from '../var-stat-dialog/var-stat-dialog.component';
+import {VarSumStatDialogComponent} from '../var-sum-stat-dialog/var-sum-stat-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {VarDialogComponent} from '../var-dialog/var-dialog.component';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -21,6 +22,7 @@ export class VarComponent implements OnInit {
   @Input() variableGroups: any;
 
   public dialogStatRef: MatDialogRef<VarStatDialogComponent>;
+  public dialogSumStatRef: MatDialogRef<VarSumStatDialogComponent>;
   public dialogRef: MatDialogRef<VarDialogComponent>;
 
   variableGroupsVars = [];
@@ -157,6 +159,16 @@ export class VarComponent implements OnInit {
     });
   }
 
+  onViewSumStat(_id) {
+    const data = this.getObjByID(_id, this._variables);
+    // open a dialog showing the variables
+    this.dialogSumStatRef = this.dialog.open(VarSumStatDialogComponent, {
+      width: '35em',
+      data: data,
+      panelClass: 'field_width'
+    });
+  }
+
   getDisplayedColumns() {
     let displayedColumns = []; // 'order_arrows'
 
@@ -166,6 +178,7 @@ export class VarComponent implements OnInit {
       'name',
       'labl',
       'wgt-var',
+      'viewsumstat',
       'view',
       'viewquest'
     ];

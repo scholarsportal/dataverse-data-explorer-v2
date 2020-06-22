@@ -39,7 +39,8 @@
     "LABEL": "Étiquette",
     "WEIGHT": "Poids",
     "VIEW": "Visualiser FR",
-    "VIEWQUEST": "View Questions FR"
+    "VIEWQUEST": "View Questions FR",
+    "VIEWSUMSTAT": "View Summary Statistics FR"
   },
   "VARDIALOG":{
     "VARINFO": "Information sur la variable",
@@ -61,7 +62,15 @@
     "CATEGORIES": "Catégories",
     "COUNT": "Nombre",
     "COUNTPER": "Nombre d'observations en %",
-    "WEIGHTCOUNT": "Chiffre pondéré"
+    "WEIGHTCOUNT": "Chiffre pondéré",
+    "MEDIAN": "Median FR",
+    "STDEV": "Standart deviation FR",
+    "MIN": "Minimum FR",
+    "MAX": "Maximum FR",
+    "MEAN": "Mean FR",
+    "VALD": "Total Valid Count FR",
+    "INVD": "Total Invalid Count FR",
+    "OTHER": "Other FR"
   },
   "TS": {
     "CONFIRM": "Êtes-vous sûr de vouloir supprimer "

@@ -95,7 +95,8 @@ export class InterfaceComponent implements OnInit {
       // Just for testing purposes
       uri = this.ddiService.getBaseUrl();
      // uri = uri + '/assets/test_groups.xml';
-      uri = uri + '/assets/dct2.xml';
+     // uri = uri + '/assets/dct2.xml';
+      uri = uri + '/assets/arg-drones-E-2014-uk_F1-ddi.xml';
     }
     console.log(uri);
 
@@ -143,6 +144,7 @@ export class InterfaceComponent implements OnInit {
 
     const agency =  this.data.getElementsByTagName('IDNo')[0];
     const obj = JSON.parse(xml2json(agency, ''));
+    console.log(this._variables);
   }
 
   showDDI() {
