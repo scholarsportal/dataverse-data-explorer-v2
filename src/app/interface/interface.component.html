@@ -35,6 +35,13 @@
         </ng-template>
       </span>
       <span class="fill-space"></span>
+      <span class="action-buttons">
+        <button mat-button (click)="onShowSumStat()">
+          <mat-icon color="accent" [attr.aria-label]="'VARDIALSTAT.SUMMARYSTAT' | translate" [attr.matTooltip]="'VARDIALSTAT.SUMMARYSTAT' | translate">notes</mat-icon>
+          <span class="button-label">{{'VARDIALSTAT.SUMMARYSTAT' | translate}}</span>
+        </button>
+      </span>
+      <span class="action-buttons">
       <mat-form-field class="download-select">
       <mat-select placeholder="{{'SAVE.DOWNLOAD' | translate}}" #downloadSelect (selectionChange)="onSave($event)">
         <mat-option  value="1">{{'SAVE.DOWNLOADSUB' | translate}}</mat-option>
@@ -44,6 +51,8 @@
         <mat-option value="5">{{'SAVE.DOWNLOADVARMETA' | translate}}</mat-option>
       </mat-select>
       </mat-form-field>
+      </span>
+
 
     </mat-toolbar-row>
 

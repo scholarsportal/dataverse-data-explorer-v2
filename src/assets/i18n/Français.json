@@ -64,13 +64,15 @@
     "COUNTPER": "Nombre d'observations en %",
     "WEIGHTCOUNT": "Chiffre pondéré",
     "MEDIAN": "Median FR",
-    "STDEV": "Standart deviation FR",
+    "STDEV": "Standard deviation FR",
     "MIN": "Minimum FR",
     "MAX": "Maximum FR",
     "MEAN": "Mean FR",
     "VALD": "Total Valid Count FR",
     "INVD": "Total Invalid Count FR",
-    "OTHER": "Other FR"
+    "OTHER": "Other FR",
+    "SUMMARYSTAT": "Summary Statistics FR",
+    "SELVARNOTE": "No variables were selected FR"
   },
   "TS": {
     "CONFIRM": "Êtes-vous sûr de vouloir supprimer "

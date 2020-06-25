@@ -1,0 +1,64 @@
+<div mat-dialog-content>
+  <button mat-icon-button mat-dialog-close matTooltip="{{'VARDIALSTAT.CLOSE' | translate}}" class="close-dialog">
+    <mat-icon  [attr.aria-label]="'VARDIALSTAT.CLOSE' | translate">close</mat-icon>
+  </button>
+  <table>
+    <tr *ngFor="let item of selectedVars">
+
+      <h1 mat-dialog-title>{{item["@name"]}}:  {{item["labl"]["#text"]}}</h1>
+      <app-chart [data]="item.sortedCategories"></app-chart>
+        <table class="table-bordered">
+          <tr>
+            <th>{{'VARDIALSTAT.VALUES' | translate}}</th>
+            <th>{{'VARDIALSTAT.CATEGORIES' | translate}}</th>
+            <th>{{'VARDIALSTAT.COUNT' | translate}}</th>
+            <th>{{'VARDIALSTAT.COUNTPER' | translate}}</th>
+            <th>{{'VARDIALSTAT.WEIGHTCOUNT' | translate}}</th>
+          </tr>
+          <tr *ngFor="let row of item.sortedCategories">
+            <td>{{row.catValu}}</td>
+            <td>{{row.labl["#text"]}}</td>
+            <td *ngIf="isUndefined(row.catStat); else elseBlock"></td>
+            <ng-template #elseBlock>
+              <td *ngIf="isUndefined(row.catStat.length); else elseBlock2"></td>
+              <ng-template #elseBlock2>
+                <td>{{row.catStat[0]["#text"] | number}}</td>
+              </ng-template>
+            </ng-template>
+            <td>{{row.countPerc | number}}</td>
+            <td *ngIf="isUndefined(row.catStat); else elseBloc"></td>
+            <ng-template #elseBloc>
+              <td *ngIf="doesExist(row.catStat.length); else elseBloc2">{{row.catStat[1]["#text"] | number }}</td>
+              <ng-template #elseBloc2>
+                <td></td>
+              </ng-template>
+            </ng-template>
+          </tr>
+        </table>
+    <br />
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Summary Statistics
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <table *ngIf=item.sumStats>
+            <tr *ngIf="item.sumStats.medn"><td ><b>{{'VARDIALSTAT.MEDIAN' | translate }}</b>:</td><td>{{item.sumStats.medn}}</td></tr>
+            <tr *ngIf="item.sumStats.stdev"><td ><b>{{'VARDIALSTAT.STDEV' | translate }}</b>:</td><td>{{item.sumStats.stdev}}</td></tr>
+            <tr *ngIf="item.sumStats.min"><td ><b>{{'VARDIALSTAT.MIN' | translate }}</b>:</td><td>{{item.sumStats.min}}</td></tr>
+            <tr *ngIf="item.sumStats.max"><td ><b>{{'VARDIALSTAT.MAX' | translate }}</b>:</td><td>{{item.sumStats.max}}</td></tr>
+            <tr *ngIf="item.sumStats.mean"><td ><b>{{'VARDIALSTAT.MEAN' | translate }}</b>:</td><td>{{item.sumStats.mean}}</td></tr>
+            <tr *ngIf="item.sumStats.vald"><td ><b>{{'VARDIALSTAT.VALD' | translate }}</b>:</td><td>{{item.sumStats.vald | number:'1.0-0'}}</td></tr>
+            <tr *ngIf="item.sumStats.invd"><td ><b>{{'VARDIALSTAT.INVD' | translate }}</b>:</td><td>{{item.sumStats.invd | number:'1.0-0'}}</td></tr>
+            <tr *ngIf="item.sumStats.other"><td ><b>{{'VARDIALSTAT.OTHER' | translate }}</b>:</td><td>{{item.sumStats.other}}</td></tr>
+          </table>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <br />
+    </tr>
+
+  </table >
+
+</div>

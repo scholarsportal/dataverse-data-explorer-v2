@@ -9,6 +9,9 @@ import { VarComponent } from '../var/var.component';
 import {VarGroupComponent} from '../var-group/var-group.component';
 
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {VarStatDialogComponent} from '../var-stat-dialog/var-stat-dialog.component';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MultiVarStatDialogComponent} from '../multi-var-stat-dialog/multi-var-stat-dialog.component';
 
 @Component({
   selector: 'app-interface',
@@ -19,6 +22,8 @@ export class InterfaceComponent implements OnInit {
   @ViewChild(VarComponent, { static: true }) child;
   @ViewChild(VarGroupComponent, { static: true }) childGroups;
   @ViewChild('scrollMe', { static: true }) private myScrollContainer: ElementRef;
+
+  public multiVarDialogStatRef: MatDialogRef<MultiVarStatDialogComponent>;
 
   translate: TranslateService;
   ddiLoaded = false; // show the loading
@@ -37,6 +42,7 @@ export class InterfaceComponent implements OnInit {
   key;
 
   constructor(
+    public dialog: MatDialog,
     private matomoTracker: MatomoTracker,
     private ddiService: DdiService,
     public snackBar: MatSnackBar,
@@ -95,8 +101,8 @@ export class InterfaceComponent implements OnInit {
       // Just for testing purposes
       uri = this.ddiService.getBaseUrl();
      // uri = uri + '/assets/test_groups.xml';
-     // uri = uri + '/assets/dct2.xml';
-      uri = uri + '/assets/arg-drones-E-2014-uk_F1-ddi.xml';
+      uri = uri + '/assets/dct2.xml';
+     // uri = uri + '/assets/arg-drones-E-2014-uk_F1-ddi.xml';
     }
     console.log(uri);
 
@@ -332,6 +338,23 @@ export class InterfaceComponent implements OnInit {
         break;
     }
     window.location.assign(url);
+  }
+
+  onShowSumStat() {
+    console.log(this.child.selection.selected);
+    console.log(this.child.selection.selected);
+    if (this.child.selection.selected.length > 0) {
+      this.multiVarDialogStatRef = this.dialog.open(MultiVarStatDialogComponent, {
+        width: '35em',
+        data: this.child.selection.selected,
+        panelClass: 'field_width'
+      });
+    } else {
+      this.snackBar.open(this.translate.instant('VARDIALSTAT.SELVARNOTE') , '', {
+        duration: 2000
+      });
+    }
+
   }
 
 

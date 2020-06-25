@@ -56,6 +56,9 @@ import { VarStatDialogComponent } from './var-stat-dialog/var-stat-dialog.compon
 import { ChartComponent } from './chart/chart.component';
 import { VarDialogComponent } from './var-dialog/var-dialog.component';
 import { VarSumStatDialogComponent } from './var-sum-stat-dialog/var-sum-stat-dialog.component';
+import { MultiVarStatDialogComponent } from './multi-var-stat-dialog/multi-var-stat-dialog.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { CrossTabDialogComponent } from './cross-tab-dialog/cross-tab-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -106,42 +109,46 @@ export function load(http: HttpClient, config: ConfigService): (() => Promise<bo
     VarStatDialogComponent,
     ChartComponent,
     VarDialogComponent,
-    VarSumStatDialogComponent
+    VarSumStatDialogComponent,
+    MultiVarStatDialogComponent,
+    CrossTabDialogComponent
   ],
-  imports: [
-    MatomoModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatTabsModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatSidenavModule,
-    MatListModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatGridListModule,
-    MatChipsModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatAutocompleteModule,
-    TranslateModule.forRoot({loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ],
+    imports: [
+        MatomoModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatTabsModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+        MatPaginatorModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatListModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatGridListModule,
+        MatChipsModule,
+        MatSnackBarModule,
+        MatTooltipModule,
+        MatAutocompleteModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        MatExpansionModule
+    ],
   exports: [
   ],
   entryComponents: [/*VarDialogComponent, VarStatDialogComponent*/],

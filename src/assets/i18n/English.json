@@ -65,13 +65,15 @@
     "COUNTPER": "Count Percentage(%)",
     "WEIGHTCOUNT": "Weighted Count",
     "MEDIAN": "Median",
-    "STDEV": "Standart deviation",
+    "STDEV": "Standard deviation",
     "MIN": "Minimum",
     "MAX": "Maximum",
     "MEAN": "Mean",
     "VALD": "Total Valid Count",
     "INVD": "Total Invalid Count",
-    "OTHER": "Other"
+    "OTHER": "Other",
+    "SUMMARYSTAT": "Summary Statistics",
+    "SELVARNOTE": "No variables were selected"
   },
   "TS": {
     "CONFIRM": "Are you sure you want to delete "
