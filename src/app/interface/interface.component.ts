@@ -12,6 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {VarStatDialogComponent} from '../var-stat-dialog/var-stat-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MultiVarStatDialogComponent} from '../multi-var-stat-dialog/multi-var-stat-dialog.component';
+import {CrossTabDialogComponent} from '../cross-tab-dialog/cross-tab-dialog.component';
 
 @Component({
   selector: 'app-interface',
@@ -24,6 +25,7 @@ export class InterfaceComponent implements OnInit {
   @ViewChild('scrollMe', { static: true }) private myScrollContainer: ElementRef;
 
   public multiVarDialogStatRef: MatDialogRef<MultiVarStatDialogComponent>;
+  public crossTabDialogRef: MatDialogRef<CrossTabDialogComponent>;
 
   translate: TranslateService;
   ddiLoaded = false; // show the loading
@@ -355,6 +357,20 @@ export class InterfaceComponent implements OnInit {
       });
     }
 
+  }
+
+  onShowCrossTab() {
+    if (this.child.crossTab != null && (this.child.crossTab.col.selected.length > 0 || this.child.crossTab.row.selected.length > 0)) {
+      this.crossTabDialogRef = this.dialog.open(CrossTabDialogComponent, {
+        width: '70em',
+        data: this.child.crossTab,
+        panelClass: 'field_width'
+      });
+    } else {
+      this.snackBar.open(this.translate.instant('VARDIALSTAT.SELVARNOTE') , '', {
+        duration: 2000
+      });
+    }
   }
 
 

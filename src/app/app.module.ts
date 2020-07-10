@@ -59,6 +59,7 @@ import { VarSumStatDialogComponent } from './var-sum-stat-dialog/var-sum-stat-di
 import { MultiVarStatDialogComponent } from './multi-var-stat-dialog/multi-var-stat-dialog.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { CrossTabDialogComponent } from './cross-tab-dialog/cross-tab-dialog.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -147,7 +148,8 @@ export function load(http: HttpClient, config: ConfigService): (() => Promise<bo
                 deps: [HttpClient]
             }
         }),
-        MatExpansionModule
+        MatExpansionModule,
+        MatRadioModule
     ],
   exports: [
   ],

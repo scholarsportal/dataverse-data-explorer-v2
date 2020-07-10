@@ -40,7 +40,9 @@
     "WEIGHT": "Poids",
     "VIEW": "Visualiser FR",
     "VIEWQUEST": "View Questions FR",
-    "VIEWSUMSTAT": "View Summary Statistics FR"
+    "VIEWSUMSTAT": "View Summary Statistics FR",
+    "CROSSTABCOL" : "Add as Column FR",
+    "CROSSTABROW": "Add as Row FR"
   },
   "VARDIALOG":{
     "VARINFO": "Information sur la variable",
@@ -72,7 +74,8 @@
     "INVD": "Total Invalid Count FR",
     "OTHER": "Other FR",
     "SUMMARYSTAT": "Summary Statistics FR",
-    "SELVARNOTE": "No variables were selected FR"
+    "SELVARNOTE": "No variables were selected FR",
+    "CROSSTAB": "Cross Tabulation FR"
   },
   "TS": {
     "CONFIRM": "Êtes-vous sûr de vouloir supprimer "

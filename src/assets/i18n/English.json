@@ -40,7 +40,9 @@
     "WEIGHT": "Weight",
     "VIEW": "View Categories",
     "VIEWQUEST": "View Questions",
-    "VIEWSUMSTAT": "View Summary Statistics"
+    "VIEWSUMSTAT": "View Summary Statistics",
+    "CROSSTABCOL" : "Add as Column",
+    "CROSSTABROW": "Add as Row"
 
   },
   "VARDIALOG":{
@@ -73,7 +75,8 @@
     "INVD": "Total Invalid Count",
     "OTHER": "Other",
     "SUMMARYSTAT": "Summary Statistics",
-    "SELVARNOTE": "No variables were selected"
+    "SELVARNOTE": "No variables were selected",
+    "CROSSTAB": "Cross Tabulation"
   },
   "TS": {
     "CONFIRM": "Are you sure you want to delete "

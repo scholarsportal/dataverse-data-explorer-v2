@@ -36,6 +36,17 @@
     </mat-cell>
   </ng-container>
 
+  <!-- RadioButton for Cross Tabulation -->
+  <ng-container matColumnDef="selecttab">
+    <mat-header-cell *matHeaderCellDef>{{'VARDIALSTAT.CROSSTAB' | translate}}</mat-header-cell>
+    <mat-cell *matCellDef="let row; let i=index">
+      <mat-radio-group class="mat-radio-group" >
+        <mat-radio-button #button1 value="1"  matTooltip="{{'VAR.CROSSTABROW' | translate}}" (click)="checkStateRow($event, button1, row)"></mat-radio-button>
+        <mat-radio-button #button2 value="2" matTooltip="{{'VAR.CROSSTABCOL' | translate}}" (click)="checkStateCol($event, button2, row)"></mat-radio-button>
+      </mat-radio-group>
+    </mat-cell>
+  </ng-container>
+
   <!-- ID Column -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.ID' | translate}}</mat-header-cell>

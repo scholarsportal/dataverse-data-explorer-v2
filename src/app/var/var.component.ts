@@ -11,6 +11,11 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {VarDialogComponent} from '../var-dialog/var-dialog.component';
 import {SelectionModel} from '@angular/cdk/collections';
 
+interface CrossTab {
+  row: SelectionModel<Element>;
+  col: SelectionModel<Element>;
+}
+
 @Component({
   selector: 'app-var',
   templateUrl: './var.component.html',
@@ -37,6 +42,8 @@ export class VarComponent implements OnInit {
   mode = 'all';
   private filterValues = { search: '', _show: true };
 
+  crossTab: CrossTab;
+
   selection = new SelectionModel<Element>(true, []);
 
   constructor(public dialog: MatDialog,
@@ -49,9 +56,11 @@ export class VarComponent implements OnInit {
       this.filterValues['search'] = value;
       this.datasource.filter = JSON.stringify(this.filterValues);
     });
-
+    this.crossTab = {
+      row: new SelectionModel<Element>(true, []),
+      col: new SelectionModel<Element>(true, [])
+    };
   }
-
 
   // Entry point - when data has been loaded
   onUpdateVars(data) {
@@ -66,6 +75,8 @@ export class VarComponent implements OnInit {
     }
     // show if var is _in_group
     this.updateGroupsVars(true);
+    console.log("This variables");
+    console.log(this._variables);
     this.datasource = new MatTableDataSource(this._variables);
     this.datasource.sort = this.sort;
     console.log(this.datasource);
@@ -174,6 +185,7 @@ export class VarComponent implements OnInit {
 
     displayedColumns = [
       'select',
+      'selecttab',
       'id',
       'name',
       'labl',
@@ -364,6 +376,31 @@ export class VarComponent implements OnInit {
   checkSelection() {
 
   }
+
+  checkStateCol(event, el, row) {
+    event.preventDefault();
+    if (el.checked && this.crossTab && this.crossTab.col && this.crossTab.col.isSelected(row)) {
+      el.checked = false;
+      this.crossTab.col.deselect(row);
+    } else {
+      this.crossTab.col.select(row);
+      this.crossTab.row.deselect(row);
+      el.checked = true;
+    }
+  }
+
+  checkStateRow(event, el, row) {
+    event.preventDefault();
+    if (el.checked && this.crossTab && this.crossTab.row && this.crossTab.row.isSelected(row)) {
+      el.checked = false;
+      this.crossTab.row.deselect(row);
+    } else {
+      this.crossTab.row.select(row);
+      this.crossTab.col.deselect(row);
+      el.checked = true;
+    }
+  }
+
 
 
 

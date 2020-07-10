@@ -1,1 +1,30 @@
-<p>cross-tab-dialog works!</p>
+<div mat-dialog-content>
+  <button mat-icon-button mat-dialog-close matTooltip="{{'VARDIALSTAT.CLOSE' | translate}}" class="close-dialog">
+    <mat-icon  [attr.aria-label]="'VARDIALSTAT.CLOSE' | translate">close</mat-icon>
+  </button>
+
+
+
+  <table class="table-bordered">
+    <tr *ngFor="let item of selectedVarsRow; let i=index">
+      <th  scope="row" [colSpan]="selectedVarsCol.length">{{item["@name"]}}</th>
+
+        <td [colSpan]="item.span" *ngFor="let category of item.combinedCategories">{{category.labl["#text"]}}</td>
+    </tr>
+    <tr>
+      <th  *ngFor="let item of selectedVarsCol" scope="col" >{{item["@name"]}}</th>
+    </tr>
+
+   <tr *ngFor="let row of tableRows">
+     <td *ngFor="let cell of row.tds" [rowSpan]="cell.span">{{cell.text}}</td>
+     <td>{{row.combinedCategories | number}}</td>
+   </tr>
+  <tr>
+    <td>Total</td>
+    <td>{{sumCol | number}}</td>
+  </tr>
+  </table>
+
+
+
+</div>

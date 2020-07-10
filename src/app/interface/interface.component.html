@@ -36,6 +36,12 @@
       </span>
       <span class="fill-space"></span>
       <span class="action-buttons">
+        <button mat-button (click)="onShowCrossTab()">
+          <mat-icon color="accent" [attr.aria-label]="'VARDIALSTAT.CROSSTAB' | translate" [attr.matTooltip]="'VARDIALSTAT.CROSSTAB' | translate">table_chart</mat-icon>
+          <span class="button-label">{{'VARDIALSTAT.CROSSTAB' | translate}}</span>
+        </button>
+      </span>
+      <span class="action-buttons">
         <button mat-button (click)="onShowSumStat()">
           <mat-icon color="accent" [attr.aria-label]="'VARDIALSTAT.SUMMARYSTAT' | translate" [attr.matTooltip]="'VARDIALSTAT.SUMMARYSTAT' | translate">notes</mat-icon>
           <span class="button-label">{{'VARDIALSTAT.SUMMARYSTAT' | translate}}</span>
