@@ -9,22 +9,37 @@
     <tr *ngFor="let item of selectedVarsRow; let i=index">
       <th  scope="row" [colSpan]="selectedVarsCol.length">{{item["@name"]}}</th>
 
-        <td [colSpan]="item.span" *ngFor="let category of item.combinedCategories">{{category.labl["#text"]}}</td>
+      <td [colSpan]="item.span" *ngFor="let category of item.combinedCategories">{{category.labl["#text"]}}</td>
+      <td *ngIf="i==0">Total</td>
     </tr>
+
     <tr>
       <th  *ngFor="let item of selectedVarsCol" scope="col" >{{item["@name"]}}</th>
     </tr>
 
-   <tr *ngFor="let row of tableRows">
+    <ng-container *ngIf="numberOfColumns == 0">
+      <tr *ngFor="let row of tableRows">
+        <td></td>
+        <td *ngFor="let cell of row.combinedCategories">{{cell.numbers}}<br>{{cell.percentages | number:'1.0-2'}}%</td>
+        <td>{{row.totalNumber}}</td>
+      </tr>
+    </ng-container>
+
+    <ng-container *ngIf="numberOfColumns > 0">
+    <tr *ngFor="let row of tableRows">
      <td *ngFor="let cell of row.tds" [rowSpan]="cell.span">{{cell.text}}</td>
-     <td>{{row.combinedCategories | number}}</td>
-   </tr>
-  <tr>
-    <td>Total</td>
-    <td>{{sumCol | number}}</td>
-  </tr>
+     <td *ngFor="let cell of row.combinedCategories">{{cell.numbers}}<br>{{cell.percentages | number:'1.0-2'}}%</td>
+     <td *ngIf="numberOfRows > 0">{{row.totalNumber}}</td>
+     <!--<td>{{row.combinedCategories | number}}</td>-->
+    </tr>
+    <tr>
+      <td *ngIf="numberOfColumns > 0" [colSpan]="numberOfColumns" >Total</td>
+      <ng-container *ngIf="numberOfRows > 0">
+      <td *ngFor="let cell of selectedVarsRow[selectedVarsRow.length - 1].combinedCategories"></td>
+      </ng-container>
+      <td>{{sumCol | number}}</td>
+    </tr>
+    </ng-container>
   </table>
-
-
 
 </div>

@@ -102,9 +102,11 @@ export class InterfaceComponent implements OnInit {
     } else if (this.siteUrl == null && this.fileId == null){
       // Just for testing purposes
       uri = this.ddiService.getBaseUrl();
-     // uri = uri + '/assets/test_groups.xml';
-      uri = uri + '/assets/dct2.xml';
-     // uri = uri + '/assets/arg-drones-E-2014-uk_F1-ddi.xml';
+      // uri = uri + '/assets/test_groups.xml';
+      // uri = uri + '/assets/dct2.xml';
+      // uri = uri + '/assets/arg-drones-E-2014-uk_F1-ddi.xml';
+      // uri =  uri + '/assets/nads-89M0007-E-1989_F1-ddi.xml';
+      uri = uri + '/assets/w1130-ddi.xml';
     }
     console.log(uri);
 
@@ -263,6 +265,10 @@ export class InterfaceComponent implements OnInit {
     console.log(event);
     const option = event.value;
     let url = this.siteUrl;
+    if (!url) {
+      url = 'https://demodv.scholarsportal.info';
+      this.fileId = '10159';
+    }
     if (this.fileId === null) {
       this.snackBar.open(this.translate.instant('SAVE.NOFILEID') , '', {
         duration: 2000
@@ -358,6 +364,7 @@ export class InterfaceComponent implements OnInit {
     }
 
   }
+
 
   onShowCrossTab() {
     if (this.child.crossTab != null && (this.child.crossTab.col.selected.length > 0 || this.child.crossTab.row.selected.length > 0)) {
