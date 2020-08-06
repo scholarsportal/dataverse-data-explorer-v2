@@ -1,0 +1,41 @@
+.mat-selection-list-big {
+  max-height: 95%;
+  overflow: auto;
+  border: 1px solid #ddd;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.mat-selection-list-small {
+  max-height: 70%;
+  min-height: 30%;
+  overflow: auto;
+  border: 1px solid #ddd;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.close-dialog {
+  float: right;
+}
+
+.mat-dialog-content {
+  overflow: visible;
+}
+
+.h2 {
+  text-align: center;
+}
+
+.mat-icon-arrow {
+  color: magenta;
+  width: 45px;
+  height: 45px;
+}
+
+
+
+
+
