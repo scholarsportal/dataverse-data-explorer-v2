@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import { MatomoTracker } from 'ngx-matomo';
 import { DdiService } from '../ddi.service';
@@ -12,20 +12,22 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {VarStatDialogComponent} from '../var-stat-dialog/var-stat-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MultiVarStatDialogComponent} from '../multi-var-stat-dialog/multi-var-stat-dialog.component';
-import {CrossTabDialogComponent} from '../cross-tab-dialog/cross-tab-dialog.component';
+import {SelectVarsDialogComponent} from '../select-vars-dialog/select-vars-dialog.component';
+
 
 @Component({
   selector: 'app-interface',
   templateUrl: './interface.component.html',
   styleUrls: ['./interface.component.css']
 })
-export class InterfaceComponent implements OnInit {
+export class InterfaceComponent implements OnInit, AfterViewInit {
   @ViewChild(VarComponent, { static: true }) child;
   @ViewChild(VarGroupComponent, { static: true }) childGroups;
   @ViewChild('scrollMe', { static: true }) private myScrollContainer: ElementRef;
+  @ViewChild('downloadSelect') downloadSelect;
 
   public multiVarDialogStatRef: MatDialogRef<MultiVarStatDialogComponent>;
-  public crossTabDialogRef: MatDialogRef<CrossTabDialogComponent>;
+  public selectVarsDialogRef: MatDialogRef<SelectVarsDialogComponent>;
 
   translate: TranslateService;
   ddiLoaded = false; // show the loading
@@ -42,13 +44,16 @@ export class InterfaceComponent implements OnInit {
   fileId;
   fileMetadataId;
   key;
+  activeGroupVars;
+  selected;
 
   constructor(
     public dialog: MatDialog,
     private matomoTracker: MatomoTracker,
     private ddiService: DdiService,
     public snackBar: MatSnackBar,
-    private translatePar: TranslateService) {
+    private translatePar: TranslateService,
+    ) {
 
     this.translate = translatePar;
     this.translate.addLangs(['English', 'Français']);
@@ -56,13 +61,20 @@ export class InterfaceComponent implements OnInit {
 
     const browserLang = this.translate.getBrowserLang();
     this.translate.use(browserLang.match(/English|Français/) ? browserLang : 'English');
+
   }
 
+  ngAfterViewInit(): void {
+
+    setTimeout(() => {
+      this.selected = '0';  }, 300 );
+
+  }
+
+
   ngOnInit(): void {
-    console.log(this.child);
     this.ddiLoaded = false; // for now
     this.dvLocale = this.ddiService.getParameterByName('dvLocale');
-    console.log(this.dvLocale);
     if (this.dvLocale != null) {
       if (this.dvLocale === 'en') {
         this.translate.use('English');
@@ -80,12 +92,9 @@ export class InterfaceComponent implements OnInit {
 //siteUrl=https://dataverse.scholarsportal.info&fileId=8988
 
     this.siteUrl = this.ddiService.getParameterByName('siteUrl');
-    console.log(this.siteUrl);
     this.fileId = this.ddiService.getParameterByName('fileId');
-    console.log(this.fileId);
     this.fileMetadataId = this.ddiService.getParameterByName('fileMetadataId');
     this.key = this.ddiService.getParameterByName('key');
-    console.log(this.fileMetadataId);
     let uri = null;
     if (this.siteUrl != null && this.fileId != null) {
       uri = this.siteUrl + '/api/access/datafile/' + this.fileId + '/metadata/ddi';
@@ -108,7 +117,6 @@ export class InterfaceComponent implements OnInit {
       // uri =  uri + '/assets/nads-89M0007-E-1989_F1-ddi.xml';
       uri = uri + '/assets/w1130-ddi.xml';
     }
-    console.log(uri);
 
     this.getDDI(uri);
   }
@@ -154,7 +162,6 @@ export class InterfaceComponent implements OnInit {
 
     const agency =  this.data.getElementsByTagName('IDNo')[0];
     const obj = JSON.parse(xml2json(agency, ''));
-    console.log(this._variables);
   }
 
   showDDI() {
@@ -232,7 +239,6 @@ export class InterfaceComponent implements OnInit {
     }
 
     this._variables = flat_array;
-    console.log(this._variables);
     this.child.onUpdateVars(this._variables);
 
   }
@@ -262,8 +268,10 @@ export class InterfaceComponent implements OnInit {
   }
 
   onSave(event){
-    console.log(event);
     const option = event.value;
+    setTimeout(() => {
+      this.selected = '0';  }, 300 );
+
     let url = this.siteUrl;
     if (!url) {
       url = 'https://demodv.scholarsportal.info';
@@ -346,11 +354,10 @@ export class InterfaceComponent implements OnInit {
         break;
     }
     window.location.assign(url);
+
   }
 
   onShowSumStat() {
-    console.log(this.child.selection.selected);
-    console.log(this.child.selection.selected);
     if (this.child.selection.selected.length > 0) {
       this.multiVarDialogStatRef = this.dialog.open(MultiVarStatDialogComponent, {
         width: '35em',
@@ -365,21 +372,75 @@ export class InterfaceComponent implements OnInit {
 
   }
 
-
-  onShowCrossTab() {
-    if (this.child.crossTab != null && (this.child.crossTab.col.selected.length > 0 || this.child.crossTab.row.selected.length > 0)) {
-      this.crossTabDialogRef = this.dialog.open(CrossTabDialogComponent, {
-        width: '70em',
-        data: this.child.crossTab,
-        panelClass: 'field_width'
-      });
-    } else {
-      this.snackBar.open(this.translate.instant('VARDIALSTAT.SELVARNOTE') , '', {
+  onSelectVarsForCrossTab() {
+    if (this.siteUrl === null || typeof this.siteUrl === 'undefined') {
+      this.snackBar.open(this.translate.instant('CROSSTAB.DATAVERSE'), '', {
         duration: 2000
       });
+    } else {
+      if (this.childGroups !== null && !this.childGroups.allActive) {
+        const groupTitle = this.getActiveGroupVars();
+        if (this.activeGroupVars.length > 0) {
+          const transferData = {
+            varArray : this.activeGroupVars,
+            grpTitle : groupTitle
+          };
+          this.selectVarsDialogRef = this.dialog.open(SelectVarsDialogComponent, {
+            width: '70em',
+            data: transferData
+          });
+        } else {
+          this.snackBar.open(this.translate.instant('VARDIALSTAT.SELVARNOTE'), '', {
+            duration: 2000
+          });
+        }
+
+      } else {
+        if (this.child._variables !== null && this.child._variables.length > 0) {
+          const transferData = {
+            varArray : this.child._variables,
+            grpTitle : ''
+          };
+          this.selectVarsDialogRef = this.dialog.open(SelectVarsDialogComponent, {
+            width: '70em',
+            data: transferData
+          });
+        } else {
+          this.snackBar.open(this.translate.instant('VARDIALSTAT.SELVARNOTE'), '', {
+            duration: 2000
+          });
+        }
+      }
     }
   }
 
-
+  getActiveGroupVars() {
+    this.activeGroupVars = [];
+    if (this.siteUrl === null || typeof this.siteUrl === 'undefined') {
+      this.snackBar.open(this.translate.instant('CROSSTAB.DATAVERSE'), '', {
+        duration: 2000
+      });
+    } else {
+      for (const obj of this.child.variableGroups) {
+        if (obj.active) {
+          const vars = obj.varGrp['@var'].split(' ');
+          for (const v of vars) {
+            const variable = this.getVariableById(v);
+            this.activeGroupVars.push(variable);
+          }
+          return obj.varGrp['labl'];
+        }
+      }
+    }
+    return '';
+  }
+  getVariableById(_id) {
+    for (const obj of this._variables)
+    {
+      if (obj['@ID'] === _id ) {
+        return obj;
+      }
+    }
+  }
 
 }

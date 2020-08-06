@@ -40,10 +40,7 @@
     "WEIGHT": "Weight",
     "VIEW": "View Categories",
     "VIEWQUEST": "View Questions",
-    "VIEWSUMSTAT": "View Summary Statistics",
-    "CROSSTABCOL" : "Add as Column",
-    "CROSSTABROW": "Add as Row"
-
+    "VIEWSUMSTAT": "View Summary Statistics"
   },
   "VARDIALOG":{
     "VARINFO": "Variable Information",
@@ -75,7 +72,7 @@
     "INVD": "Total Invalid Count",
     "OTHER": "Other",
     "SUMMARYSTAT": "Summary Statistics",
-    "SELVARNOTE": "No variables were selected",
+    "SELVARNOTE": "There are no variables",
     "CROSSTAB": "Cross Tabulation"
   },
   "TS": {
@@ -86,5 +83,20 @@
     "NEXT_PAGE": "Next page",
     "PREVIOUS_PAGE": "Previous page",
     "RANGE": "{{startIndex}} - {{endIndex}} of {{length}}"
+  },
+  "CROSSTAB": {
+    "TABLE": "Cross Tabulation Table",
+    "VARS": "Select Variables {{group}} For Cross Tabulation",
+    "ALLVAR": "All Variables",
+    "ROWS": "Rows",
+    "COLUMNS": "Columns",
+    "TOTAL": "Total",
+    "DATAVERSE": "Data Explorer is not connected to Dataverse",
+    "TOOMANYVAR": "Too many selected variables. Please select not more than {{length}} variables",
+    "OK": "OK",
+    "MOVETOROWS": "Move to Rows",
+    "MOVETOCOLS": "Move to Columns",
+    "REMOVEFROMROWS": "Remove from Rows",
+    "REMOVEFROMCOLS": "Remove from Columns"
   }
 }

@@ -36,7 +36,7 @@
       </span>
       <span class="fill-space"></span>
       <span class="action-buttons">
-        <button mat-button (click)="onShowCrossTab()">
+        <button mat-button (click)="onSelectVarsForCrossTab()">
           <mat-icon color="accent" [attr.aria-label]="'VARDIALSTAT.CROSSTAB' | translate" [attr.matTooltip]="'VARDIALSTAT.CROSSTAB' | translate">table_chart</mat-icon>
           <span class="button-label">{{'VARDIALSTAT.CROSSTAB' | translate}}</span>
         </button>
@@ -49,7 +49,8 @@
       </span>
       <span class="action-buttons">
       <mat-form-field class="download-select">
-      <mat-select placeholder="{{'SAVE.DOWNLOAD' | translate}}" #downloadSelect (selectionChange)="onSave($event)">
+      <mat-select #downloadSelect [(ngModel)]="selected" (selectionChange)="onSave($event)">
+        <mat-option value="0">{{'SAVE.DOWNLOAD' | translate}}</mat-option>
         <mat-option  value="1">{{'SAVE.DOWNLOADSUB' | translate}}</mat-option>
         <mat-option value="2">{{'SAVE.DOWNLOADORIG' | translate}}</mat-option>
         <mat-option value="3"> {{'SAVE.DOWNLOADTAB' | translate}}</mat-option>

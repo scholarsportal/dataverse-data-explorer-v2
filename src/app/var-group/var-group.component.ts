@@ -14,9 +14,9 @@ export class VarGroupComponent implements OnInit {
   constructor(private ddiService: DdiService,
               private translate: TranslateService) { }
   allActive = true;
-
   source: any;
   @Input() variableGroups: any;
+
   @Output() subSetRows: EventEmitter<null> = new EventEmitter();
   @Output() parentScrollNav: EventEmitter<null> = new EventEmitter();
 

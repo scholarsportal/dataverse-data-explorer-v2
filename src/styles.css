@@ -62,3 +62,9 @@ body {
 [hidden] {
   display: none !important;
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+

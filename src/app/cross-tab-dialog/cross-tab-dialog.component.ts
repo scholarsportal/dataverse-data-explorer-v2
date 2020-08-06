@@ -21,6 +21,7 @@ export class CrossTabDialogComponent implements OnInit {
   selectedVarsRow = [];
   tableRows = [];
   sumCol;
+  sumPerc;
   sumRow;
   numberOfRows;
   numberOfColumns;
@@ -28,8 +29,8 @@ export class CrossTabDialogComponent implements OnInit {
   allPossibleCategoryCombCol;
 
   ngOnInit(): void {
-    this.selectedVarsCol = this.data.col.selected;
-    this.selectedVarsRow = this.data.row.selected;
+    this.selectedVarsCol = this.data.row; // Columns are Rows and Rows are Columns
+    this.selectedVarsRow = this.data.col;
     this.numberOfRows = this.selectedVarsRow.length;
     this.numberOfColumns = this.selectedVarsCol.length;
 
@@ -41,7 +42,6 @@ export class CrossTabDialogComponent implements OnInit {
 
       this.allPossibleCategoryCombRow = this.calculateAllPossibleCategories(this.selectedVarsRow);
 
-      this.sumRow = 0;
     }
 
     if (this.selectedVarsCol.length > 0) {
@@ -51,7 +51,7 @@ export class CrossTabDialogComponent implements OnInit {
       this.allPossibleCategoryCombCol = this.calculateAllPossibleCategories(this.selectedVarsCol);
 
       for (let variable = 0; variable < this.selectedVarsCol.length; variable++) {
-        console.log(this.selectedVarsCol[variable].repeat);
+
         let index = 0;
         for (let repeat = 0; repeat < this.selectedVarsCol[variable].repeat; repeat++) {
 
@@ -63,13 +63,16 @@ export class CrossTabDialogComponent implements OnInit {
               categoryPerc: null
             };
             td.span = this.selectedVarsCol[variable].span;
-            console.log("span = " + td.span);
-            console.log(this.selectedVarsCol[variable].sortedCategories[category]);
             td.text = this.selectedVarsCol[variable].sortedCategories[category].labl["#text"];
             // td.categoryPerc = this.selectedVarsCol[variable].sortedCategories[category].countPerc;
             if (typeof this.tableRows[index] === 'undefined') {
               this.tableRows[index] = {
-                tds: []
+                tds: [],
+                combinedCategories: [],
+                totalNumber : {
+                  numbers: 0,
+                  percentages: 0
+                }
               };
             }
             this.tableRows[index].tds.push(td);
@@ -77,46 +80,6 @@ export class CrossTabDialogComponent implements OnInit {
           }
         }
       }
-
-
-    /*  console.log("--------------");
-      let categoriesColSpan = new Array(this.selectedVarsCol.length);
-      let categoriesCol = new Array(this.selectedVarsCol.length);
-      console.log(this.tableRows.length);
-      for (let i = 0; i < this.tableRows.length; i++) {
-        let category = -1;
-        let indexCol = 0;
-        for (let j = 0; j < this.selectedVarsCol.length; j++) {
-          if (categoriesColSpan[j] == null || categoriesColSpan[j] === 0) {
-            categoriesColSpan[j] = this.tableRows[i].tds[indexCol].span - 1;
-            categoriesCol[j] = this.tableRows[i].tds[indexCol].categoryPerc;
-            if (category !== -1) {
-              category = (category * this.tableRows[i].tds[indexCol].categoryPerc) / 100.0;
-            } else {
-              category = this.tableRows[i].tds[indexCol].categoryPerc;
-            }
-            indexCol++;
-          } else {
-            categoriesColSpan[j]--;
-            if (category !== -1) {
-              category = (category * categoriesCol[j]) / 100.0;
-            } else {
-              category = categoriesCol[j];
-            }
-          }
-
-        }
-        console.log("Category " + category);
-        this.tableRows[i].combinedCategories = category;
-
-      }
-
-      console.log('Combined');
-      this.sumCol = 0;
-      for (let i = 0; i < this.tableRows.length; i++) {
-        console.log(this.tableRows[i].combinedCategories);
-        this.sumCol = this.sumCol + this.tableRows[i].combinedCategories;
-      }*/
     }
 
     this.calculateCrossTabPercentages();
@@ -163,7 +126,6 @@ export class CrossTabDialogComponent implements OnInit {
       if (i === 0) {
         selectedVars[0].combinedCategories = selectedVars[0].sortedCategories;
       } else {
-        console.log(selectedVars[i].repeat);
         for (let j = 0; j < selectedVars[i].repeat; j++) {
           for (let k = 0; k < selectedVars[i].sortedCategories.length; k++) {
             selectedVars[i].combinedCategories.push(selectedVars[i].sortedCategories[k]);
@@ -183,7 +145,6 @@ export class CrossTabDialogComponent implements OnInit {
         let pos = Math.floor(k / selectedVars[i].sortedCategories.length);
         let previousCat = selectedVars[i - 1].combinedCategoriesPerc[pos];
         let currentCat = selectedVars[i].combinedCategories[k].countPerc * previousCat / 100.0;
-        console.log(pos + " " + previousCat + " " + currentCat);
         selectedVars[i].combinedCategoriesPerc[k] = currentCat;
 
       }
@@ -207,6 +168,7 @@ export class CrossTabDialogComponent implements OnInit {
   }
   calculateNumbersofCategories(map) {
     this.sumCol = 0;
+    this.sumPerc = 0;
     let lengthTable = 1;
     if (this.numberOfRows > 0) {
       lengthTable = this.allPossibleCategoryCombRow.length;
@@ -214,12 +176,19 @@ export class CrossTabDialogComponent implements OnInit {
 
     if (this.numberOfColumns === 0) {
       this.tableRows = new Array(1);
+      //this.tableRows[0] = {
+      //};
       this.tableRows[0] = {
+        tds: [],
+        combinedCategories: [],
+        totalNumber : {
+          numbers: 0,
+          percentages: 0
+        }
       };
     }
     for (let i = 0; i < this.tableRows.length; i++) {
       this.tableRows[i].combinedCategories = new Array(lengthTable);
-      this.tableRows[i].totalNumber = 0;
 
       for (let k = 0; k < lengthTable; k++) {
         let key = null;
@@ -236,7 +205,7 @@ export class CrossTabDialogComponent implements OnInit {
             numbers: value,
             percentages: null
           };
-          this.tableRows[i].totalNumber = this.tableRows[i].totalNumber + parseFloat(value);
+          this.tableRows[i].totalNumber.numbers = this.tableRows[i].totalNumber.numbers + parseFloat(value);
 
         } else {
           this.tableRows[i].combinedCategories[k] = {
@@ -246,33 +215,25 @@ export class CrossTabDialogComponent implements OnInit {
 
         }
       }
-      this.sumCol = this.sumCol + this.tableRows[i].totalNumber;
-      console.log(this.tableRows);
+      this.sumCol = this.sumCol + this.tableRows[i].totalNumber.numbers;
     }
-    console.log("length");
-    console.log(this.tableRows.length);
     for (let i = 0; i < this.tableRows.length; i++) {
       for (let k = 0; k < lengthTable; k++) {
         this.tableRows[i].combinedCategories[k].percentages = (this.tableRows[i].combinedCategories[k].numbers / this.sumCol) * 100;
-
+        this.tableRows[i].totalNumber.percentages = this.tableRows[i].totalNumber.percentages + this.tableRows[i].combinedCategories[k].percentages;
+        this.sumPerc = this.sumPerc + this.tableRows[i].combinedCategories[k].percentages;
       }
     }
   }
 
   calculateCrossTabPercentages() {
-    console.log(this.selectedVarsCol);
-    console.log(this.selectedVarsCol);
     let siteUrl = this.ddiService.getParameterByName('siteUrl');
-    console.log(siteUrl);
     let fileId = this.ddiService.getParameterByName('fileId');
-    console.log(fileId);
     let key = this.ddiService.getParameterByName('key');
-    console.log(key);
     let detailUrl = null;
     let variables = '';
 
     for (const variable of this.selectedVarsRow) {
-      console.log(variable['@ID']);
       if (variables === '') {
         variables = variables  + variable['@ID'];
       } else {
@@ -280,19 +241,16 @@ export class CrossTabDialogComponent implements OnInit {
       }
     }
     for (const variable of this.selectedVarsCol) {
-      console.log(variable['@ID']);
       if (variables === '') {
         variables = variables  + variable['@ID'];
       } else {
         variables = variables  + ',' + variable['@ID'];
       }
     }
-    console.log(variables);
     if (!siteUrl) {
       const baseUrl = 'https://demodv.scholarsportal.info';
       //fileId = '3';
       fileId = '10159';
-      console.log(baseUrl);
       detailUrl =
           baseUrl +
           '/api/access/datafile/' +
@@ -311,7 +269,6 @@ export class CrossTabDialogComponent implements OnInit {
         '&key=' +
         key;
     }
-    console.log(detailUrl);
 
     this.ddiService
         .getDDI(detailUrl)
@@ -325,7 +282,6 @@ export class CrossTabDialogComponent implements OnInit {
 
   processVariables(data) {
     const variables = data.split('\n');
-    console.log(variables);
     const mapCategories = new Map();
     for (let i = 1; i < variables.length; i++) {
       if (mapCategories.has(variables[i])) {
@@ -334,14 +290,28 @@ export class CrossTabDialogComponent implements OnInit {
         mapCategories.set(variables[i],  1);
       }
     }
-    console.log(mapCategories);
-      this.calculateNumbersofCategories(mapCategories);
+    this.calculateNumbersofCategories(mapCategories);
+    this.sumRow = null;
+    if (this.tableRows !== null && this.selectedVarsRow.length > 0) {
+      this.sumRow = new Array(this.tableRows[this.selectedVarsRow.length - 1].combinedCategories.length > 0);
+      for (let k = 0; k < this.tableRows[this.selectedVarsRow.length - 1].combinedCategories.length; k++) {
+        this.sumRow[k] = {
+          numbers: 0,
+          percentages: 0
+        };
+        for (let i = 0; i < this.tableRows.length; i++) {
+          this.sumRow[k].numbers = this.sumRow[k].numbers + this.tableRows[i].combinedCategories[k].numbers;
+          this.sumRow[k].percentages = this.sumRow[k].percentages + this.tableRows[i].combinedCategories[k].percentages;
+        }
+      }
+    }
 
   }
 
   completeVariables() {
-    this.sumRow = 0;
+
   }
+
 
 
 }

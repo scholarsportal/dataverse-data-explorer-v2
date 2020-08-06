@@ -40,9 +40,7 @@
     "WEIGHT": "Poids",
     "VIEW": "Visualiser FR",
     "VIEWQUEST": "View Questions FR",
-    "VIEWSUMSTAT": "View Summary Statistics FR",
-    "CROSSTABCOL" : "Add as Column FR",
-    "CROSSTABROW": "Add as Row FR"
+    "VIEWSUMSTAT": "View Summary Statistics FR"
   },
   "VARDIALOG":{
     "VARINFO": "Information sur la variable",
@@ -74,7 +72,7 @@
     "INVD": "Total Invalid Count FR",
     "OTHER": "Other FR",
     "SUMMARYSTAT": "Summary Statistics FR",
-    "SELVARNOTE": "No variables were selected FR",
+    "SELVARNOTE": "There are no variables FR",
     "CROSSTAB": "Cross Tabulation FR"
   },
   "TS": {
@@ -85,5 +83,20 @@
     "NEXT_PAGE": "Page suivante",
     "PREVIOUS_PAGE": "Page précédente",
     "RANGE": "{{startIndex}} - {{endIndex}} de {{length}}"
+  },
+  "CROSSTAB": {
+    "TABLE": "Cross Tabulation Table FR",
+    "VARS": "Select Variables {{group}} For Cross Tabulation FR",
+    "ALLVAR": "Toutes les variables",
+    "ROWS": "Rows FR",
+    "COLUMNS": "Columns FR",
+    "TOTAL": "Total FR",
+    "DATAVERSE": "Data Explorer is not connected to Dataverse FR",
+    "TOOMANYVAR": "Too many selected variables. Please select not more than {{length}} variables FR",
+    "OK": "OK FR",
+    "MOVETOROWS": "Move to Rows FR",
+    "MOVETOCOLS": "Move to Columns FR",
+    "REMOVEFROMROWS": "Remove from Rows FR",
+    "REMOVEFROMCOLS": "Remove from Columns FR"
   }
 }

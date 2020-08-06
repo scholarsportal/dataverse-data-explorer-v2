@@ -3,6 +3,7 @@
     <mat-icon  [attr.aria-label]="'VARDIALSTAT.CLOSE' | translate">close</mat-icon>
   </button>
 
+  <h2 mat-dialog-title class="h2">{{'CROSSTAB.TABLE' | translate}}</h2>
 
 
   <table class="table-bordered">
@@ -10,7 +11,7 @@
       <th  scope="row" [colSpan]="selectedVarsCol.length">{{item["@name"]}}</th>
 
       <td [colSpan]="item.span" *ngFor="let category of item.combinedCategories">{{category.labl["#text"]}}</td>
-      <td *ngIf="i==0">Total</td>
+      <td *ngIf="i==0">{{'CROSSTAB.TOTAL'| translate}}</td>
     </tr>
 
     <tr>
@@ -21,7 +22,7 @@
       <tr *ngFor="let row of tableRows">
         <td></td>
         <td *ngFor="let cell of row.combinedCategories">{{cell.numbers}}<br>{{cell.percentages | number:'1.0-2'}}%</td>
-        <td>{{row.totalNumber}}</td>
+        <td>{{row.totalNumber.numbers}}<br>{{row.totalNumber.percentages | number:'1.0-2'}}%</td>
       </tr>
     </ng-container>
 
@@ -29,15 +30,14 @@
     <tr *ngFor="let row of tableRows">
      <td *ngFor="let cell of row.tds" [rowSpan]="cell.span">{{cell.text}}</td>
      <td *ngFor="let cell of row.combinedCategories">{{cell.numbers}}<br>{{cell.percentages | number:'1.0-2'}}%</td>
-     <td *ngIf="numberOfRows > 0">{{row.totalNumber}}</td>
-     <!--<td>{{row.combinedCategories | number}}</td>-->
+     <td *ngIf="numberOfRows > 0">{{row.totalNumber.numbers}}<br>{{row.totalNumber.percentages | number:'1.0-2' }}%</td>
     </tr>
     <tr>
-      <td *ngIf="numberOfColumns > 0" [colSpan]="numberOfColumns" >Total</td>
+      <td *ngIf="numberOfColumns > 0" [colSpan]="numberOfColumns" >{{'CROSSTAB.TOTAL'| translate}}</td>
       <ng-container *ngIf="numberOfRows > 0">
-      <td *ngFor="let cell of selectedVarsRow[selectedVarsRow.length - 1].combinedCategories"></td>
+      <td *ngFor="let cell of sumRow">{{cell.numbers}}<br>{{cell.percentages | number:'1.0-2'}}%</td>
       </ng-container>
-      <td>{{sumCol | number}}</td>
+      <td>{{sumCol | number}}<br>{{sumPerc  | number:'1.0-2'}}%</td>
     </tr>
     </ng-container>
   </table>

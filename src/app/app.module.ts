@@ -60,6 +60,7 @@ import { MultiVarStatDialogComponent } from './multi-var-stat-dialog/multi-var-s
 import {MatExpansionModule} from '@angular/material/expansion';
 import { CrossTabDialogComponent } from './cross-tab-dialog/cross-tab-dialog.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { SelectVarsDialogComponent } from './select-vars-dialog/select-vars-dialog.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -84,7 +85,6 @@ export function load(http: HttpClient, config: ConfigService): (() => Promise<bo
         .pipe(
           map((x: ConfigService) => {
             config.baseUrl = x.baseUrl;
-            console.log(config.baseUrl);
             config.id = x.id;
             resolve(true);
           }),
@@ -112,7 +112,8 @@ export function load(http: HttpClient, config: ConfigService): (() => Promise<bo
     VarDialogComponent,
     VarSumStatDialogComponent,
     MultiVarStatDialogComponent,
-    CrossTabDialogComponent
+    CrossTabDialogComponent,
+    SelectVarsDialogComponent
   ],
     imports: [
         MatomoModule,

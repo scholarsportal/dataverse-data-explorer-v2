@@ -25,9 +25,6 @@ export class MultiVarStatDialogComponent implements OnInit {
   panelOpenState = false;
   selectedVars = [];
   ngOnInit(): void {
-
-    console.log('--------------');
-
     for (let i = 0; i < this.data.length; i++) {
       const selectedVar = this.data[i];
       selectedVar.sortedCategories = [];
@@ -60,7 +57,6 @@ export class MultiVarStatDialogComponent implements OnInit {
         }
       }
 
-      console.log(selectedVar);
       if (typeof selectedVar.catgry !== 'undefined') {
         if (typeof selectedVar.catgry.length === 'undefined') {
           selectedVar.sortedCategories.push(this.data[i].catgry);
@@ -75,8 +71,6 @@ export class MultiVarStatDialogComponent implements OnInit {
       }
       this.selectedVars.push(selectedVar);
     }
-    console.log("sortedVars")
-    console.log(this.selectedVars);
 
   }
 
