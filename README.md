@@ -17,7 +17,7 @@ There are three ways to run the Data Explorer V2 with Dataverse:
 
 The simplest way to run the Data Curation Tool is to use GitHub Pages as the host. This is not recomended for production use, but is useful for testing the application.
 
-To do this, download `DataCuration.json` to the server running Dataverse and run the following command:
+To do this, download manifest json (`DataExplorer_v4.17up_github.json` or `DataExplorer_v4.20up_github.json`)  to the server running Dataverse and run the following command:
 
 for versions of Dataverse v4.17-v4.19
 
