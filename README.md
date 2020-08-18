@@ -29,7 +29,7 @@ for versions of Dataverse v4.20 and up
 
 ### Inside of the Dataverse application
 
-Another way to use Data Curation tool with Dataverse is to install it in `dataverseDirectory/src/main/webapp/dct_explore`.
+Another way to use Data Curation tool with Dataverse is to install it in `dataverseDirectory/src/main/webapp/ddi_explore`.
 
 To do this, download the Dataverse-Data-Curation-Tool directory, download your npm packages with `npm install`, and run `ng build --prod --base-href=ddi_explore`.
 
