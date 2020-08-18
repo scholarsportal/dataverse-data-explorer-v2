@@ -110,7 +110,8 @@ export class InterfaceComponent implements OnInit, AfterViewInit {
       }
     } else if (this.siteUrl == null && this.fileId == null){
       // Just for testing purposes
-      uri = this.ddiService.getBaseUrl();
+      //uri = this.ddiService.getBaseUrl();
+      uri = window.location.href;
       // uri = uri + '/assets/test_groups.xml';
       // uri = uri + '/assets/dct2.xml';
       // uri = uri + '/assets/arg-drones-E-2014-uk_F1-ddi.xml';
