@@ -2,27 +2,10 @@
   "GROUPS": {
     "HIDE": "Hide Groups",
     "SHOW": "Show Groups",
-    "ADD":  "Add Group",
-    "ADDTO": "Add to Group",
-    "ALLVAR": "All Variables",
-    "DONE": "Done",
-    "SAVE": "Save",
-    "CANCEL": "Cancel",
-    "DELETE": "Delete",
-    "EDIT": "Edit Group Name",
-    "ADDSELECTED": "Add Selected to Group",
-    "REMOVE" : "Remove from Group",
-    "ADDEDTO": "Added to ",
-    "ADDEDID":  "Added {{_id}} to ",
-    "REMOVEDID": "Removed  {{_id}} from ",
-    "REMOVEALL": "Remove all variables from group"
+    "ALLVAR": "All Variables"
   },
   "SAVE": {
-    "SAVE": "Save to Dataverse",
     "DOWNLOAD": "Download",
-    "CANNOT": "Cannot save to Dataverse. ",
-    "SAVED": "Saved to Dataverse",
-    "MISSAPI": "Cannot save to Dataverse. API key is missing.",
     "DOWNLOADSUB": "Download subset",
     "DOWNLOADORIG": "Download original file",
     "DOWNLOADTAB": "Download tab-delimited file",
@@ -72,11 +55,8 @@
     "INVD": "Total Invalid Count",
     "OTHER": "Other",
     "SUMMARYSTAT": "Summary Statistics",
-    "SELVARNOTE": "There are no variables",
+    "SELVARNOTE": "No variables selected. Please select variables to continue.",
     "CROSSTAB": "Cross Tabulation"
-  },
-  "TS": {
-    "CONFIRM": "Are you sure you want to delete "
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Items per page",
@@ -92,7 +72,7 @@
     "COLUMNS": "Columns",
     "TOTAL": "Total",
     "DATAVERSE": "Data Explorer is not connected to Dataverse",
-    "TOOMANYVAR": "Too many selected variables. Please select not more than {{length}} variables",
+    "TOOMANYVAR": "Too many variables selected. Please select no more than {{length}} variables.",
     "OK": "OK",
     "MOVETOROWS": "Move to Rows",
     "MOVETOCOLS": "Move to Columns",

@@ -2,27 +2,10 @@
   "GROUPS": {
     "HIDE": "Masquer les groupes",
     "SHOW": "Afficher les groupes",
-    "ADD": "Ajouter un groupe",
-    "ADDTO": "Ajouter au groupe",
-    "ALLVAR": "Toutes les variables",
-    "DONE": "Complété",
-    "SAVE": "Sauvegarder",
-    "CANCEL": "Annuler",
-    "DELETE": "Supprimer",
-    "EDIT": "Modifier le nom du groupe",
-    "ADDSELECTED": "Ajouter cette selection à un groupe",
-    "REMOVE" : "Enlever du groupe",
-    "ADDEDTO": "Ajouté à ",
-    "ADDEDID":  "{{_id}} a été ajoutée à ",
-    "REMOVEDID": "{{_id}} a été retiré de ",
-    "REMOVEALL": "Retirez toutes les variables du groupe"
+    "ALLVAR": "Toutes les variables"
   },
   "SAVE": {
-    "SAVE": "Sauvegarder dans Dataverse",
     "DOWNLOAD": "Télécharger",
-    "CANNOT": "N'a pas pu être sauvegardé dans Dataverse.",
-    "SAVED": "A été enregisté dans Dataverse",
-    "MISSAPI": "N'a pas pu être sauvegardé dans Dataverse - La clé API est introuvable.",
     "DOWNLOADSUB": "Télécharger le sous-ensemble",
     "DOWNLOADORIG": "Fichier au format d'origine",
     "DOWNLOADTAB": "Fichier délimité par des tabulations",
@@ -74,9 +57,6 @@
     "SUMMARYSTAT": "Summary Statistics FR",
     "SELVARNOTE": "There are no variables FR",
     "CROSSTAB": "Cross Tabulation FR"
-  },
-  "TS": {
-    "CONFIRM": "Êtes-vous sûr de vouloir supprimer "
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Éléments par page",
