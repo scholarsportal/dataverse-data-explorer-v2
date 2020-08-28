@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {DdiService} from '../ddi.service';
 
 interface SumStats {
   medn: number;
@@ -18,43 +19,21 @@ interface SumStats {
   styleUrls: ['./multi-var-stat-dialog.component.css']
 })
 
-
 export class MultiVarStatDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              private ddiService: DdiService) { }
   panelOpenState = false;
   selectedVars = [];
+  variable = [];
   ngOnInit(): void {
     for (let i = 0; i < this.data.length; i++) {
       const selectedVar = this.data[i];
       selectedVar.sortedCategories = [];
-      selectedVar.sumStats = {medn : null,
-        stdev: null,
-        min: null,
-        max: null,
-        mean: null,
-        vald: null,
-        invd: null,
-        other: null};
+      selectedVar.sumStats = null;
 
-      for (const obj of selectedVar['sumStat']) {
-        if (obj['@type'] === 'medn' ) {
-          selectedVar.sumStats.medn = obj['#text'];
-        } else if (obj['@type'] === 'stdev') {
-          selectedVar.sumStats.stdev = obj['#text'];
-        } else if (obj['@type'] === 'min') {
-          selectedVar.sumStats.min = obj['#text'];
-        } else if (obj['@type'] === 'max') {
-          selectedVar.sumStats.max = obj['#text'];
-        } else if (obj['@type'] === 'mean') {
-          selectedVar.sumStats.mean = obj['#text'];
-        } else if (obj['@type'] === 'vald') {
-          selectedVar.sumStats.vald = obj['#text'];
-        } else if (obj['@type'] === 'invd') {
-          selectedVar.sumStats.invd = obj['#text'];
-        } else if (obj['@type'] === 'other') {
-          selectedVar.sumStats.other = obj['#text'];
-        }
+      if (typeof selectedVar['sumStat'] !== 'undefined') {
+        selectedVar.sumStats = this.ddiService.getSumStat(selectedVar);
       }
 
       if (typeof selectedVar.catgry !== 'undefined') {
@@ -72,6 +51,34 @@ export class MultiVarStatDialogComponent implements OnInit {
       this.selectedVars.push(selectedVar);
     }
 
+  }
+
+  getVariableData(item) {
+    this.panelOpenState = true;
+    if (item.sumStats === null) {
+      const obj = item['varFormat'];
+      if (obj['@type'] === 'numeric') {
+        const id = item["@ID"];
+        const detailUrl = this.ddiService.getDetailUrl(id);
+        if (detailUrl !== null) {
+          this.ddiService
+            .getDDI(detailUrl)
+            .subscribe(
+              data => this.processVariables(data),
+              error => console.log(error),
+              () => this.completeVariables(item)
+            );
+        } else {
+          console.log("Not connected to dataverse");
+        }
+      }
+    }
+  }
+  processVariables(data) {
+    this.variable = this.ddiService.processVariables(data);
+  }
+  completeVariables(item) {
+    item.sumStats = this.ddiService.completeVariables(this.variable);
   }
 
   isUndefined(val) {
