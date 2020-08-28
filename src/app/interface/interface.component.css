@@ -35,7 +35,11 @@
 
 .action-buttons {
   float: right;
-  font-size: 0.7em;
+}
+
+.download {
+  float: right;
+  font-size: 0.8em;
 }
 
 .button-label {
@@ -48,4 +52,26 @@
 
 .group-container {
   min-height: 100vh;
+  background: white;
+}
+
+/* Smaller screen display */
+
+@media (max-width: 675px) {
+
+  .side_nav,
+  .groups-toggle {
+    display: none;
+  }
+
+  .action-buttons {
+    float: none;
+  }
+}
+
+@media (max-width: 540px) {
+
+  .button-row {
+    display: block;
+  }
 }
