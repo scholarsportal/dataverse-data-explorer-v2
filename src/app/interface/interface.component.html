@@ -49,7 +49,7 @@
       </span>
       <span class="download">
         <mat-form-field class="download-select">
-          <mat-select #downloadSelect [(ngModel)]="selected" (selectionChange)="onSave($event)">
+          <mat-select #downloadSelect [(ngModel)]="selected" (selectionChange)="onSave($event)" [attr.aria-label]="'SAVE.DOWNLOAD' | translate">
             <mat-option value="0">{{'SAVE.DOWNLOAD' | translate}}</mat-option>
             <mat-option value="1">{{'SAVE.DOWNLOADSUB' | translate}}</mat-option>
             <mat-option value="2">{{'SAVE.DOWNLOADORIG' | translate}}</mat-option>

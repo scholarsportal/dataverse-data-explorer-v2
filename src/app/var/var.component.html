@@ -71,11 +71,12 @@
     <td class="view-col" mat-cell *matCellDef="let row; let i = index">
       <button
         mat-icon-button
+        [attr.aria-label]="'VAR.VIEWSUMSTAT' | translate"
         color="accent"
         (click)="onViewSumStat(row['@ID'])"
         matTooltip="{{'VAR.VIEWSUMSTAT' | translate}}"
       >
-        <mat-icon [attr.aria-label]="'VAR.VIEWSUMSTAT' | translate">visibility</mat-icon>
+        <mat-icon>visibility</mat-icon>
       </button>
     </td>
   </ng-container>
@@ -86,11 +87,12 @@
     <td class="view-col" mat-cell *matCellDef="let row; let i = index">
       <button
         mat-icon-button
+        [attr.aria-label]="'VAR.VIEW' | translate"
         color="accent"
         (click)="onView(row['@ID'])"
         matTooltip="{{'VAR.VIEW' | translate}}"
       >
-        <mat-icon [attr.aria-label]="'VAR.VIEW' | translate">visibility</mat-icon>
+        <mat-icon>visibility</mat-icon>
       </button>
     </td>
   </ng-container>
@@ -101,11 +103,12 @@
     <td class="view-col" mat-cell *matCellDef="let row; let i = index">
       <button
         mat-icon-button
+        [attr.aria-label]="'VAR.VIEWQUEST' | translate"
         color="accent"
         (click)="onViewQuestions(row['@ID'])"
         matTooltip="{{'VAR.VIEWQUEST' | translate}}"
       >
-        <mat-icon [attr.aria-label]="'VAR.VIEWQUEST' | translate">visibility</mat-icon>
+        <mat-icon>visibility</mat-icon>
       </button>
     </td>
   </ng-container>
