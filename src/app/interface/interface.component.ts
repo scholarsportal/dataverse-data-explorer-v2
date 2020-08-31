@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, AfterViewChecked, Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
 
 import { MatomoTracker } from 'ngx-matomo';
 import { DdiService } from '../ddi.service';
@@ -20,7 +20,7 @@ import {SelectVarsDialogComponent} from '../select-vars-dialog/select-vars-dialo
   templateUrl: './interface.component.html',
   styleUrls: ['./interface.component.css']
 })
-export class InterfaceComponent implements OnInit, AfterViewInit {
+export class InterfaceComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @ViewChild(VarComponent, { static: true }) child;
   @ViewChild(VarGroupComponent, { static: true }) childGroups;
   @ViewChild('scrollMe', { static: true }) private myScrollContainer: ElementRef;
@@ -53,6 +53,7 @@ export class InterfaceComponent implements OnInit, AfterViewInit {
     private ddiService: DdiService,
     public snackBar: MatSnackBar,
     private translatePar: TranslateService,
+    private cdr: ChangeDetectorRef
     ) {
 
     this.translate = translatePar;
@@ -69,6 +70,10 @@ export class InterfaceComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.selected = '0';  }, 300 );
 
+  }
+
+  ngAfterViewChecked(){
+    this.cdr.detectChanges();
   }
 
 
