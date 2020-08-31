@@ -1,31 +1,26 @@
-<mat-grid-list class="table-controls" cols="3" rowHeight="64">
-  <mat-grid-tile>
+<mat-toolbar-row class="search-bar">
     <mat-form-field>
-      <input matInput [formControl]="searchFilter" placeholder="{{'VAR.SEARCH' | translate}}" />
+      <mat-label>{{'VAR.SEARCH' | translate}}</mat-label>
+      <input matInput [formControl]="searchFilter"/>
       <span matSuffix><mat-icon>search</mat-icon></span>
     </mat-form-field>
-  </mat-grid-tile>
+    <span class="fill-space"></span>
   <mat-paginator [pageSizeOptions]="getPageSizeOptions()"></mat-paginator>
-  <mat-divider [vertical]="true"></mat-divider>
-  <mat-grid-tile>
+</mat-toolbar-row>
 
-  </mat-grid-tile>
-
-</mat-grid-list>
-
-<mat-table class="mat-elevation-z8" [dataSource]="datasource" matSort (matSortChange)="sortChange($event)">
+<table mat-table class="mat-elevation-z8" [dataSource]="datasource" matSort (matSortChange)="sortChange($event)">
 
   <!-- Checkbox Column in 'All Variables' view -->
   <ng-container matColumnDef="select">
-    <mat-header-cell *matHeaderCellDef>
+    <th mat-header-cell *matHeaderCellDef>
       <mat-checkbox
         (change)="$event ? masterToggle() : null"
         [checked]="selection.hasValue() && isAllSelected()"
         [indeterminate]="selection.hasValue() && !isAllSelected()"
       >
       </mat-checkbox>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row; let i=index">
+    </th>
+    <td mat-cell *matCellDef="let row; let i=index">
       <mat-checkbox
         (click)="$event.shiftKey ? multipleToggle(row,i, $event) : singleToggle(i,$event)"
         (change)="$event ? selection.toggle(row) : null; "
@@ -33,94 +28,94 @@
         matTooltip="{{'VAR.SELECT' | translate}}"
       >
       </mat-checkbox>
-    </mat-cell>
+    </td>
   </ng-container>
 
   <!-- ID Column -->
   <ng-container matColumnDef="id">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.ID' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{ row['id'] }} </mat-cell>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="id-col">{{'VAR.ID' | translate}}</th>
+    <td mat-cell class="id-col" *matCellDef="let row"> {{ row['id'] }} </td>
   </ng-container>
 
   <ng-container matColumnDef="_order">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>order</mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{ row['_order'] }} </mat-cell>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>order</th>
+    <td mat-cell *matCellDef="let row"> {{ row['_order'] }}</td>
   </ng-container>
 
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.NAME' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let row">{{ (row['@name'].length > 30) ? (row['@name'] | slice:0:30) + '...' : (row['@name']) }}  </mat-cell>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="name-col">{{'VAR.NAME' | translate}}</th>
+    <td mat-cell class="name-col" *matCellDef="let row">{{ (row['@name'].length > 30) ? (row['@name'] | slice:0:30) + '...' : (row['@name']) }}</td>
   </ng-container>
 
   <!-- Label Column -->
   <ng-container matColumnDef="labl">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.LABEL' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{ (row.labl['#text'].length > 150) ? (row.labl['#text'] | slice:0:150) + '...' : (row.labl['#text'])}} </mat-cell>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="label-col">{{'VAR.LABEL' | translate}}</th>
+    <td mat-cell class="label-col" *matCellDef="let row"> {{ (row.labl['#text'].length > 150) ? (row.labl['#text'] | slice:0:150) + '...' : (row.labl['#text'])}}</td>
   </ng-container>
 
   <!-- Weight Column-->
   <ng-container matColumnDef="wgt-var">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'VAR.WEIGHT' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <span *ngIf="row['@wgt-var'] ; else elseBlock">{{ row['@wgt-var'] }} </span>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="weight-col">{{'VAR.WEIGHT' | translate}}</th>
+    <td mat-cell class="weight-col" *matCellDef="let row">
+      <span *ngIf="row['@wgt-var'] ; else elseBlock">{{ row['@wgt-var'] }}</span>
       <ng-template #elseBlock>
         <span *ngIf="row['@wgt']">{{ row['@wgt'] }}</span>
       </ng-template>
-    </mat-cell>
+    </td>
   </ng-container>
 
-  <!-- View Column-->
-  <ng-container matColumnDef="viewsumstat">
-    <mat-header-cell *matHeaderCellDef>{{'VAR.VIEWSUMSTAT' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let row; let i = index">
+  <!-- View Summary Stats-->
+  <ng-container matColumnDef="viewsumstat" class="view-col">
+    <th class="view-col" mat-header-cell *matHeaderCellDef>{{'VAR.VIEWSUMSTAT' | translate}}</th>
+    <td class="view-col" mat-cell *matCellDef="let row; let i = index">
       <button
         mat-icon-button
+        [attr.aria-label]="'VAR.VIEWSUMSTAT' | translate"
         color="accent"
         (click)="onViewSumStat(row['@ID'])"
         matTooltip="{{'VAR.VIEWSUMSTAT' | translate}}"
       >
-        <mat-icon [attr.aria-label]="'VAR.VIEWSUMSTAT' | translate">visibility</mat-icon>
+        <mat-icon>visibility</mat-icon>
       </button>
-    </mat-cell>
+    </td>
   </ng-container>
 
-  <!-- View Column-->
-  <ng-container matColumnDef="view">
-    <mat-header-cell *matHeaderCellDef>{{'VAR.VIEW' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let row; let i = index">
+  <!-- View Categories-->
+  <ng-container matColumnDef="view" class="view-col">
+    <th class="view-col" mat-header-cell *matHeaderCellDef>{{'VAR.VIEW' | translate}}</th>
+    <td class="view-col" mat-cell *matCellDef="let row; let i = index">
       <button
         mat-icon-button
+        [attr.aria-label]="'VAR.VIEW' | translate"
         color="accent"
         (click)="onView(row['@ID'])"
         matTooltip="{{'VAR.VIEW' | translate}}"
       >
-        <mat-icon [attr.aria-label]="'VAR.VIEW' | translate">visibility</mat-icon>
+        <mat-icon>visibility</mat-icon>
       </button>
-    </mat-cell>
+    </td>
   </ng-container>
 
   <!-- View Questions-->
   <ng-container matColumnDef="viewquest">
-    <mat-header-cell *matHeaderCellDef>{{'VAR.VIEWQUEST' | translate}}</mat-header-cell>
-    <mat-cell *matCellDef="let row; let i = index">
+    <th class="view-col" mat-header-cell *matHeaderCellDef>{{'VAR.VIEWQUEST' | translate}}</th>
+    <td class="view-col" mat-cell *matCellDef="let row; let i = index">
       <button
         mat-icon-button
+        [attr.aria-label]="'VAR.VIEWQUEST' | translate"
         color="accent"
         (click)="onViewQuestions(row['@ID'])"
         matTooltip="{{'VAR.VIEWQUEST' | translate}}"
       >
-        <mat-icon [attr.aria-label]="'VAR.VIEWQUEST' | translate">visibility</mat-icon>
+        <mat-icon>visibility</mat-icon>
       </button>
-    </mat-cell>
+    </td>
   </ng-container>
 
-
-
-  <mat-header-row *matHeaderRowDef="getDisplayedColumns()"></mat-header-row>
-  <mat-row
-    *matRowDef="let row; columns: getDisplayedColumns()"
+  <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+  <tr mat-row *matRowDef="let row; columns: getDisplayedColumns()"
     [ngClass]="{ unvis: row._show != true , active: row._active == true }"
   >
-  </mat-row>
-</mat-table>
+  </tr>
+</table>
