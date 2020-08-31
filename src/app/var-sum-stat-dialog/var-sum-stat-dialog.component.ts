@@ -56,4 +56,8 @@ export class VarSumStatDialogComponent implements OnInit {
   completeVariables() {
     this.sumStats = this.ddiService.completeVariables(this.variable);
   }
+
+  isNotEmpty(val) {
+    return val !== null && typeof val !== 'undefined';
+  }
 }
