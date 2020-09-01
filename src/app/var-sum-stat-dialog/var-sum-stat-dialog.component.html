@@ -7,36 +7,36 @@
   <h1 mat-dialog-title>{{data["@name"]}}: {{data["labl"]["#text"]}}</h1>
 
   <mat-dialog-content>
-    <table *ngIf=sumStats>
-      <tr *ngIf="sumStats.medn">
+    <table *ngIf="isNotEmpty(sumStats)">
+      <tr *ngIf="isNotEmpty(sumStats.medn)">
         <td><b>{{'VARDIALSTAT.MEDIAN' | translate }}</b>:</td>
         <td>{{sumStats.medn}}</td>
       </tr>
-      <tr *ngIf="sumStats.stdev">
+      <tr *ngIf="isNotEmpty(sumStats.stdev)">
         <td><b>{{'VARDIALSTAT.STDEV' | translate }}</b>:</td>
         <td>{{sumStats.stdev}}</td>
       </tr>
-      <tr *ngIf="sumStats.min">
+      <tr *ngIf="isNotEmpty(sumStats.min)">
         <td><b>{{'VARDIALSTAT.MIN' | translate }}</b>:</td>
         <td>{{sumStats.min}}</td>
       </tr>
-      <tr *ngIf="sumStats.max">
+      <tr *ngIf="isNotEmpty(sumStats.max)">
         <td><b>{{'VARDIALSTAT.MAX' | translate }}</b>:</td>
         <td>{{sumStats.max}}</td>
       </tr>
-      <tr *ngIf="sumStats.mean">
+      <tr *ngIf="isNotEmpty(sumStats.mean)">
         <td><b>{{'VARDIALSTAT.MEAN' | translate }}</b>:</td>
         <td>{{sumStats.mean}}</td>
       </tr>
-      <tr *ngIf="sumStats.vald">
+      <tr *ngIf="isNotEmpty(sumStats.vald)">
         <td><b>{{'VARDIALSTAT.VALD' | translate }}</b>:</td>
         <td>{{sumStats.vald | number:'1.0-0'}}</td>
       </tr>
-      <tr *ngIf="sumStats.invd">
+      <tr *ngIf="isNotEmpty(sumStats.invd)">
         <td><b>{{'VARDIALSTAT.INVD' | translate }}</b>:</td>
         <td>{{sumStats.invd | number:'1.0-0'}}</td>
       </tr>
-      <tr *ngIf="sumStats.other">
+      <tr *ngIf="isNotEmpty(sumStats.other)">
         <td><b>{{'VARDIALSTAT.OTHER' | translate }}</b>:</td>
         <td>{{sumStats.other}}</td>
       </tr>

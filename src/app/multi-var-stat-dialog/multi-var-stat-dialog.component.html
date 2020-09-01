@@ -44,15 +44,15 @@
               {{'VARDIALSTAT.SUMMARYSTAT' | translate }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <table *ngIf=item.sumStats>
-            <tr *ngIf="item.sumStats.medn"><td ><b>{{'VARDIALSTAT.MEDIAN' | translate }}</b>:</td><td>{{item.sumStats.medn}}</td></tr>
-            <tr *ngIf="item.sumStats.stdev"><td ><b>{{'VARDIALSTAT.STDEV' | translate }}</b>:</td><td>{{item.sumStats.stdev}}</td></tr>
-            <tr *ngIf="item.sumStats.min"><td ><b>{{'VARDIALSTAT.MIN' | translate }}</b>:</td><td>{{item.sumStats.min}}</td></tr>
-            <tr *ngIf="item.sumStats.max"><td ><b>{{'VARDIALSTAT.MAX' | translate }}</b>:</td><td>{{item.sumStats.max}}</td></tr>
-            <tr *ngIf="item.sumStats.mean"><td ><b>{{'VARDIALSTAT.MEAN' | translate }}</b>:</td><td>{{item.sumStats.mean}}</td></tr>
-            <tr *ngIf="item.sumStats.vald"><td ><b>{{'VARDIALSTAT.VALD' | translate }}</b>:</td><td>{{item.sumStats.vald | number:'1.0-0'}}</td></tr>
-            <tr *ngIf="item.sumStats.invd"><td ><b>{{'VARDIALSTAT.INVD' | translate }}</b>:</td><td>{{item.sumStats.invd | number:'1.0-0'}}</td></tr>
-            <tr *ngIf="item.sumStats.other"><td ><b>{{'VARDIALSTAT.OTHER' | translate }}</b>:</td><td>{{item.sumStats.other}}</td></tr>
+          <table *ngIf="isNotEmpty(item.sumStats)">
+            <tr *ngIf="isNotEmpty(item.sumStats.medn)"><td ><b>{{'VARDIALSTAT.MEDIAN' | translate }}</b>:</td><td>{{item.sumStats.medn}}</td></tr>
+            <tr *ngIf="isNotEmpty(item.sumStats.stdev)"><td ><b>{{'VARDIALSTAT.STDEV' | translate }}</b>:</td><td>{{item.sumStats.stdev}}</td></tr>
+            <tr *ngIf="isNotEmpty(item.sumStats.min)"><td ><b>{{'VARDIALSTAT.MIN' | translate }}</b>:</td><td>{{item.sumStats.min}}</td></tr>
+            <tr *ngIf="isNotEmpty(item.sumStats.max)"><td ><b>{{'VARDIALSTAT.MAX' | translate }}</b>:</td><td>{{item.sumStats.max}}</td></tr>
+            <tr *ngIf="isNotEmpty(item.sumStats.mean)"><td ><b>{{'VARDIALSTAT.MEAN' | translate }}</b>:</td><td>{{item.sumStats.mean}}</td></tr>
+            <tr *ngIf="isNotEmpty(item.sumStats.vald)"><td ><b>{{'VARDIALSTAT.VALD' | translate }}</b>:</td><td>{{item.sumStats.vald | number:'1.0-0'}}</td></tr>
+            <tr *ngIf="isNotEmpty(item.sumStats.invd)"><td ><b>{{'VARDIALSTAT.INVD' | translate }}</b>:</td><td>{{item.sumStats.invd | number:'1.0-0'}}</td></tr>
+            <tr *ngIf="isNotEmpty(item.sumStats.other)"><td ><b>{{'VARDIALSTAT.OTHER' | translate }}</b>:</td><td>{{item.sumStats.other}}</td></tr>
           </table>
         </mat-expansion-panel>
       </mat-accordion>
