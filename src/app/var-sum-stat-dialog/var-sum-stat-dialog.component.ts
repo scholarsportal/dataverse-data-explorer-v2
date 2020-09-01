@@ -58,6 +58,7 @@ export class VarSumStatDialogComponent implements OnInit {
   }
 
   isNotEmpty(val) {
-    return val !== null && typeof val !== 'undefined';
+    console.log(val);
+    return val !== null && typeof val !== 'undefined' && val !== 'NaN';
   }
 }

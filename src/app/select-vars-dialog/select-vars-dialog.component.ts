@@ -41,6 +41,13 @@ export class SelectVarsDialogComponent implements OnInit {
     this.dirCol = 0;
     this.variablesToSelect.sort((a, b) => a['@name'].localeCompare(b['@name']));
     this.maxSelectedVars = 6;
+    for (const variable of this.variablesToSelect) {
+      if (variable['@name'].length > 20) {
+        variable['@shortname'] = variable['@name'].substr(0, 20) + ' ...';
+      } else {
+        variable['@shortname'] = variable['@name'];
+      }
+    }
   }
 
   onMoveToRows() {

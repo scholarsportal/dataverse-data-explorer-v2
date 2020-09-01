@@ -90,7 +90,7 @@ export class MultiVarStatDialogComponent implements OnInit {
   }
 
   isNotEmpty(val) {
-    return val !== null && typeof val !== 'undefined';
+    return val !== null && typeof val !== 'undefined' && val !== 'NaN';
   }
 
 }
