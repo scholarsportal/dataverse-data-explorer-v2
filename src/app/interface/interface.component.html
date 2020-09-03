@@ -66,12 +66,12 @@
 
   <mat-sidenav-container class="group-container">
     <mat-sidenav mode="side" opened class="side_nav" #sidenav #scrollMe>
-      <app-var-group [variableGroups]="variableGroups" (subSetRows)="broadcastSubSetRows($event)"
+      <app-var-group [variableGroups]="variableGroups" (subSetRows)="broadcastSubSetRows($event)" [selection]="selection"
                      (parentScrollNav)="scrollNav()"
       ></app-var-group>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-var [variableGroups]="variableGroups"></app-var>
+      <app-var [variableGroups]="variableGroups" [selection]="selection"></app-var>
     </mat-sidenav-content>
   </mat-sidenav-container>
 

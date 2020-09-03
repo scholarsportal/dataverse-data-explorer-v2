@@ -20,6 +20,7 @@ export class VarComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @Input() variableGroups: any;
+  @Input() selection: any;
 
   public dialogStatRef: MatDialogRef<VarStatDialogComponent>;
   public dialogSumStatRef: MatDialogRef<VarSumStatDialogComponent>;
@@ -37,7 +38,7 @@ export class VarComponent implements OnInit {
   mode = 'all';
   private filterValues = { search: '', _show: true };
 
-  selection = new SelectionModel<Element>(true, []);
+  // selection = new SelectionModel<Element>(true, []);
 
   constructor(public dialog: MatDialog,
               private ddiService: DdiService,

@@ -16,6 +16,7 @@ export class VarGroupComponent implements OnInit {
   allActive = true;
   source: any;
   @Input() variableGroups: any;
+  @Input() selection: any;
 
   @Output() subSetRows: EventEmitter<null> = new EventEmitter();
   @Output() parentScrollNav: EventEmitter<null> = new EventEmitter();
@@ -28,13 +29,16 @@ export class VarGroupComponent implements OnInit {
     this.showActive();
     this.allActive = true;
     this.subSetRows.emit();
+    this.selection.clear();
   }
   onGroupClick(_obj) {
     this.ddiService.clearSearch();
     const obj = _obj;
     const vars = obj.varGrp['@var'].split(' ');
+
     this.subSetRows.emit(vars);
     this.showActive(obj.varGrp['@ID']);
+    this.selection.clear();
   }
 
   showActive(_id?) {

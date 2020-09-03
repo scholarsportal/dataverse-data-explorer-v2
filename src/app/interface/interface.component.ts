@@ -13,6 +13,7 @@ import {VarStatDialogComponent} from '../var-stat-dialog/var-stat-dialog.compone
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MultiVarStatDialogComponent} from '../multi-var-stat-dialog/multi-var-stat-dialog.component';
 import {SelectVarsDialogComponent} from '../select-vars-dialog/select-vars-dialog.component';
+import {SelectionModel} from '@angular/cdk/collections';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class InterfaceComponent implements OnInit, AfterViewInit, AfterViewCheck
   key;
   activeGroupVars;
   selected;
+  selection = new SelectionModel<Element>(true, []);
 
   constructor(
     public dialog: MatDialog,
