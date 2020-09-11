@@ -1,4 +1,7 @@
 {
+  "INTERFACE": {
+    "LANG": "Language FR"
+  },
   "GROUPS": {
     "HIDE": "Masquer les groupes",
     "SHOW": "Afficher les groupes",
