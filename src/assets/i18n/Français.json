@@ -56,7 +56,8 @@
     "OTHER": "Other FR",
     "SUMMARYSTAT": "Summary Statistics FR",
     "SELVARNOTE": "There are no variables FR",
-    "CROSSTAB": "Cross Tabulation FR"
+    "CROSSTAB": "Cross Tabulation FR",
+    "NOCATEGORIES": "This variable does not have any categories assigned FR"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Éléments par page",

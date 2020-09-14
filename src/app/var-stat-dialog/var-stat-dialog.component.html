@@ -6,9 +6,9 @@
 
   <h1 mat-dialog-title>{{data["@name"]}}: {{data["labl"]["#text"]}}</h1>
 
-  <app-chart [data]="sortedCategories"></app-chart>
-
-  <table class="table-bordered">
+  <app-chart *ngIf="doCategoriesExist()" [data]="sortedCategories"></app-chart>
+  <h2 *ngIf="!doCategoriesExist()">{{'VARDIALSTAT.NOCATEGORIES' | translate}}</h2>
+  <table *ngIf="doCategoriesExist()" class="table-bordered">
     <tr>
       <th>{{'VARDIALSTAT.VALUES' | translate}}</th>
       <th>{{'VARDIALSTAT.CATEGORIES' | translate}}</th>

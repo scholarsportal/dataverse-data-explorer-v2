@@ -33,5 +33,12 @@ export class VarStatDialogComponent implements OnInit {
   doesExist(val) {
     return typeof val !== 'undefined' && val > 1;
   }
+  doCategoriesExist() {
+    if (this.sortedCategories.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
 }

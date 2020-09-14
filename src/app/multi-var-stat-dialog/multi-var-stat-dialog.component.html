@@ -6,8 +6,9 @@
     <tr *ngFor="let item of selectedVars">
 
       <h1 mat-dialog-title>{{item["@name"]}}:  {{item["labl"]["#text"]}}</h1>
-      <app-chart [data]="item.sortedCategories"></app-chart>
-        <table class="table-bordered">
+      <app-chart *ngIf="doCategoriesExist(item)" [data]="item.sortedCategories"></app-chart>
+      <h2 *ngIf="!doCategoriesExist(item)">{{'VARDIALSTAT.NOCATEGORIES' | translate}}</h2>
+        <table *ngIf="doCategoriesExist(item)" class="table-bordered">
           <tr>
             <th>{{'VARDIALSTAT.VALUES' | translate}}</th>
             <th>{{'VARDIALSTAT.CATEGORIES' | translate}}</th>

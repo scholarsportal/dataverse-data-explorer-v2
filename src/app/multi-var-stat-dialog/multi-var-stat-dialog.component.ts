@@ -93,4 +93,12 @@ export class MultiVarStatDialogComponent implements OnInit {
     return val !== null && typeof val !== 'undefined' && val !== 'NaN';
   }
 
+  doCategoriesExist(item) {
+    if (item.sortedCategories.length === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }
