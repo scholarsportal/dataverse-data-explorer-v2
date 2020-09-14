@@ -8,7 +8,7 @@
       <h1 class="header-text title">{{title}}</h1>
       <span class="fill-space"></span>
       <mat-form-field class="lang-select">
-        <select matNativeControl title="Language" #langSelect (change)="translate.use(langSelect.value)">
+        <select matNativeControl title="{{'INTERFACE.LANG' | translate}}" [attr.aria-label]="'INTERFACE.LANG' | translate" #langSelect (change)="translate.use(langSelect.value)">
           <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{lang}}</option>
         </select>
       </mat-form-field>

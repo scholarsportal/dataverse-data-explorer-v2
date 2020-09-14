@@ -1,4 +1,7 @@
 {
+  "INTERFACE": {
+    "LANG": "Language"
+  },
   "GROUPS": {
     "HIDE": "Hide Groups",
     "SHOW": "Show Groups",
