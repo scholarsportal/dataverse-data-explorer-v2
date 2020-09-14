@@ -1,4 +1,7 @@
 {
+  "INTERFACE": {
+    "LANG": "Language"
+  },
   "GROUPS": {
     "HIDE": "Hide Groups",
     "SHOW": "Show Groups",
@@ -56,7 +59,8 @@
     "OTHER": "Other",
     "SUMMARYSTAT": "Summary Statistics",
     "SELVARNOTE": "No variables selected. Please select variables to continue.",
-    "CROSSTAB": "Cross Tabulation"
+    "CROSSTAB": "Cross Tabulation",
+    "NOCATEGORIES": "This variable does not have any categories assigned"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Items per page",
