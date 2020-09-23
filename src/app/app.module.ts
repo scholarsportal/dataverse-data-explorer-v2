@@ -154,7 +154,17 @@ export function load(http: HttpClient, config: ConfigService): (() => Promise<bo
     ],
   exports: [
   ],
-  entryComponents: [/*VarDialogComponent, VarStatDialogComponent*/],
+  entryComponents: [AppComponent,
+    InterfaceComponent,
+    VarComponent,
+    VarGroupComponent,
+    VarStatDialogComponent,
+    ChartComponent,
+    VarDialogComponent,
+    VarSumStatDialogComponent,
+    MultiVarStatDialogComponent,
+    CrossTabDialogComponent,
+    SelectVarsDialogComponent],
   providers: [DdiService, MatPaginatorIntl, {
 
     provide: MatPaginatorIntl,
