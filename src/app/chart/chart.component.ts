@@ -51,7 +51,7 @@ export class ChartComponent implements OnInit {
   }
 
   createChart(_data) {
-
+    const dictShortNames = {};
     const obj = this;
     let data = this.data;
     data = [];
@@ -77,7 +77,15 @@ export class ChartComponent implements OnInit {
       let shortName = _data[i].labl['#text'];
 
       if (shortName.length > this.maxStringLength) {
-        shortName = shortName.substring(0, this.maxStringLength) + '...';
+          shortName = shortName.substring(0, this.maxStringLength) + '...';
+      }
+      if (typeof  dictShortNames[shortName] === 'undefined') {
+        dictShortNames[shortName] = 0;
+      } else {
+        dictShortNames[shortName] = dictShortNames[shortName] + 1;
+      }
+      if (dictShortNames[shortName] > 0) {
+        shortName = shortName.substring(0, this.maxStringLength) + '...' + dictShortNames[shortName];
       }
       shortName = shortName;
       // switching to weighted frequencies
@@ -91,7 +99,8 @@ export class ChartComponent implements OnInit {
 
     // sort based on catStat
     data = data.sort(function(a, b) {
-      return a.catStat - b.catStat;
+      return a.catValu - b.catValu;
+      // return parseFloat(a.freq) - parseFloat(b.freq);
     });
 
     // set the dimensions and margins of the graph

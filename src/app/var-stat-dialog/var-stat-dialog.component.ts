@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DdiService } from '../ddi.service';
 
 @Component({
   selector: 'app-var-stat-dialog',
@@ -8,9 +9,11 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class VarStatDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+              private ddiService: DdiService) { }
 
   sortedCategories = [];
+  variable;
   ngOnInit(): void {
     if (typeof this.data.catgry !== 'undefined') {
       if (typeof this.data.catgry.length === 'undefined') {
@@ -24,6 +27,31 @@ export class VarStatDialogComponent implements OnInit {
         return a.catValu - b.catValu;
       });
     }
+    if (this.sortedCategories.length === 0) {
+      this.createCategories();
+    }
+  }
+
+  createCategories() {
+    const detailUrl = this.ddiService.getDetailUrl(this.data['@ID']);
+    if (detailUrl !== null) {
+      this.ddiService
+        .getDDI(detailUrl)
+        .subscribe(
+          data => this.processVariables(data),
+          error => console.log(error),
+          () => this.completeVariables()
+        );
+      //  http://localhost:8080/api/access/datafile/41?variables=v885
+    }
+  }
+
+  processVariables(data) {
+    this.variable = this.ddiService.processVariables(data, '\n');
+  }
+
+  completeVariables() {
+    this.sortedCategories = this.ddiService.completeVariableForCategories(this.variable);
   }
 
   isUndefined(val) {

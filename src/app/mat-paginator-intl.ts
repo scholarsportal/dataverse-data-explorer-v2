@@ -1,6 +1,8 @@
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslateParser, TranslateService } from '@ngx-translate/core';
+import {Injectable} from '@angular/core';
 
+@Injectable()
 export class MyMatPaginatorIntl extends MatPaginatorIntl {
 
   private rangeLabelIntl: string;

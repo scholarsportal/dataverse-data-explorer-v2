@@ -31,9 +31,7 @@ export class VarSumStatDialogComponent implements OnInit {
       this.sumStats = this.ddiService.getSumStat(this.data);
     } else {
       const obj = this.data['varFormat'];
-      if (obj['@type'] === 'numeric') {
-         this.getVariableData(this.data["@ID"]);
-      }
+      this.getVariableData(this.data["@ID"]);
     }
   }
   getVariableData(id) {
@@ -51,14 +49,14 @@ export class VarSumStatDialogComponent implements OnInit {
     }
   }
   processVariables(data) {
-    this.variable = this.ddiService.processVariables(data);
+    this.variable = this.ddiService.processVariables(data, '\n');
   }
   completeVariables() {
     this.sumStats = this.ddiService.completeVariables(this.variable);
   }
 
   isNotEmpty(val) {
-    console.log(val);
+    //console.log(val);
     return val !== null && typeof val !== 'undefined' && val !== 'NaN';
   }
 }

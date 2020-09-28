@@ -26,6 +26,9 @@ export class MultiVarStatDialogComponent implements OnInit {
   panelOpenState = false;
   selectedVars = [];
   variable = [];
+  selectedVar: any;
+  varsWithoutCategories = [];
+  vars = [];
   ngOnInit(): void {
     for (let i = 0; i < this.data.length; i++) {
       const selectedVar = this.data[i];
@@ -48,16 +51,64 @@ export class MultiVarStatDialogComponent implements OnInit {
           return a.catValu - b.catValu;
         });
       }
+      if (selectedVar.sortedCategories.length === 0) {
+        this.varsWithoutCategories.push(selectedVar);
+      }
       this.selectedVars.push(selectedVar);
     }
+    if (this.varsWithoutCategories.length > 0) {
+      this.createCategories();
+    }
 
+  }
+
+  createCategories() {
+    let vars = this.varsWithoutCategories[0]['@ID'];
+    for (let i = 1; i < this.varsWithoutCategories.length; i++) {
+        vars = vars + ',' + this.varsWithoutCategories[i]['@ID'];
+    }
+    const detailUrl = this.ddiService.getDetailUrl(vars);
+    if (detailUrl !== null) {
+      this.ddiService
+        .getDDI(detailUrl)
+        .subscribe(
+          data => this.processVariablesCat(data),
+          error => console.log(error),
+          () => this.completeVariablesCat()
+        );
+      //  http://localhost:8080/api/access/datafile/41?variables=v885
+    }
+  }
+
+  processVariablesCat(data) {
+    const tempVars = this.ddiService.processVariables(data, '\n');
+    if (tempVars.length > 0) {
+      const names = this.ddiService.processVariables(tempVars[0], '\t');
+      let vars = new Array(names.length);
+      for (let k = 0; k < names.length; k++) {
+        vars[k] = [];
+      }
+      for (let i = 1; i < tempVars.length; i++) {
+        const temp = this.ddiService.processVariables(tempVars[i], '\t');
+        for (let k = 0; k < temp.length; k++) {
+          vars[k].push(temp[k]);
+        }
+      }
+      this.vars = vars;
+    }
+  }
+
+  completeVariablesCat() {
+    for (let i = 0; i < this.vars.length; i++ ) {
+      this.varsWithoutCategories[i].sortedCategories = this.ddiService.completeVariableForCategories(this.vars[i]);
+    }
   }
 
   getVariableData(item) {
     this.panelOpenState = true;
     if (item.sumStats === null) {
       const obj = item['varFormat'];
-      if (obj['@type'] === 'numeric') {
+      // if (obj['@type'] === 'numeric') {
         const id = item["@ID"];
         const detailUrl = this.ddiService.getDetailUrl(id);
         if (detailUrl !== null) {
@@ -71,11 +122,11 @@ export class MultiVarStatDialogComponent implements OnInit {
         } else {
           console.log("Not connected to dataverse");
         }
-      }
+      //}
     }
   }
   processVariables(data) {
-    this.variable = this.ddiService.processVariables(data);
+    this.variable = this.ddiService.processVariables(data, '\n');
   }
   completeVariables(item) {
     item.sumStats = this.ddiService.completeVariables(this.variable);

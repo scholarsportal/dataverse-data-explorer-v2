@@ -87,9 +87,24 @@ export class DdiService {
   calculateValidVariable(variable) {
     const validVariable = [];
     for (const v of variable ) {
-      if (v !== null && typeof v !== 'undefined' && v !== '' && !isNaN(Number(v))) {
+      if (v !== null && typeof v !== 'undefined' && v.localeCompare('') !== 0  && !isNaN(Number(v))) {
         const vNum = parseFloat(v);
         validVariable.push(vNum);
+      }
+    }
+    return validVariable;
+  }
+
+  calculateValidVariableForCategories(variable) {
+    const validVariable = [];
+    for (let i = 1; i < variable.length; i++ ) {
+      if (variable[i] !== null && typeof variable[i] !== 'undefined' && variable[i].localeCompare('') !== 0) {
+     /*   if (variable[i].substring(0, 1).localeCompare('\"') !== 0 &&
+          variable[i].substring(variable[i].length - 1, 1).localeCompare('\"') !== 0) {*/
+          validVariable.push(variable[i].substring(1, variable[i].length - 1));
+       /* } else {
+          validVariable.push(variable[i]);
+        }*/
       }
     }
     return validVariable;
@@ -156,9 +171,10 @@ export class DdiService {
     return detailUrl;
   }
 
-  processVariables(data) {
-    const variable = data.split('\n');
+  processVariables(data, separator) {
+    const variable = data.split(separator);
     return variable;
+
   }
   completeVariables(variable) {
     const sumStats = {medn : null,
@@ -180,5 +196,36 @@ export class DdiService {
       sumStats.stdev = this.calculateStDev(validVariable, sumStats.mean);
     }
     return sumStats;
+  }
+  completeVariableForCategories(variable) {
+    const createdCategories = [];
+    const validVariable = this.calculateValidVariableForCategories(variable);
+    const dict = {};
+    let dictLength = 0;
+    for (const varValid of validVariable) {
+      if (typeof  dict[varValid] === 'undefined') {
+        dict[varValid] = 1;
+        dictLength = dictLength + 1;
+      } else {
+        dict[varValid] = dict[varValid] + 1;
+      }
+    }
+    if (dictLength < validVariable.length * 0.5 ) {
+      for (const key in dict) {
+        const row = {
+          catValu: null,
+          labl: {'@level': 'category', '#text': ''},
+          catStat: {'@type': 'freq', '#text': ''},
+          countPerc: null
+        };
+        row.catValu = key;
+        row.catStat['#text'] = dict[key].toString();
+        row.labl['#text'] = key;
+        row.countPerc = (dict[key] / validVariable.length) * 100;
+
+        createdCategories.push(row);
+      }
+    }
+    return createdCategories;
   }
 }
