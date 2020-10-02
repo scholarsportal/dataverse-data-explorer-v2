@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import * as d3 from 'd3';
+import { DdiService } from '../ddi.service';
 
 @Component({
   selector: 'app-chart',
@@ -44,7 +45,9 @@ export class ChartComponent implements OnInit {
   maxStringLength = 13;
   @Input() private data: Array<any>;
 
-  constructor() {}
+  constructor(private ddiService: DdiService) {
+
+  }
 
   ngOnInit() {
     this.createChart(this.data);
@@ -92,17 +95,16 @@ export class ChartComponent implements OnInit {
       if (freqWeight != null) { freq = freqWeight; }
       data.push({
         name: shortName,
-        freq: freq
+        freq: freq,
+        catValu: _data[i].catValu
       });
     }
     const maxHeight = (data.length + 1) * 25;
-
     // sort based on catStat
-    data = data.sort(function(a, b) {
-      return a.catValu - b.catValu;
-      // return parseFloat(a.freq) - parseFloat(b.freq);
-    });
-
+    const ddi = this.ddiService.sorting.bind(this);
+    data = data.sort(  (function(a, b ) {
+        return ddi(a, b);
+    })  );
     // set the dimensions and margins of the graph
     const margin = { top: 0, right: 20, bottom: 30, left: 90 };
     const width = 450 - margin.left - margin.right;
@@ -191,4 +193,5 @@ export class ChartComponent implements OnInit {
     }
     return color;
   }
+
 }

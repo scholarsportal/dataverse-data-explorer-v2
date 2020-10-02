@@ -23,12 +23,15 @@ export class VarStatDialogComponent implements OnInit {
           this.sortedCategories.push(i);
         }
       }
-      this.sortedCategories.sort((a, b) => {
-        return a.catValu - b.catValu;
-      });
+
     }
     if (this.sortedCategories.length === 0) {
       this.createCategories();
+    } else {
+      const ddi = this.ddiService.sorting.bind(this);
+      this.sortedCategories.sort(  function(a, b ) {
+        return ddi(b, a);
+      }  );
     }
   }
 
@@ -52,6 +55,10 @@ export class VarStatDialogComponent implements OnInit {
 
   completeVariables() {
     this.sortedCategories = this.ddiService.completeVariableForCategories(this.variable);
+    const ddi = this.ddiService.sorting.bind(this);
+    this.sortedCategories.sort(  (a, b) =>  {
+      return ddi(b, a);
+    }  );
   }
 
   isUndefined(val) {

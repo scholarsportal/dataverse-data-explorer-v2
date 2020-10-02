@@ -8,7 +8,8 @@ export class DdiService {
   private searchInput = new BehaviorSubject('');
   currentSearchInput = this.searchInput.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
   getDDI(url: string) {
     return this.http.get(url, { responseType: 'text' });
   }
@@ -227,5 +228,30 @@ export class DdiService {
       }
     }
     return createdCategories;
+  }
+  sorting(a, b) {
+    if (b.catValu.localeCompare('') === 0 && a.catValu.localeCompare('') === 0) return 0;
+    if (a.catValu.localeCompare('') === 0 && b.catValu.localeCompare('') !== 0) {
+      if (!isNaN(b.catValu)) {
+        return 1;
+      } else {
+        return 2;
+      }
+    }
+    if (b.catValu.localeCompare('') === 0 && a.catValu.localeCompare('') !== 0) {
+      if (!isNaN(a.catValu)) {
+        return -1 * parseFloat(a.catValu);
+      } else {
+        return -2;
+      }
+    }
+
+    if (isNaN(a.catValu) && isNaN(b.catValu)) {
+      return b.catValu.localeCompare(a.catValu);
+    }
+    if (!isNaN(a.catValu) && !isNaN(b.catValu))
+    {
+      return parseFloat(b.catValu) - parseFloat(a.catValu);
+    }
   }
 }

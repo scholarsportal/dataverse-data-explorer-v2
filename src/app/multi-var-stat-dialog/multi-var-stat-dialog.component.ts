@@ -47,9 +47,6 @@ export class MultiVarStatDialogComponent implements OnInit {
             selectedVar.sortedCategories.push(j);
           }
         }
-        selectedVar.sortedCategories.sort((a, b) => {
-          return a.catValu - b.catValu;
-        });
       }
       if (selectedVar.sortedCategories.length === 0) {
         this.varsWithoutCategories.push(selectedVar);
@@ -58,6 +55,11 @@ export class MultiVarStatDialogComponent implements OnInit {
     }
     if (this.varsWithoutCategories.length > 0) {
       this.createCategories();
+    } else {
+      const ddi = this.ddiService.sorting.bind(this);
+      this.selectedVar.sortedCategories.sort(  function(a, b ) {
+        return ddi(b, a);
+      }  );
     }
 
   }
@@ -99,8 +101,12 @@ export class MultiVarStatDialogComponent implements OnInit {
   }
 
   completeVariablesCat() {
+    const ddi = this.ddiService.sorting.bind(this);
     for (let i = 0; i < this.vars.length; i++ ) {
       this.varsWithoutCategories[i].sortedCategories = this.ddiService.completeVariableForCategories(this.vars[i]);
+      this.varsWithoutCategories[i].sortedCategories.sort(  (a, b) =>  {
+        return ddi(b, a);
+      }  );
     }
   }
 
