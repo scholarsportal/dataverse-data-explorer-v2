@@ -29,7 +29,9 @@ export class MultiVarStatDialogComponent implements OnInit {
   selectedVar: any;
   varsWithoutCategories = [];
   vars = [];
+  categoriesLoaded;
   ngOnInit(): void {
+    this.categoriesLoaded = false;
     for (let i = 0; i < this.data.length; i++) {
       const selectedVar = this.data[i];
       selectedVar.sortedCategories = [];
@@ -60,6 +62,7 @@ export class MultiVarStatDialogComponent implements OnInit {
       this.selectedVar.sortedCategories.sort(  function(a, b ) {
         return ddi(b, a);
       }  );
+      this.categoriesLoaded = true;
     }
 
   }
@@ -108,6 +111,7 @@ export class MultiVarStatDialogComponent implements OnInit {
         return ddi(b, a);
       }  );
     }
+    this.categoriesLoaded = true;
   }
 
   getVariableData(item) {

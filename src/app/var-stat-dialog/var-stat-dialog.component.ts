@@ -14,7 +14,9 @@ export class VarStatDialogComponent implements OnInit {
 
   sortedCategories = [];
   variable;
+  categoriesLoaded;
   ngOnInit(): void {
+    this.categoriesLoaded = false;
     if (typeof this.data.catgry !== 'undefined') {
       if (typeof this.data.catgry.length === 'undefined') {
         this.sortedCategories.push(this.data.catgry);
@@ -32,7 +34,9 @@ export class VarStatDialogComponent implements OnInit {
       this.sortedCategories.sort(  function(a, b ) {
         return ddi(b, a);
       }  );
+      this.categoriesLoaded = true;
     }
+
   }
 
   createCategories() {
@@ -59,6 +63,7 @@ export class VarStatDialogComponent implements OnInit {
     this.sortedCategories.sort(  (a, b) =>  {
       return ddi(b, a);
     }  );
+    this.categoriesLoaded = true;
   }
 
   isUndefined(val) {
