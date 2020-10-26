@@ -33,27 +33,27 @@ export class MultiVarStatDialogComponent implements OnInit {
   ngOnInit(): void {
     this.categoriesLoaded = false;
     for (let i = 0; i < this.data.length; i++) {
-      const selectedVar = this.data[i];
-      selectedVar.sortedCategories = [];
-      selectedVar.sumStats = null;
+      this.selectedVar = this.data[i];
+      this.selectedVar.sortedCategories = [];
+      this.selectedVar.sumStats = null;
 
-      if (typeof selectedVar['sumStat'] !== 'undefined') {
-        selectedVar.sumStats = this.ddiService.getSumStat(selectedVar);
+      if (typeof this.selectedVar['sumStat'] !== 'undefined') {
+        this.selectedVar.sumStats = this.ddiService.getSumStat(selectedVar);
       }
 
-      if (typeof selectedVar.catgry !== 'undefined') {
-        if (typeof selectedVar.catgry.length === 'undefined') {
-          selectedVar.sortedCategories.push(this.data[i].catgry);
+      if (typeof this.selectedVar.catgry !== 'undefined') {
+        if (typeof this.selectedVar.catgry.length === 'undefined') {
+          this.selectedVar.sortedCategories.push(this.data[i].catgry);
         } else {
-          for (const j of selectedVar.catgry) {
-            selectedVar.sortedCategories.push(j);
+          for (const j of this.selectedVar.catgry) {
+            this.selectedVar.sortedCategories.push(j);
           }
         }
       }
-      if (selectedVar.sortedCategories.length === 0) {
-        this.varsWithoutCategories.push(selectedVar);
+      if (this.selectedVar.sortedCategories.length === 0) {
+        this.varsWithoutCategories.push(this.selectedVar);
       }
-      this.selectedVars.push(selectedVar);
+      this.selectedVars.push(this.selectedVar);
     }
     if (this.varsWithoutCategories.length > 0) {
       this.createCategories();
