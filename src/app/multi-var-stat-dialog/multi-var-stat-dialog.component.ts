@@ -38,7 +38,7 @@ export class MultiVarStatDialogComponent implements OnInit {
       this.selectedVar.sumStats = null;
 
       if (typeof this.selectedVar['sumStat'] !== 'undefined') {
-        this.selectedVar.sumStats = this.ddiService.getSumStat(selectedVar);
+        this.selectedVar.sumStats = this.ddiService.getSumStat(this.selectedVar);
       }
 
       if (typeof this.selectedVar.catgry !== 'undefined') {
