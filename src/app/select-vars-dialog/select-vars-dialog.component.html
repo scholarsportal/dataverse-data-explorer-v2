@@ -3,8 +3,8 @@
 </button>
 <h2 mat-dialog-title class="h2">{{this.title}}</h2>
 
-  <mat-grid-list cols="3" >
-    <mat-grid-tile [rowspan]=2>
+  <mat-grid-list cols="5" rowHeight="3:4">
+    <mat-grid-tile [rowspan]=2 colspan='2'>
       <mat-selection-list #list class="mat-selection-list-big" [(ngModel)]="selectedOptions" (ngModelChange)="onSelectOrDeselectVar($event)">
         <h3 matSubheader>{{'CROSSTAB.ALLVAR' | translate}}</h3>
         <mat-list-option [value]='variable' *ngFor="let variable of variablesToSelect"  >
@@ -12,7 +12,7 @@
         </mat-list-option>
       </mat-selection-list>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile colspan='1'>
       <button color="accent" [attr.aria-label]="'CROSSTAB.MOVETOROWS' | translate" matTooltip="{{'CROSSTAB.MOVETOROWS' | translate}}" *ngIf="dirRow === 0" mat-raised-button (click)="onMoveToRows()">
         <mat-icon>east</mat-icon>
       </button>
@@ -21,7 +21,7 @@
       </button>
     </mat-grid-tile>
 
-    <mat-grid-tile>
+    <mat-grid-tile colspan="2">
       <mat-selection-list #varCol class="mat-selection-list-small"   [(ngModel)]="selectedOptionsRow" (ngModelChange)="onSelectOrDeselectRow($event)">
         <h3 matSubheader>{{'CROSSTAB.ROWS' | translate}}</h3>
         <mat-list-option [value]='variable' *ngFor="let variable of selectedVarsRow" >
@@ -29,7 +29,7 @@
         </mat-list-option>
       </mat-selection-list>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile colspan="1">
       <button color="accent" [attr.aria-label]="'CROSSTAB.MOVETOCOLS' | translate"  matTooltip="{{'CROSSTAB.MOVETOCOLS' | translate}}" mat-raised-button *ngIf="dirCol === 0" (click)="onMoveToCols()">
         <mat-icon>east</mat-icon>
       </button>
@@ -37,7 +37,7 @@
         <mat-icon>west</mat-icon>
       </button>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile colspan="2">
       <mat-selection-list #varRow class="mat-selection-list-small" [(ngModel)]="selectedOptionsCol" (ngModelChange)="onSelectOrDeselectCol($event)">
         <h3 matSubheader>{{'CROSSTAB.COLUMNS' | translate}}</h3>
         <mat-list-option [value]='variable' *ngFor="let variable of selectedVarsCol" >
