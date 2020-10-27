@@ -82,6 +82,8 @@ export class MultiVarStatDialogComponent implements OnInit {
           () => this.completeVariablesCat()
         );
       //  http://localhost:8080/api/access/datafile/41?variables=v885
+    } else {
+      this.categoriesLoaded = true;
     }
   }
 
@@ -155,7 +157,7 @@ export class MultiVarStatDialogComponent implements OnInit {
   }
 
   doCategoriesExist(item) {
-    if (item.sortedCategories.length === 0) {
+    if (item.sortedCategories === null || item.sortedCategories.length === 0) {
       return false;
     } else {
       return true;

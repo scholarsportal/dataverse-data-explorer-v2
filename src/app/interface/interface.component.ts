@@ -282,8 +282,10 @@ export class InterfaceComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     let url = this.siteUrl;
     if (!url) {
-      url = 'https://demodv.scholarsportal.info';
-      this.fileId = '10159';
+      this.snackBar.open(this.translate.instant('CROSSTAB.DATAVERSE') , '', {
+        duration: 2000
+      });
+      return;
     }
     if (this.fileId === null) {
       this.snackBar.open(this.translate.instant('SAVE.NOFILEID') , '', {
