@@ -20,6 +20,7 @@
   "VAR": {
     "SEARCH": "Search",
     "SELECT": "Select",
+    "DESELECT": "Remove Selection",
     "ID": "ID",
     "NAME": "Name",
     "LABEL": "Label",

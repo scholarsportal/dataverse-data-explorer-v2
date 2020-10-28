@@ -20,6 +20,7 @@
   "VAR": {
     "SEARCH": "Chercher",
     "SELECT": "Sélectionner",
+    "DESELECT": "Remove Selection FR",
     "ID": "ID",
     "NAME": "Nom",
     "LABEL": "Étiquette",
