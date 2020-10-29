@@ -1,6 +1,6 @@
 {
   "INTERFACE": {
-    "LANG": "Language FR"
+    "LANG": "Langue"
   },
   "GROUPS": {
     "HIDE": "Masquer les groupes",
@@ -10,36 +10,36 @@
   "SAVE": {
     "DOWNLOAD": "Télécharger",
     "DOWNLOADSUB": "Télécharger le sous-ensemble",
-    "DOWNLOADORIG": "Fichier au format d'origine",
-    "DOWNLOADTAB": "Fichier délimité par des tabulations",
-    "DOWNLOADRDATA": "Fichier au format RData",
-    "DOWNLOADVARMETA": "Métadonnées des variables",
-    "NOFILEID": "Cannot download, there is no file id FR",
-    "NOSELECT": "There was no selection FR"
+    "DOWNLOADORIG": "Télécharger le fichier en format original",
+    "DOWNLOADTAB": "Télécharger le fichier délimité par des tabulations",
+    "DOWNLOADRDATA": "Télécharger le fichier en format RData",
+    "DOWNLOADVARMETA": "Télécharger les métadonnées des variables",
+    "NOFILEID": "Téléchargement impossible, il n'y a pas d'identifiant de fichier",
+    "NOSELECT": "Aucune sélection n'a été faite"
   },
   "VAR": {
     "SEARCH": "Chercher",
     "SELECT": "Sélectionner",
-    "DESELECT": "Remove Selection FR",
+    "DESELECT": "Désélectionner",
     "ID": "ID",
     "NAME": "Nom",
-    "LABEL": "Étiquette",
+    "LABEL": "Libellé",
     "WEIGHT": "Poids",
-    "VIEW": "Visualiser FR",
-    "VIEWQUEST": "View Questions FR",
-    "VIEWSUMSTAT": "View Summary Statistics FR"
+    "VIEW": "Afficher les catégories",
+    "VIEWQUEST": "Afficher les questions",
+    "VIEWSUMSTAT": "Afficher les statistiques sommaires"
   },
   "VARDIALOG":{
     "VARINFO": "Information sur la variable",
     "LITQ": "Question littérale",
-    "INTINSTR": "Les directives pour l'intervieweur",
-    "POSTQ": "Instruction à propos de la question posée",
+    "INTINSTR": "Directives d'entrevue",
+    "POSTQ": "Instructions à propos de la question posée",
     "UNIVERSE": "Univers",
     "NOTES" : "Remarques",
     "GROUP" : "Groupe",
-    "WEIGHTVAR": "Variable de poids",
-    "UNWEIGHTED": "Non-pondéré",
-    "ISWEIGHT": "Pondéré",
+    "WEIGHTVAR": "Variable de pondération",
+    "UNWEIGHTED": "Non-pondéré(e)",
+    "ISWEIGHT": "Pondéré(e)",
     "UPDATE": "Mettre à jour",
     "CANCEL": "Annuler"
   },
@@ -49,19 +49,19 @@
     "CATEGORIES": "Catégories",
     "COUNT": "Nombre",
     "COUNTPER": "Nombre d'observations en %",
-    "WEIGHTCOUNT": "Chiffre pondéré",
-    "MEDIAN": "Median FR",
-    "STDEV": "Standard deviation FR",
-    "MIN": "Minimum FR",
-    "MAX": "Maximum FR",
-    "MEAN": "Mean FR",
-    "VALD": "Total Valid Count FR",
-    "INVD": "Total Invalid Count FR",
-    "OTHER": "Other FR",
-    "SUMMARYSTAT": "Summary Statistics FR",
-    "SELVARNOTE": "There are no variables FR",
-    "CROSSTAB": "Cross Tabulation FR",
-    "NOCATEGORIES": "This variable does not have any categories assigned FR"
+    "WEIGHTCOUNT": "Nombre d'observations (pondéré)",
+    "MEDIAN": "Médiane",
+    "STDEV": "Écart type",
+    "MIN": "Minimum",
+    "MAX": "Maximum",
+    "MEAN": "Moyenne",
+    "VALD": "Nombre d'observations valides",
+    "INVD": "Nombre d'observations manquantes",
+    "OTHER": "Autre",
+    "SUMMARYSTAT": "Statistiques sommaires",
+    "SELVARNOTE": "Il n'y a pas de variables",
+    "CROSSTAB": "Tableau croisé",
+    "NOCATEGORIES": "Variable sans catégorie attribuée"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE": "Éléments par page",
@@ -70,18 +70,18 @@
     "RANGE": "{{startIndex}} - {{endIndex}} de {{length}}"
   },
   "CROSSTAB": {
-    "TABLE": "Cross Tabulation Table FR",
-    "VARS": "Select Variables {{group}} For Cross Tabulation FR",
+    "TABLE": "Tableau croisé",
+    "VARS": "Sélectionner les variables {{group}} pour le tableau croisé",
     "ALLVAR": "Toutes les variables",
-    "ROWS": "Rows FR",
-    "COLUMNS": "Columns FR",
-    "TOTAL": "Total FR",
-    "DATAVERSE": "Data Explorer is not connected to Dataverse FR",
-    "TOOMANYVAR": "Too many selected variables. Please select not more than {{length}} variables FR",
-    "OK": "OK FR",
-    "MOVETOROWS": "Move to Rows FR",
-    "MOVETOCOLS": "Move to Columns FR",
-    "REMOVEFROMROWS": "Remove from Rows FR",
-    "REMOVEFROMCOLS": "Remove from Columns FR"
+    "ROWS": "Lignes",
+    "COLUMNS": "Colonnes",
+    "TOTAL": "Total",
+    "DATAVERSE": "L'outil Data Explorer n'est pas connecté à Dataverse",
+    "TOOMANYVAR": "Le nombre de variables sélectionnées est trop grand. Ne pas sélectionner plus de {{length}} variable(s)",
+    "OK": "Ok",
+    "MOVETOROWS": "Déplacer vers les lignes",
+    "MOVETOCOLS": "Déplacer vers les colonnes",
+    "REMOVEFROMROWS": "Retirer des lignes",
+    "REMOVEFROMCOLS": "Retirer des colonnes"
   }
 }
