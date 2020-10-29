@@ -20,6 +20,7 @@
   "VAR": {
     "SEARCH": "Chercher",
     "SELECT": "Sélectionner",
+    "DESELECT": "Désélectionner"
     "ID": "ID",
     "NAME": "Nom",
     "LABEL": "Libellé",
