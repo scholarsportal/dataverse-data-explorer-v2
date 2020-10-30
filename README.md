@@ -55,10 +55,10 @@ Next, copy the contents of `dataverse-data-explorer-v2/dist` into `dataverseDire
 
 Compile Dataverse and deploy it, then run the following command:
 
-for versions of Dataverse v4.17-v4.19
+#### Dataverse v4.17-v4.19
 
 `curl -X POST -H 'Content-type: application/json' --upload-file DataExplorer_v4.17up.json http://localhost:8080/api/admin/externalTools`
 
-for versions of Dataverse v4.20 and up
+#### Dataverse v4.20 and up
 
 `curl -X POST -H 'Content-type: application/json' --upload-file DataExplorer_v4.20up.json http://localhost:8080/api/admin/externalTools`
