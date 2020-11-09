@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DdiService } from '../ddi.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {TranslateService} from '@ngx-translate/core';
 
 interface TD {
   span: number;
@@ -15,7 +17,9 @@ interface TD {
 export class CrossTabDialogComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-              private ddiService: DdiService) {}
+              private ddiService: DdiService,
+              public snackBar: MatSnackBar,
+              private translate: TranslateService) {}
 
   selectedVarsCol = [];
   selectedVarsRow = [];
@@ -27,15 +31,32 @@ export class CrossTabDialogComponent implements OnInit {
   numberOfColumns;
   allPossibleCategoryCombRow;
   allPossibleCategoryCombCol;
+  varsWithoutCategories = [];
+  vars = [];
+  maxNumberOfCategories: number;
 
   ngOnInit(): void {
     this.selectedVarsCol = this.data.row; // Columns are Rows and Rows are Columns
     this.selectedVarsRow = this.data.col;
     this.numberOfRows = this.selectedVarsRow.length;
     this.numberOfColumns = this.selectedVarsCol.length;
+    this.maxNumberOfCategories = 100000;
 
     if (this.selectedVarsRow.length > 0) {
       this.calculateSortedCategories(this.selectedVarsRow);
+    }
+
+    if (this.selectedVarsCol.length > 0) {
+      this.calculateSortedCategories(this.selectedVarsCol);
+    }
+    if (this.varsWithoutCategories.length > 0) {
+      this.createCategories();
+    } else {
+      this.process();
+    }
+  }
+  process() {
+    if (this.selectedVarsRow.length > 0) {
       this.calculateSpanAndRepeat(this.selectedVarsRow);
       this.calculateCombineCategories(this.selectedVarsRow);
       // this.calculatePercRow(this.selectedVarsRow);
@@ -45,7 +66,6 @@ export class CrossTabDialogComponent implements OnInit {
     }
 
     if (this.selectedVarsCol.length > 0) {
-      this.calculateSortedCategories(this.selectedVarsCol);
       this.calculateSpanAndRepeat(this.selectedVarsCol);
       this.calculateCombineCategories(this.selectedVarsCol);
       this.allPossibleCategoryCombCol = this.calculateAllPossibleCategories(this.selectedVarsCol);
@@ -69,7 +89,7 @@ export class CrossTabDialogComponent implements OnInit {
               this.tableRows[index] = {
                 tds: [],
                 combinedCategories: [],
-                totalNumber : {
+                totalNumber: {
                   numbers: 0,
                   percentages: 0
                 }
@@ -83,8 +103,6 @@ export class CrossTabDialogComponent implements OnInit {
     }
 
     this.calculateCrossTabPercentages();
-
-
   }
   sortCategories(selectedVar) {
     if (typeof selectedVar.catgry !== 'undefined') {
@@ -99,6 +117,8 @@ export class CrossTabDialogComponent implements OnInit {
       selectedVar.sortedCategories.sort((a, b) => {
         return a.catValu - b.catValu;
       });
+    } else {
+      this.varsWithoutCategories.push(selectedVar);
     }
   }
   calculateSortedCategories(selectedVars) {
@@ -156,12 +176,21 @@ export class CrossTabDialogComponent implements OnInit {
     const allPossibleCategoryComb = [];
     for (let k = 0; k < selectedVars[selectedVars.length - 1].combinedCategories.length; k++) {
       allPossibleCategoryComb[k] = [];
-      allPossibleCategoryComb[k] = selectedVars[selectedVars.length - 1].combinedCategories[k].catValu;
+      if (isNaN(selectedVars[selectedVars.length - 1].combinedCategories[k].catValu)) {
+        allPossibleCategoryComb[k] = '\"' + selectedVars[selectedVars.length - 1].combinedCategories[k].catValu + '\"';
+      } else {
+        allPossibleCategoryComb[k] = selectedVars[selectedVars.length - 1].combinedCategories[k].catValu;
+      }
       let pos = k;
       for (let i = selectedVars.length - 2; i > -1; i-- ) {
         pos = Math.floor(pos / selectedVars[i + 1].sortedCategories.length);
-        allPossibleCategoryComb[k] =  selectedVars[i].combinedCategories[pos].catValu +
-          '\t' + allPossibleCategoryComb[k];
+        if (isNaN(selectedVars[i].combinedCategories[pos].catValu)) {
+          allPossibleCategoryComb[k] = '\"' + selectedVars[i].combinedCategories[pos].catValu + '\"' +
+            '\t' + allPossibleCategoryComb[k];
+        } else {
+          allPossibleCategoryComb[k] = selectedVars[i].combinedCategories[pos].catValu +
+            '\t' + allPossibleCategoryComb[k];
+        }
       }
     }
     return allPossibleCategoryComb;
@@ -195,11 +224,11 @@ export class CrossTabDialogComponent implements OnInit {
         if (this.numberOfRows > 0 && this.numberOfColumns > 0 ) {
           key = this.allPossibleCategoryCombRow[k] + '\t' + this.allPossibleCategoryCombCol[i];
         } else if (this.numberOfColumns > 0 ){
-          key = this.allPossibleCategoryCombCol[i];
+            key  = this.allPossibleCategoryCombCol[i];
         } else {
-          key = this.allPossibleCategoryCombRow[k];
+            key = this.allPossibleCategoryCombRow[k];
         }
-        const value = map.get(key)
+        const value = map.get(key);
         if (typeof value !== 'undefined') {
           this.tableRows[i].combinedCategories[k] = {
             numbers: value,
@@ -292,6 +321,7 @@ export class CrossTabDialogComponent implements OnInit {
     }
     this.calculateNumbersofCategories(mapCategories);
     this.sumRow = null;
+    console.log(this.tableRows);
     if (this.tableRows !== null && this.selectedVarsRow.length > 0) {
       this.sumRow = new Array(this.tableRows[this.selectedVarsRow.length - 1].combinedCategories.length > 0);
       for (let k = 0; k < this.tableRows[this.selectedVarsRow.length - 1].combinedCategories.length; k++) {
@@ -310,6 +340,83 @@ export class CrossTabDialogComponent implements OnInit {
 
   completeVariables() {
 
+  }
+
+  createCategories() {
+    let vars = this.varsWithoutCategories[0]['@ID'];
+    for (let i = 1; i < this.varsWithoutCategories.length; i++) {
+      vars = vars + ',' + this.varsWithoutCategories[i]['@ID'];
+    }
+    const detailUrl = this.ddiService.getDetailUrl(vars);
+    if (detailUrl !== null) {
+      this.ddiService
+        .getDDI(detailUrl)
+        .subscribe(
+          data => this.processVariablesCat(data),
+          error => console.log(error),
+          () => this.completeVariablesCat()
+        );
+      //  http://localhost:8080/api/access/datafile/41?variables=v885
+    } else {
+      // this.categoriesLoaded = true;
+    }
+  }
+
+  processVariablesCat(data) {
+    const tempVars = this.ddiService.processVariables(data, '\n');
+    if (tempVars.length > 0) {
+      const names = this.ddiService.processVariables(tempVars[0], '\t');
+      let vars = new Array(names.length);
+      for (let k = 0; k < names.length; k++) {
+        vars[k] = [];
+      }
+      for (let i = 1; i < tempVars.length; i++) {
+        const temp = this.ddiService.processVariables(tempVars[i], '\t');
+        for (let k = 0; k < temp.length; k++) {
+          vars[k].push(temp[k]);
+        }
+      }
+      this.vars = vars;
+    }
+  }
+
+  completeVariablesCat() {
+    const ddi = this.ddiService.sorting.bind(this);
+    for (let i = 0; i < this.vars.length; i++ ) {
+      this.varsWithoutCategories[i].sortedCategories = this.ddiService.completeVariableForCategories(this.vars[i]);
+      this.varsWithoutCategories[i].sortedCategories.sort(  (a, b) =>  {
+        return ddi(b, a);
+      }  );
+    }
+    let totalCategories = 1;
+    const selectedRowsWithCategories = [];
+    for (const row of this.selectedVarsRow) {
+      if (row.sortedCategories.length > 0) {
+        selectedRowsWithCategories.push(row);
+        totalCategories = totalCategories * row.sortedCategories.length;
+      }
+    }
+    this.selectedVarsRow = selectedRowsWithCategories;
+
+    const selectedColsWithCategories = [];
+    for (const col of this.selectedVarsCol) {
+      if (col.sortedCategories.length > 0) {
+        selectedRowsWithCategories.push(col);
+        totalCategories = totalCategories * col.sortedCategories.length;
+      }
+    }
+    this.selectedVarsCol = selectedColsWithCategories;
+
+    this.numberOfRows = this.selectedVarsRow.length;
+    this.numberOfColumns = this.selectedVarsCol.length;
+    console.log(totalCategories);
+    if (totalCategories > this.maxNumberOfCategories) {
+      this.snackBar.open(this.translate.instant('CROSSTAB.TOOMANYVAR', {length}), '', {
+        duration: 2000
+      });
+      return;
+    }
+    this.process();
   }
 
 
