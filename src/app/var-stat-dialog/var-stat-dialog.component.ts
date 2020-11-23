@@ -58,7 +58,7 @@ export class VarStatDialogComponent implements OnInit {
   }
 
   completeVariables() {
-    this.sortedCategories = this.ddiService.completeVariableForCategories(this.variable);
+    this.sortedCategories = this.ddiService.completeVariableForCategories(this.variable, 1, false);
     const ddi = this.ddiService.sorting.bind(this);
     this.sortedCategories.sort(  (a, b) =>  {
       return ddi(b, a);

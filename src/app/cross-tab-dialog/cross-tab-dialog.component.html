@@ -1,4 +1,5 @@
 <div mat-dialog-content>
+  <div  id="loading-details" *ngIf="categoriesLoaded">
   <button mat-icon-button mat-dialog-close matTooltip="{{'VARDIALSTAT.CLOSE' | translate}}" class="close-dialog">
     <mat-icon [attr.aria-label]="'VARDIALSTAT.CLOSE' | translate">close</mat-icon>
   </button>
@@ -41,5 +42,5 @@
       </tr>
     </ng-container>
   </table>
-
+  </div>
 </div>

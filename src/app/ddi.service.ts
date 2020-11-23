@@ -85,31 +85,48 @@ export class DdiService {
     return stdv;
   }
 
-  calculateValidVariable(variable) {
+  calculateValidVariable(variable, numericalVariable, indx) {
     const validVariable = [];
-    for (const v of variable ) {
-      if (v !== null && typeof v !== 'undefined' && v.localeCompare('') !== 0  && !isNaN(Number(v))) {
-        const vNum = parseFloat(v);
-        validVariable.push(vNum);
+    for (let i = indx; i < variable.length; i++ ) {
+      if (variable[i] !== null && typeof variable[i] !== 'undefined') {
+        if (isNaN(parseFloat(variable[i]))) {
+          if (variable[i].trim().localeCompare('') !== 0) {
+            validVariable.push(variable[i]);
+          }
+        } else {
+          numericalVariable.push(parseFloat(variable[i]));
+          validVariable.push(variable[i]);
+        }
       }
     }
+
     return validVariable;
+
   }
 
-  calculateValidVariableForCategories(variable) {
+ /* calculateValidVariableForCategories(variable, indx, crosstab) {
     const validVariable = [];
-    for (let i = 1; i < variable.length; i++ ) {
-      if (variable[i] !== null && typeof variable[i] !== 'undefined' && variable[i].localeCompare('') !== 0) {
-     /*   if (variable[i].substring(0, 1).localeCompare('\"') !== 0 &&
-          variable[i].substring(variable[i].length - 1, 1).localeCompare('\"') !== 0) {*/
-          validVariable.push(variable[i].substring(1, variable[i].length - 1));
-       /* } else {
-          validVariable.push(variable[i]);
-        }*/
+    for (let i = indx; i < variable.length; i++ ) {
+
+      if (variable[i] !== null && typeof variable[i] !== 'undefined') {
+        let trimVar = null;
+        if (!crosstab) {
+          trimVar = variable[i].substring(1, variable[i].length - 1).trim();
+        } else {
+          trimVar = variable[i];
+        }
+        if (trimVar.localeCompare('') !== 0) {*/
+          /*   if (variable[i].substring(0, 1).localeCompare('\"') !== 0 &&
+               variable[i].substring(variable[i].length - 1, 1).localeCompare('\"') !== 0) {*/
+          //validVariable.push(trimVar);
+          /* } else {
+             validVariable.push(variable[i]);
+           }*/
+  /*      }
       }
     }
     return validVariable;
-  }
+  } */
 
   calculateMean(variable) {
     let sum = 0;
@@ -175,9 +192,14 @@ export class DdiService {
   processVariables(data, separator) {
     const variable = data.split(separator);
     return variable;
-
   }
-  completeVariables(variable) {
+  completeVariables(variable, indx) {
+    const numericalVariable = [];
+    const validVariable = this.calculateValidVariable(variable, numericalVariable, indx);
+    const sumStats = this.calculateSummaryStatistics(validVariable, numericalVariable, variable, indx);
+    return sumStats;
+  }
+  calculateSummaryStatistics(validVariable, numericalVariable, variable, indx ) {
     const sumStats = {medn : null,
       stdev: null,
       min: null,
@@ -186,32 +208,39 @@ export class DdiService {
       vald: null,
       invd: null,
       other: null};
-    const validVariable = this.calculateValidVariable(variable);
-    sumStats.vald = validVariable.length;
+    sumStats.vald = validVariable.length - 1 + indx;
     sumStats.invd = variable.length - sumStats.vald - 2;
-    if (validVariable.length > 0) {
-      sumStats.mean = this.calculateMean(validVariable);
-      sumStats.medn = this.calculateMedian(validVariable);
-      sumStats.min = Math.min.apply(null, validVariable);
-      sumStats.max = Math.max.apply(null, validVariable);
-      sumStats.stdev = this.calculateStDev(validVariable, sumStats.mean);
+    if (numericalVariable.length > 0) {
+      sumStats.mean = this.calculateMean(numericalVariable);
+      sumStats.medn = this.calculateMedian(numericalVariable);
+      sumStats.min = Math.min.apply(null, numericalVariable);
+      sumStats.max = Math.max.apply(null, numericalVariable);
+      sumStats.stdev = this.calculateStDev(numericalVariable, sumStats.mean);
     }
     return sumStats;
   }
-  completeVariableForCategories(variable) {
+  completeVariableForCategories(variable, indx, crosstab) {
     const createdCategories = [];
-    const validVariable = this.calculateValidVariableForCategories(variable);
+    const numericalVariable = [];
+    const validVariable = this.calculateValidVariable(variable, numericalVariable, indx);
     const dict = {};
     let dictLength = 0;
     for (const varValid of validVariable) {
-      if (typeof  dict[varValid] === 'undefined') {
-        dict[varValid] = 1;
+      let varClean = varValid;
+      if (!crosstab) {
+        if (varClean.substring(0, 1).localeCompare('"') === 0 &&
+          (varClean.substring(varValid.length - 1, varValid.length ).localeCompare('"') === 0)) {
+          varClean = varValid.substring(1, varValid.length - 1).trim();
+        }
+      }
+      if (typeof  dict[varClean] === 'undefined') {
+        dict[varClean] = 1;
         dictLength = dictLength + 1;
       } else {
-        dict[varValid] = dict[varValid] + 1;
+        dict[varClean] = dict[varClean] + 1;
       }
     }
-    if (dictLength < validVariable.length * 0.5 ) {
+    if (dictLength < validVariable.length * 0.7 ) {
       for (const key in dict) {
         const row = {
           catValu: null,
@@ -219,9 +248,15 @@ export class DdiService {
           catStat: {'@type': 'freq', '#text': ''},
           countPerc: null
         };
+        let keyClean = key;
+        if (key.substring(0, 1).localeCompare('"') === 0 &&
+          (key.substring(key.length - 1, key.length ).localeCompare('"') === 0)) {
+          keyClean = key.substring(1, key.length - 1).trim();
+        }
+
         row.catValu = key;
         row.catStat['#text'] = dict[key].toString();
-        row.labl['#text'] = key;
+        row.labl['#text'] = keyClean;
         row.countPerc = (dict[key] / validVariable.length) * 100;
 
         createdCategories.push(row);

@@ -108,7 +108,7 @@ export class MultiVarStatDialogComponent implements OnInit {
   completeVariablesCat() {
     const ddi = this.ddiService.sorting.bind(this);
     for (let i = 0; i < this.vars.length; i++ ) {
-      this.varsWithoutCategories[i].sortedCategories = this.ddiService.completeVariableForCategories(this.vars[i]);
+      this.varsWithoutCategories[i].sortedCategories = this.ddiService.completeVariableForCategories(this.vars[i], 0, false);
       this.varsWithoutCategories[i].sortedCategories.sort(  (a, b) =>  {
         return ddi(b, a);
       }  );
@@ -141,7 +141,7 @@ export class MultiVarStatDialogComponent implements OnInit {
     this.variable = this.ddiService.processVariables(data, '\n');
   }
   completeVariables(item) {
-    item.sumStats = this.ddiService.completeVariables(this.variable);
+    item.sumStats = this.ddiService.completeVariables(this.variable, 0);
   }
 
   isUndefined(val) {
@@ -153,7 +153,7 @@ export class MultiVarStatDialogComponent implements OnInit {
   }
 
   isNotEmpty(val) {
-    return val !== null && typeof val !== 'undefined' && val !== 'NaN';
+    return val !== null && typeof val !== 'undefined';
   }
 
   doCategoriesExist(item) {

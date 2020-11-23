@@ -78,6 +78,7 @@
     "TOTAL": "Total",
     "DATAVERSE": "L'outil Data Explorer n'est pas connecté à Dataverse",
     "TOOMANYVAR": "Le nombre de variables sélectionnées est trop grand. Ne pas sélectionner plus de {{length}} variable(s)",
+    "TOOMANYCAT": "Le nombre du catégories est trop grand.",
     "OK": "Ok",
     "MOVETOROWS": "Déplacer vers les lignes",
     "MOVETOCOLS": "Déplacer vers les colonnes",
