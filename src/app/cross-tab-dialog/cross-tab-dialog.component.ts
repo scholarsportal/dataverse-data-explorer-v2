@@ -35,7 +35,6 @@ export class CrossTabDialogComponent implements OnInit {
   vars = [];
   maxNumberOfCategories: number;
   categoriesLoaded: boolean;
-  mapCategories;
 
   ngOnInit(): void {
     this.categoriesLoaded = false;
@@ -43,8 +42,7 @@ export class CrossTabDialogComponent implements OnInit {
     this.selectedVarsRow = this.data.col;
     this.numberOfRows = this.selectedVarsRow.length;
     this.numberOfColumns = this.selectedVarsCol.length;
-    this.maxNumberOfCategories = 100000;
-    this.mapCategories = null;
+    this.maxNumberOfCategories = 50000;
     if (this.selectedVarsRow.length > 0) {
       this.calculateSortedCategories(this.selectedVarsRow);
     }
@@ -52,6 +50,7 @@ export class CrossTabDialogComponent implements OnInit {
     if (this.selectedVarsCol.length > 0) {
       this.calculateSortedCategories(this.selectedVarsCol);
     }
+
     if (this.varsWithoutCategories.length > 0) {
       this.createCategories();
     } else {
@@ -63,7 +62,6 @@ export class CrossTabDialogComponent implements OnInit {
       this.calculateSpanAndRepeat(this.selectedVarsRow);
       this.calculateCombineCategories(this.selectedVarsRow);
       // this.calculatePercRow(this.selectedVarsRow);
-
       this.allPossibleCategoryCombRow = this.calculateAllPossibleCategories(this.selectedVarsRow);
 
     }
@@ -177,6 +175,7 @@ export class CrossTabDialogComponent implements OnInit {
   calculateAllPossibleCategories(selectedVars) {
     const allPossibleCategoryComb = [];
     for (let k = 0; k < selectedVars[selectedVars.length - 1].combinedCategories.length; k++) {
+      //console.log(selectedVars[selectedVars.length - 1].combinedCategories[k].catValu);
       allPossibleCategoryComb[k] = [];
      // if (isNaN(selectedVars[selectedVars.length - 1].combinedCategories[k].catValu)) {
      //   allPossibleCategoryComb[k] = '\"' + selectedVars[selectedVars.length - 1].combinedCategories[k].catValu + '\"';
@@ -228,6 +227,7 @@ export class CrossTabDialogComponent implements OnInit {
         } else {
             key = this.allPossibleCategoryCombRow[k];
         }
+
         const value = map.get(key);
         if (typeof value !== 'undefined') {
           this.tableRows[i].combinedCategories[k] = {
@@ -256,65 +256,61 @@ export class CrossTabDialogComponent implements OnInit {
   }
 
   calculateCrossTabPercentages() {
-    if (this.mapCategories === null) {
+    let siteUrl = this.ddiService.getParameterByName('siteUrl');
+    let fileId = this.ddiService.getParameterByName('fileId');
+    let key = this.ddiService.getParameterByName('key');
+    let detailUrl = null;
+    let variables = '';
 
-      let siteUrl = this.ddiService.getParameterByName('siteUrl');
-      let fileId = this.ddiService.getParameterByName('fileId');
-      let key = this.ddiService.getParameterByName('key');
-      let detailUrl = null;
-      let variables = '';
-
-      for (const variable of this.selectedVarsRow) {
-        if (variables === '') {
-          variables = variables + variable['@ID'];
-        } else {
-          variables = variables + ',' + variable['@ID'];
-        }
-      }
-      for (const variable of this.selectedVarsCol) {
-        if (variables === '') {
-          variables = variables + variable['@ID'];
-        } else {
-          variables = variables + ',' + variable['@ID'];
-        }
-      }
-      if (!siteUrl) {
-        const baseUrl = 'https://demodv.scholarsportal.info';
-        //fileId = '3';
-        fileId = '10159';
-        detailUrl =
-          baseUrl +
-          '/api/access/datafile/' +
-          fileId +
-          '?format=subset&variables=' +
-          variables +
-          '&key=' +
-          key;
+    for (const variable of this.selectedVarsRow) {
+      if (variables === '') {
+        variables = variables + variable['@ID'];
       } else {
-        detailUrl =
-          siteUrl +
-          '/api/access/datafile/' +
-          fileId +
-          '?format=subset&variables=' +
-          variables +
-          '&key=' +
-          key;
+        variables = variables + ',' + variable['@ID'];
       }
-
-      this.ddiService
-        .getDDI(detailUrl)
-        .subscribe(
-          data => this.processVariables(data),
-          error => console.log(error),
-          () => this.completeVariables()
-        );
-      //  http://localhost:8080/api/access/datafile/41?variables=v885
-    } else {
-      this.processCrossTabPercentage();
     }
+    for (const variable of this.selectedVarsCol) {
+      if (variables === '') {
+        variables = variables + variable['@ID'];
+      } else {
+        variables = variables + ',' + variable['@ID'];
+      }
+    }
+    if (!siteUrl) {
+      const baseUrl = 'https://demodv.scholarsportal.info';
+      //fileId = '3';
+      fileId = '10159';
+      detailUrl =
+        baseUrl +
+        '/api/access/datafile/' +
+        fileId +
+        '?format=subset&variables=' +
+        variables +
+        '&key=' +
+        key;
+    } else {
+      detailUrl =
+        siteUrl +
+        '/api/access/datafile/' +
+        fileId +
+        '?format=subset&variables=' +
+        variables +
+        '&key=' +
+        key;
+    }
+
+    this.ddiService
+      .getDDI(detailUrl)
+      .subscribe(
+        data => this.processVariables(data),
+        error => console.log(error),
+        () => this.completeVariables()
+      );
+    //  http://localhost:8080/api/access/datafile/41?variables=v885
+
   }
-  processCrossTabPercentage() {
-    this.calculateNumbersofCategories(this.mapCategories);
+  processCrossTabPercentage(map) {
+    this.calculateNumbersofCategories(map);
     this.sumRow = null;
     if (this.tableRows !== null && this.selectedVarsRow.length > 0 &&
       !(typeof this.tableRows[this.selectedVarsRow.length - 1] === 'undefined')) {
@@ -335,17 +331,15 @@ export class CrossTabDialogComponent implements OnInit {
 
   processVariables(data) {
     const variables = data.split('\n');
-    if (this.mapCategories === null) {
-      this.mapCategories = new Map();
-      for (let i = 1; i < variables.length; i++) {
-        if (this.mapCategories.has(variables[i])) {
-          this.mapCategories.set(variables[i], this.mapCategories.get(variables[i]) + 1);
-        } else {
-          this.mapCategories.set(variables[i], 1);
-        }
+    const map = new Map();
+    for (let i = 1; i < variables.length; i++) {
+      if (map.has(variables[i])) {
+        map.set(variables[i], map.get(variables[i]) + 1);
+      } else {
+        map.set(variables[i], 1);
       }
     }
-    this.processCrossTabPercentage();
+    this.processCrossTabPercentage(map);
   }
 
   completeVariables() {
@@ -376,7 +370,7 @@ export class CrossTabDialogComponent implements OnInit {
     const tempVars = this.ddiService.processVariables(data, '\n');
     if (tempVars.length > 0) {
       const names = this.ddiService.processVariables(tempVars[0], '\t');
-      let vars = new Array(names.length);
+      const vars = new Array(names.length);
       for (let k = 0; k < names.length; k++) {
         vars[k] = [];
       }
@@ -394,7 +388,7 @@ export class CrossTabDialogComponent implements OnInit {
         }
       }
       this.vars = vars;
-      this.mapCategories = new Map();
+      /*this.mapCategories = new Map();
       for (let i = 0; i < this.vars[0].length; i++) {
         let temp = '';
         for (let j = 0; j < this.vars.length; j++) {
@@ -409,7 +403,7 @@ export class CrossTabDialogComponent implements OnInit {
             this.mapCategories.set(temp, 1);
           }
         }
-      }
+      }*/
     }
   }
 
