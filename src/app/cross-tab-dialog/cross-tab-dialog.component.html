@@ -8,14 +8,14 @@
 
   <table class="table-bordered">
     <tr *ngFor="let item of selectedVarsRow; let i=index">
-      <th scope="row" [colSpan]="selectedVarsCol.length">{{item["@name"]}}</th>
+      <th scope="row" [colSpan]="selectedVarsCol.length">{{item["@name"]}} - {{item.labl["#text"].trim().substring(0,45)}}</th>
 
       <td [colSpan]="item.span" *ngFor="let category of item.combinedCategories">{{category.labl["#text"]}}</td>
       <td *ngIf="i==0">{{'CROSSTAB.TOTAL'| translate}}</td>
     </tr>
 
     <tr>
-      <th *ngFor="let item of selectedVarsCol" scope="col">{{item["@name"]}}</th>
+      <th *ngFor="let item of selectedVarsCol" scope="col">{{item["@name"]}} - {{item.labl["#text"].trim().substring(0,45)}}</th>
     </tr>
 
     <ng-container *ngIf="numberOfColumns == 0">

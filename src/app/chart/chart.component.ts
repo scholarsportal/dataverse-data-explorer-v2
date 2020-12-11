@@ -106,7 +106,7 @@ export class ChartComponent implements OnInit {
         return ddi(a, b);
     })  );
     // set the dimensions and margins of the graph
-    const margin = { top: 0, right: 20, bottom: 30, left: 90 };
+    const margin = { top: 0, right: 20, bottom: 30, left: 94 };
     const width = 450 - margin.left - margin.right;
     const height = maxHeight - margin.top - margin.bottom;
 
