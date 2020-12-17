@@ -141,7 +141,7 @@ export class VarComponent implements OnInit {
     const data = this.getObjByID(_id, this._variables);
     // open a dialog showing the variables
     this.dialogStatRef = this.dialog.open(VarStatDialogComponent, {
-      width: '35em',
+      width: '40em',
       data: data,
       panelClass: 'field_width'
     });

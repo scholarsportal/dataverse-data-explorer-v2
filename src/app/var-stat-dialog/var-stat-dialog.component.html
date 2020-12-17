@@ -13,6 +13,7 @@
       <th>{{'VARDIALSTAT.COUNT' | translate}}</th>
       <th>{{'VARDIALSTAT.COUNTPER' | translate}}</th>
       <th>{{'VARDIALSTAT.WEIGHTCOUNT' | translate}}</th>
+      <th>{{'VARDIALSTAT.WEIGHTCOUNTPER' | translate}}</th>
     </tr>
     <tr *ngFor="let row of sortedCategories">
       <td>{{row.catValu}}</td>
@@ -31,6 +32,10 @@
         <ng-template #elseBloc2>
           <td></td>
         </ng-template>
+      </ng-template>
+      <td *ngIf="doesExist(row.catStat.length); else elseBloc3">{{row.weightCountPerc | number}}</td>
+      <ng-template #elseBloc3>
+        <td></td>
       </ng-template>
     </tr>
   </table>

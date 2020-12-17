@@ -50,6 +50,7 @@
     "COUNT": "Nombre",
     "COUNTPER": "Nombre d'observations en %",
     "WEIGHTCOUNT": "Nombre d'observations (pondéré)",
+    "WEIGHTCOUNTPER": "Nombre d'observations (pondéré) en %",
     "MEDIAN": "Médiane",
     "STDEV": "Écart type",
     "MIN": "Minimum",

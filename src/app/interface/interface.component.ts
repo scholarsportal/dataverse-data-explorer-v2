@@ -212,6 +212,10 @@ export class InterfaceComponent implements OnInit, AfterViewInit, AfterViewCheck
           if (typeof obj.var.catgry[k].catStat !== 'undefined') {
             // tslint:disable-next-line:radix
             obj.var.catgry[k].countPerc = parseInt(obj.var.catgry[k].catStat[0]['#text']) * 100 / sumCount;
+            if (typeof obj.var.catgry[k].catStat[1] !== 'undefined') {
+              // tslint:disable-next-line:radix
+              obj.var.catgry[k].weightCountPerc = parseInt(obj.var.catgry[k].catStat[1]['#text']) * 100 / sumCount;
+            }
           }
         }
         obj.var.sumCount = sumCount;
@@ -370,7 +374,7 @@ export class InterfaceComponent implements OnInit, AfterViewInit, AfterViewCheck
   onShowSumStat() {
     if (this.child.selection.selected.length > 0) {
       this.multiVarDialogStatRef = this.dialog.open(MultiVarStatDialogComponent, {
-        width: '35em',
+        width: '40em',
         data: this.child.selection.selected,
         panelClass: 'field_width'
       });

@@ -50,6 +50,7 @@
     "COUNT": "Count",
     "COUNTPER": "Count Percentage(%)",
     "WEIGHTCOUNT": "Weighted Count",
+    "WEIGHTCOUNTPER": "Weighted Count Percentage(%)",
     "MEDIAN": "Median",
     "STDEV": "Standard deviation",
     "MIN": "Minimum",
