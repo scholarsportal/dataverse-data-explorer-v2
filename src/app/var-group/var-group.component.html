@@ -1,10 +1,11 @@
 <mat-nav-list class="groups-list">
 
   <mat-divider></mat-divider>
-  <a mat-list-item (click)="showAll()" [ngClass]="{'active': allActive }">{{'GROUPS.ALLVAR' | translate}}</a>
+  <a mat-list-item href="" (click)="showAll()" [ngClass]="{'active': allActive }">{{'GROUPS.ALLVAR' | translate}}</a>
   <mat-divider></mat-divider>
   <a mat-list-item
      id="{{tab.varGrp['@ID']}}"
+     href=""
      [disableRipple]="true"
      *ngFor="let tab of variableGroups"
      (click)="onGroupClick(tab)"
