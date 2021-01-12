@@ -199,22 +199,25 @@ export class InterfaceComponent implements OnInit, AfterViewInit, AfterViewCheck
           obj.var.catgry = [obj.var.catgry];
         }
         let sumCount = 0;
+        let sumCountWeighted = 0;
         for (let k = 0; k < obj.var.catgry.length; k++) {
           if (typeof obj.var.catgry[k].catStat !== 'undefined') {
             if (typeof obj.var.catgry[k].catStat.length === 'undefined') {
               obj.var.catgry[k].catStat = [obj.var.catgry[k].catStat];
             }
-            // tslint:disable-next-line:radix
-            sumCount = sumCount + parseInt(obj.var.catgry[k].catStat[0]['#text']);
+            sumCount = sumCount + parseFloat(obj.var.catgry[k].catStat[0]['#text']);
+            if (typeof obj.var.catgry[k].catStat[1] !== 'undefined') {
+              sumCountWeighted = sumCountWeighted + parseFloat(obj.var.catgry[k].catStat[1]['#text']);
+            }
           }
         }
+
         for (let k = 0; k < obj.var.catgry.length; k++) {
           if (typeof obj.var.catgry[k].catStat !== 'undefined') {
             // tslint:disable-next-line:radix
-            obj.var.catgry[k].countPerc = parseInt(obj.var.catgry[k].catStat[0]['#text']) * 100 / sumCount;
+            obj.var.catgry[k].countPerc = parseFloat(obj.var.catgry[k].catStat[0]['#text']) * 100 / sumCount;
             if (typeof obj.var.catgry[k].catStat[1] !== 'undefined') {
-              // tslint:disable-next-line:radix
-              obj.var.catgry[k].weightCountPerc = parseInt(obj.var.catgry[k].catStat[1]['#text']) * 100 / sumCount;
+              obj.var.catgry[k].weightCountPerc = parseFloat(obj.var.catgry[k].catStat[1]['#text']) * 100 / sumCountWeighted;
             }
           }
         }
