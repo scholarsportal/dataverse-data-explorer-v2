@@ -7,8 +7,8 @@
     <mat-grid-tile [rowspan]=2 colspan='2'>
       <mat-selection-list #list class="mat-selection-list-big" [(ngModel)]="selectedOptions" (ngModelChange)="onSelectOrDeselectVar($event)">
         <h3 matSubheader>{{'CROSSTAB.ALLVAR' | translate}}</h3>
-        <mat-list-option [value]='variable' *ngFor="let variable of variablesToSelect"  >
-          <a mat-list-item> <span>{{ variable["@shortname"]}} - {{variable.labl['#text'].substring(0,45)}}</span> </a>
+        <mat-list-option [value]='variable' *ngFor="let variable of variablesToSelect">
+          {{ variable["@shortname"]}} - {{variable.labl['#text'].substring(0,45)}}
         </mat-list-option>
       </mat-selection-list>
     </mat-grid-tile>
@@ -25,7 +25,7 @@
       <mat-selection-list #varCol class="mat-selection-list-small"   [(ngModel)]="selectedOptionsRow" (ngModelChange)="onSelectOrDeselectRow($event)">
         <h3 matSubheader>{{'CROSSTAB.ROWS' | translate}}</h3>
         <mat-list-option [value]='variable' *ngFor="let variable of selectedVarsRow" >
-          <a mat-list-item> <span>{{ variable["@shortname"]}} - {{variable.labl['#text'].substring(0,45)}}</span> </a>
+          {{ variable["@shortname"]}} - {{variable.labl['#text'].substring(0,45)}}
         </mat-list-option>
       </mat-selection-list>
     </mat-grid-tile>
