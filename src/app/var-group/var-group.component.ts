@@ -30,6 +30,7 @@ export class VarGroupComponent implements OnInit {
     this.allActive = true;
     this.subSetRows.emit();
     this.selection.clear();
+    return false;
   }
   onGroupClick(_obj) {
     this.ddiService.clearSearch();
@@ -39,6 +40,7 @@ export class VarGroupComponent implements OnInit {
     this.subSetRows.emit(vars);
     this.showActive(obj.varGrp['@ID']);
     this.selection.clear();
+    return false;
   }
 
   showActive(_id?) {
