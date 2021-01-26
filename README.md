@@ -1,6 +1,14 @@
 # dataverse-data-explorer-v2
 
-Version 2 of the Dataverse Data Explorer. 
+Version 2 of the Dataverse Data Explorer.
+
+The Data Explorer is a web application which lists the variables in a tabular data file and allows users to view categories and summary statistics, see charts of the data, and conduct cross tabulation analysis.
+
+This stand-alone component is built to complement [The Dataverse Project](https://dataverse.org). The Data Explorer is integrated as part of the dataset.xhtml and file.xhtml pages, revealing an Explore button for tabular data files upon installation.
+
+Here's a demo of the tool in action - this should be used for testing purposes only: https://scholarsportal.github.io/dataverse-data-explorer-v2/?siteUrl=https://dataverse.scholarsportal.info&fileId=8988
+
+You can also test this tool with your own tabular files in [the Scholars Portal demo dataverse instance](https://demodv.scholarsportal.info/dataverse.xhtml). To test the tool, create your account or log in, create a dataset with tabular files (e.g. SPSS, Stata, XLSX, CSV), then click the "Explore" button in the file list after the file has been ingested by Dataverse.
 
 ## Installation
 
@@ -60,3 +68,11 @@ Compile Dataverse and deploy it, then run the following command:
 #### Dataverse v4.20 and up
 
 `curl -X POST -H 'Content-type: application/json' --upload-file DataExplorer_v4.20up.json http://localhost:8080/api/admin/externalTools`
+
+## Languages
+
+The Data Explorer is currently available in English and French. If you would like to submit a new translation, please submit a pull request or file an issue. The language files for the application are located in `/src/assets/i18n/`
+
+## Issues
+
+If you encounter a bug or have a feature request, please file an issue in this repository. Pull requests are also welcome.
