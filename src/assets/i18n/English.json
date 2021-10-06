@@ -20,6 +20,7 @@
   "VAR": {
     "SEARCH": "Search",
     "SELECT": "Select",
+    "SELECTALL": "Select all",
     "DESELECT": "Remove Selection",
     "ID": "ID",
     "NAME": "Name",

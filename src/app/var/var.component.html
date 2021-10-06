@@ -17,7 +17,8 @@
         (change)="$event ? masterToggle() : null"
         [checked]="selection.hasValue() && isAllSelected()"
         [indeterminate]="selection.hasValue() && !isAllSelected()"
-        [attr.aria-label]="'VAR.DESELECT' | translate"
+        matTooltip="{{'VAR.SELECTALL' | translate}}"
+        [attr.aria-label]="'VAR.SELECTALL' | translate"
       >
       </mat-checkbox>
     </th>

@@ -20,6 +20,7 @@
   "VAR": {
     "SEARCH": "Chercher",
     "SELECT": "Sélectionner",
+    "SELECTALL": "Tout sélectionner",
     "DESELECT": "Désélectionner",
     "ID": "ID",
     "NAME": "Nom",
