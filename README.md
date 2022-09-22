@@ -6,7 +6,7 @@ The Data Explorer is a web application which lists the variables in a tabular da
 
 This stand-alone component is built to complement [The Dataverse Project](https://dataverse.org). The Data Explorer is integrated as part of the dataset.xhtml and file.xhtml pages, revealing an Explore button for tabular data files upon installation.
 
-Here's a demo of the tool in action - this should be used for testing purposes only: https://scholarsportal.github.io/dataverse-data-explorer-v2/?siteUrl=https://dataverse.scholarsportal.info&fileId=8988
+Here's a demo of the tool in action - this should be used for testing purposes only: https://scholarsportal.github.io/dataverse-data-explorer-v2/?siteUrl=https://borealisdata.ca&fileId=8988
 
 You can also test this tool with your own tabular files in [the Scholars Portal demo dataverse instance](https://demodv.scholarsportal.info/dataverse.xhtml). To test the tool, create your account or log in, create a dataset with tabular files (e.g. SPSS, Stata, XLSX, CSV), then click the "Explore" button in the file list after the file has been ingested by Dataverse.
 
