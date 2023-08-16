@@ -9,11 +9,11 @@
   },
   "SAVE": {
     "DOWNLOAD": "Download",
-    "DOWNLOADSUB": "Download subset",
+    "DOWNLOADSUB": "Download subset (tab-delimited only)",
     "DOWNLOADORIG": "Download original file",
     "DOWNLOADTAB": "Download tab-delimited file",
     "DOWNLOADRDATA": "Download RData format file",
-    "DOWNLOADVARMETA": "Download variable metadata",
+    "DOWNLOADVARMETA": "Download variable metadata (XML)",
     "NOFILEID": "Cannot download, there is no file id",
     "NOSELECT": "There was no selection"
   },
