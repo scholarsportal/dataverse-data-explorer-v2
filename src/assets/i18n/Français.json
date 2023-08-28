@@ -9,11 +9,11 @@
   },
   "SAVE": {
     "DOWNLOAD": "Télécharger",
-    "DOWNLOADSUB": "Télécharger le sous-ensemble",
+    "DOWNLOADSUB": "Télécharger le sous-ensemble (uniquement délimité par des tabulations)",
     "DOWNLOADORIG": "Télécharger le fichier en format original",
     "DOWNLOADTAB": "Télécharger le fichier délimité par des tabulations",
     "DOWNLOADRDATA": "Télécharger le fichier en format RData",
-    "DOWNLOADVARMETA": "Télécharger les métadonnées des variables",
+    "DOWNLOADVARMETA": "Télécharger les métadonnées des variables (XML)",
     "NOFILEID": "Téléchargement impossible, il n'y a pas d'identifiant de fichier",
     "NOSELECT": "Aucune sélection n'a été faite"
   },
