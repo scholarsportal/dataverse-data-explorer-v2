@@ -276,6 +276,10 @@ export class CrossTabDialogComponent implements OnInit {
         variables = variables + ',' + variable['@ID'];
       }
     }
+    let aut = '';
+    if ((key !== null) && (key !== 'null'))  {
+      aut = '&key=' + key;
+    }
     if (!siteUrl) {
       const baseUrl = 'https://demodv.scholarsportal.info';
       //fileId = '3';
@@ -286,8 +290,7 @@ export class CrossTabDialogComponent implements OnInit {
         fileId +
         '?format=subset&variables=' +
         variables +
-        '&key=' +
-        key;
+        aut;
     } else {
       detailUrl =
         siteUrl +
@@ -295,10 +298,9 @@ export class CrossTabDialogComponent implements OnInit {
         fileId +
         '?format=subset&variables=' +
         variables +
-        '&key=' +
-        key;
+        aut;
     }
-
+    console.log(detailUrl);
     this.ddiService
       .getDDI(detailUrl)
       .subscribe(

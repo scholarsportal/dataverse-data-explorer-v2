@@ -174,6 +174,10 @@ export class DdiService {
     const fileId = this.getParameterByName('fileId');
     const key = this.getParameterByName('key');
     let detailUrl = null;
+    let aut = '';
+    if ((key !== null) && (key !== 'null'))  {
+      aut = '&key=' + key;
+    }
 
     if (siteUrl) {
       detailUrl =
@@ -182,10 +186,10 @@ export class DdiService {
         fileId +
         '?format=subset&variables=' +
         id +
-        '&key=' +
-        key;
+       aut;
       //  http://localhost:8080/api/access/datafile/41?variables=v885
     }
+    console.log(detailUrl);
     return detailUrl;
   }
 
