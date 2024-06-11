@@ -189,7 +189,6 @@ export class DdiService {
        aut;
       //  http://localhost:8080/api/access/datafile/41?variables=v885
     }
-    console.log(detailUrl);
     return detailUrl;
   }
 

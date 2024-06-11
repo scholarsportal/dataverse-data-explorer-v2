@@ -300,7 +300,6 @@ export class CrossTabDialogComponent implements OnInit {
         variables +
         aut;
     }
-    console.log(detailUrl);
     this.ddiService
       .getDDI(detailUrl)
       .subscribe(
