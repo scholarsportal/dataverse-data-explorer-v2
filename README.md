@@ -1,4 +1,4 @@
-# dataverse-data-explorer-v2
+# THIS PROJECT IS NOW ARCHIVED, VIEW THE [NEW DATAVERSE DATA EXPLORER](https://github.com/scholarsportal/dataverse-data-explorer)
 
 Version 2 of the Dataverse Data Explorer.
 
